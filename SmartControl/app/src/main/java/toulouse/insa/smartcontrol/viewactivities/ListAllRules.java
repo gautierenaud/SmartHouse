@@ -1,8 +1,8 @@
 package toulouse.insa.smartcontrol.viewactivities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -24,7 +24,7 @@ import toulouse.insa.smartcontrol.common.MyRecyclerAdapter;
 public class ListAllRules extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ArrayList<FrameselfObject> frameselfList = new ArrayList<>();
+    public static ArrayList<FrameselfObject> frameselfList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private MyRecyclerAdapter mAdapter;
 
@@ -36,11 +36,12 @@ public class ListAllRules extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        assert fab != null;
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(ListAllRules.this, CreateRule.class);
+                startActivity(intent);
             }
         });
 
@@ -122,5 +123,9 @@ public class ListAllRules extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public ArrayList<FrameselfObject> getFrameselfList() {
+        return frameselfList;
     }
 }
