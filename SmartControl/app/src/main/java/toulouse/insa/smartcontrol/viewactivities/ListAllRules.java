@@ -1,8 +1,10 @@
-package toulouse.insa.smartcontrol;
+package toulouse.insa.smartcontrol.viewactivities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +15,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
+import toulouse.insa.smartcontrol.R;
+import toulouse.insa.smartcontrol.common.FrameselfObject;
+import toulouse.insa.smartcontrol.common.MyRecyclerAdapter;
+
 public class ListAllRules extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private ArrayList<FrameselfObject> frameselfList = new ArrayList<>();
+    private RecyclerView mRecyclerView;
+    private MyRecyclerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +52,19 @@ public class ListAllRules extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        /* CardView for Frameself Objects */
+        // filling for test purpose
+        for (int i = 0; i < 20; i++){
+            frameselfList.add(new FrameselfObject("rule" + Integer.toString(i), "trigger", "action"));
+        }
+
+        // initialize the recyclerView
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mAdapter = new MyRecyclerAdapter(frameselfList);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override

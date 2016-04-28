@@ -7,9 +7,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="toulouse.insa.smartcontrol.ListAllRules"
+    tools:context=".viewactivities.ListAllRules"
     tools:showIn="@layout/app_bar_list_all_rules">
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"></android.support.v7.widget.RecyclerView>
+
 </RelativeLayout>
