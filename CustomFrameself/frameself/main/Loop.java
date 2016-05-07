@@ -32,7 +32,7 @@ public class Loop implements Runnable
   public void run()
   {
     this.loop = true;
-    ArrayList<Event> events = new ArrayList();
+    ArrayList<Event> events = new ArrayList<Event>();
     ArrayList<Symptom> symptoms = new ArrayList();
     ArrayList<Rfc> rfcs = new ArrayList();
     ArrayList<frameself.format.Action> actions = new ArrayList();
@@ -52,9 +52,6 @@ public class Loop implements Runnable
       }
       catch (InterruptedException localInterruptedException) {}
       
-
-
-
       loopNumber--;
     }
     
