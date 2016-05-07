@@ -23,5 +23,8 @@
 	<classpathentry kind="lib" path="mvel2.jar"/>
 	<classpathentry kind="lib" path="org.eclipse.jdt.core_3.7.3.v20120119-1537.jar"/>
 	<classpathentry kind="lib" path="xstream.jar"/>
+	<classpathentry kind="lib" path="jackson-core-2.3.1.jar"/>
+	<classpathentry kind="lib" path="jackson-databind-2.3.1.jar"/>
+	<classpathentry kind="lib" path="jackson-annotations-2.3.1.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

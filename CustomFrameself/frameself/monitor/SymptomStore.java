@@ -1,28 +1,25 @@
-/*    */ package frameself.monitor;
-/*    */ 
-/*    */ import frameself.format.Symptom;
-/*    */ import java.util.ArrayList;
-/*    */ 
-/*    */ public class SymptomStore
-/*    */ {
-/*  8 */   private static ArrayList<Symptom> symptoms = new ArrayList();
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public void store(ArrayList<Symptom> symptoms)
-/*    */   {
-/* 15 */     symptoms.addAll(symptoms);
-/*    */   }
-/*    */   
-/*    */   public static ArrayList<Symptom> getSymptoms() {
-/* 19 */     return symptoms;
-/*    */   }
-/*    */   
-/*    */   public static void setSymptoms(ArrayList<Symptom> symptoms) {
-/* 23 */     symptoms = symptoms;
-/*    */   }
-/*    */ }
+package frameself.monitor;
+
+import frameself.format.Symptom;
+import java.util.ArrayList;
+
+public class SymptomStore
+{
+	private static ArrayList<Symptom> symptoms = new ArrayList();
+
+	public void store(ArrayList<Symptom> symptoms)
+	{
+		symptoms.addAll(symptoms);
+	}
+
+	public static ArrayList<Symptom> getSymptoms() {
+		return symptoms;
+	}
+
+	public static void setSymptoms(ArrayList<Symptom> symptoms) {
+		symptoms = symptoms;
+	}
+}
 
 
 /* Location:              /home/gautierenaud/Documents/Lien vers Documents/INSA/4IR/Projet_tut/SmartHouse/SmartControl/app/libs/frameself.jar!/frameself/monitor/SymptomStore.class
