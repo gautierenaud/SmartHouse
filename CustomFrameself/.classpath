@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="antlr-runtime.jar"/>
+	<classpathentry kind="lib" path="commons-lang3-3.1.jar"/>
+	<classpathentry kind="lib" path="drools-compiler.jar"/>
+	<classpathentry kind="lib" path="drools-core.jar"/>
+	<classpathentry kind="lib" path="drools-decisiontables.jar"/>
+	<classpathentry kind="lib" path="drools-jsr94.jar"/>
+	<classpathentry kind="lib" path="drools-templates.jar"/>
+	<classpathentry kind="lib" path="droolsjbpm-ide-common.jar"/>
+	<classpathentry kind="lib" path="forms-1.3.0.jar"/>
+	<classpathentry kind="lib" path="jbpm-bpmn2.jar"/>
+	<classpathentry kind="lib" path="jbpm-flow-builder.jar"/>
+	<classpathentry kind="lib" path="jbpm-flow.jar"/>
+	<classpathentry kind="lib" path="jsr94.jar"/>
+	<classpathentry kind="lib" path="junit.jar"/>
+	<classpathentry kind="lib" path="jxl.jar"/>
+	<classpathentry kind="lib" path="knowledge-api.jar"/>
+	<classpathentry kind="lib" path="knowledge-internal-api.jar"/>
+	<classpathentry kind="lib" path="miglayout15-swing.jar"/>
+	<classpathentry kind="lib" path="mvel2.jar"/>
+	<classpathentry kind="lib" path="org.eclipse.jdt.core_3.7.3.v20120119-1537.jar"/>
+	<classpathentry kind="lib" path="xstream.jar"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

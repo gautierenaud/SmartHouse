@@ -1,0 +1,8 @@
+import frameself.format.*;
+
+rule "Init Effectors"
+	when
+    then
+ 	   insert(new Effector("KnowledgeBaseManager"));  
+ 	   insert(new Effector("Lamp"));  
+end

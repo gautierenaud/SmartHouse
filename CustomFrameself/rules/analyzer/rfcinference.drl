@@ -1,0 +1,27 @@
+import frameself.format.*;
+import java.util.Date;
+
+
+rule "IncreaseLight rfc"
+    when
+       Symptom(category == "LowLuminosity")
+    then
+		Rfc rfc = new Rfc();
+		rfc.setCategory("IncreaseLight");
+		rfc.setValue("100");
+		rfc.setTimestamp(new Date());
+		rfc.setExpiry(new Date(System.currentTimeMillis()+4000));
+		insert(rfc);
+end
+
+rule "DecreaseLight rfc"
+	when
+		Symptom(category == "HightLuminosity")
+	then
+		Rfc rfc = new Rfc();
+		rfc.setCategory("DecreaseLight");
+		rfc.setValue("0");
+		rfc.setTimestamp(new Date());
+		rfc.setExpiry(new Date(System.currentTimeMillis() + 4000));
+		insert(rfc);
+end

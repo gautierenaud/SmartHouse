@@ -1,0 +1,7 @@
+import frameself.format.*;
+
+rule "Init Policies"
+	when
+    then
+ 	   insert(new Policy("EnergyEfficiency"));  
+end
