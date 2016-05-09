@@ -2,9 +2,11 @@ package toulouse.insa.smartcontrol.viewactivities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,10 +18,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import frameself.Dispatcher;
+import frameself.format.Event;
 import toulouse.insa.smartcontrol.R;
 import toulouse.insa.smartcontrol.common.FrameselfObject;
 import toulouse.insa.smartcontrol.common.MyRecyclerAdapter;
+import toulouse.insa.smartcontrol.communicate.ListAckReceiver;
+import toulouse.insa.smartcontrol.communicate.ListReqSender;
+import toulouse.insa.smartcontrol.communicate.MultipurposeCollector;
+import toulouse.insa.smartcontrol.communicate.ReqType;
+import toulouse.insa.smartcontrol.communicate.SpecificCollector;
 
 public class ListAllRules extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +50,16 @@ public class ListAllRules extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // test for sending event
+                Event event = new Event();
+                event.setCategory("LampControl");
+                event.setValue("420");
+                event.setSensor("Phone");
+                event.setLocation("Home");
+                event.setTimestamp(new Date());
+                event.setExpiry(new Date(System.currentTimeMillis()+20000));
+                MultipurposeCollector.eventQueue.add(event);
+
                 Intent intent = new Intent(ListAllRules.this, CreateRule.class);
                 startActivity(intent);
             }
@@ -66,6 +86,13 @@ public class ListAllRules extends AppCompatActivity
 
         mAdapter = new MyRecyclerAdapter(frameselfList);
         mRecyclerView.setAdapter(mAdapter);
+
+
+        new Thread(){
+            public void run(){
+                MultipurposeCollector.start();
+            }
+        }.start();
     }
 
     @Override
