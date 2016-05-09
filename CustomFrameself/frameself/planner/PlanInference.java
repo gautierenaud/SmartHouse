@@ -22,7 +22,8 @@ public class PlanInference
 	public ArrayList<Action> infer(ArrayList<Rfc> rfcs, ArrayList<Effector> effectors, ArrayList<Policy> policies)
 	{
 		ArrayList<FactHandle> rfcHandles = new ArrayList();
-		FactHandle rfchandle; for (Rfc rfc : rfcs) {
+		FactHandle rfchandle;
+		for (Rfc rfc : rfcs) {
 			rfchandle = this.ksession.insert(rfc);
 			rfcHandles.add(rfchandle);
 		}

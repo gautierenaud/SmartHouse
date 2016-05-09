@@ -6,6 +6,8 @@ import frameself.gui.GuiAdmin;
 import frameself.knowledge.KnowledgeManager;
 import frameself.monitor.MonitorManager;
 import frameself.planner.PlannerManager;
+import smarthouse.communicate.ListReqReceiver;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -47,6 +49,9 @@ public class Admin
 		this.plannerManager = new PlannerManager(prop.getProperty("action_inference_rule"));
 		this.executerManager = new ExecuterManager();
 		this.loop = new Loop(this.monitorManager, this.analyzerManager, this.plannerManager, this.executerManager);
+		
+		// lancement d'un thread pour récupérer les listes
+		new ListReqReceiver(this.plannerManager, this.analyzerManager, this.monitorManager);
 	}
 
 	public void start() {

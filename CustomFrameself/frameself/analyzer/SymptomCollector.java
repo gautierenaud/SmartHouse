@@ -1,37 +1,37 @@
-/*    */ package frameself.analyzer;
-/*    */ 
-/*    */ import frameself.format.Symptom;
-/*    */ import frameself.monitor.SymptomStore;
-/*    */ import java.util.ArrayList;
-/*    */ 
-/*    */ 
-/*    */ public class SymptomCollector
-/*    */   implements Runnable
-/*    */ {
-/*    */   private ArrayList<Symptom> symptoms;
-/*    */   
-/*    */   public void run()
-/*    */   {
-/* 15 */     this.symptoms = new ArrayList();
-/*    */     for (;;) {
-/* 17 */       this.symptoms.addAll(SymptomStore.getSymptoms());
-/*    */       try {
-/* 19 */         Thread.sleep(2000L);
-/*    */       }
-/*    */       catch (InterruptedException e) {
-/* 22 */         e.printStackTrace();
-/*    */       }
-/*    */     }
-/*    */   }
-/*    */   
-/*    */   public ArrayList<Symptom> getSymptoms() {
-/* 28 */     return this.symptoms;
-/*    */   }
-/*    */   
-/*    */   public void setSymptoms(ArrayList<Symptom> symptoms) {
-/* 32 */     this.symptoms = symptoms;
-/*    */   }
-/*    */ }
+package frameself.analyzer;
+
+import frameself.format.Symptom;
+import frameself.monitor.SymptomStore;
+import java.util.ArrayList;
+
+
+public class SymptomCollector
+implements Runnable
+{
+	private ArrayList<Symptom> symptoms;
+
+	public void run()
+	{
+		this.symptoms = new ArrayList();
+		for (;;) {
+			this.symptoms.addAll(SymptomStore.getSymptoms());
+			try {
+				Thread.sleep(2000L);
+			}
+			catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public ArrayList<Symptom> getSymptoms() {
+		return this.symptoms;
+	}
+
+	public void setSymptoms(ArrayList<Symptom> symptoms) {
+		this.symptoms = symptoms;
+	}
+}
 
 
 /* Location:              /home/gautierenaud/Documents/Lien vers Documents/INSA/4IR/Projet_tut/SmartHouse/SmartControl/app/libs/frameself.jar!/frameself/analyzer/SymptomCollector.class

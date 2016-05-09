@@ -13,21 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 public class GuiMAPE
 {
 	public static JFrame frame;
