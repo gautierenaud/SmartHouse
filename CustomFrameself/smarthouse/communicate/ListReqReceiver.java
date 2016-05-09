@@ -1,26 +1,32 @@
 package smarthouse.communicate;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jxl.biff.ByteArray;
+import frameself.analyzer.AnalyzerManager;
+import frameself.monitor.MonitorManager;
+import frameself.planner.PlannerManager;
 
 public class ListReqReceiver extends Thread{
 	
-	private int bufferSize = 8192;
+	private int bufferSize = 4000;
 	private int serverPort = 2042;
 	private ServerSocket listenSocket;
+	private PlannerManager plannerManager;
+	private AnalyzerManager analyzerManager;
+	private MonitorManager monitorManager;
 	
-	public ListReqReceiver(){
+	public ListReqReceiver(PlannerManager plan, AnalyzerManager analyzer, MonitorManager monitor){
+		this.plannerManager = plan;
+		this.analyzerManager = analyzer;
+		this.monitorManager = monitor;
 		try {
 			listenSocket = new ServerSocket(this.serverPort);
-			System.out.println("start listending to port " + serverPort);
+			System.out.println("ListReqReceiver starts listening to port " + serverPort);
 			this.start();
 		}catch (IOException e){
 			e.printStackTrace();
@@ -40,12 +46,12 @@ public class ListReqReceiver extends Thread{
 					result += new String(tmpBuf, 0, r);
 					r = inFromClient.read(tmpBuf);
 				}
-				System.out.println("toto: " + result);
+				
 				ObjectMapper mapper = new ObjectMapper();
-				ListRequest req = mapper.readValue(result, ListRequest.class);
-				System.out.println("toto: " + req);
+				ReqType req = mapper.readValue(result, ReqType.class);
+				ListAckSender sender = new ListAckSender(req, connectedSocket.getInetAddress(), this.plannerManager, this.analyzerManager, this.monitorManager);
+				sender.sendAck();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -7,7 +7,7 @@ import java.net.Socket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ListReqSender extends Thread{
+public class ListReqSender {
 	
 	private Socket clientSocket;
 	private BufferedOutputStream sWriter;
@@ -16,21 +16,17 @@ public class ListReqSender extends Thread{
 		InetAddress address = InetAddress.getLoopbackAddress();
 		try {
 			this.clientSocket = new Socket(address, 2042);
-			System.out.println(clientSocket);
 			this.sWriter = new BufferedOutputStream(this.clientSocket.getOutputStream());
-			
-			this.start();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void run(){
+	public void sendReq(ReqType req){
+		System.out.println("sending message...");
 		try{
-			ListRequest testRequest = new ListRequest(ReqType.ACTION);
 			ObjectMapper mapper = new ObjectMapper();
-			String test = mapper.writeValueAsString(testRequest);
+			String test = mapper.writeValueAsString(req);
 			sWriter.write(test.getBytes(), 0, test.getBytes().length);
 			sWriter.flush();
 		}catch (IOException e){
@@ -45,7 +41,6 @@ public class ListReqSender extends Thread{
 			this.sWriter.close();
 			this.clientSocket.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
