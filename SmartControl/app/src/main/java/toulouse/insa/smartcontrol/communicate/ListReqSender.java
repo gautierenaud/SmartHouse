@@ -8,44 +8,57 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ListReqSender {
+import frameself.format.Event;
+import toulouse.insa.smartcontrol.params.Parameters;
+
+public class ListReqSender extends Thread{
 	
 	private Socket clientSocket;
 	private BufferedOutputStream sWriter;
+
+	private static ArrayBlockingQueue<ReqType> reqQueue = new ArrayBlockingQueue<>(10);
 	
-	public ListReqSender(){
-		InetAddress address;
+	public ListReqSender(){}
+
+	public void initialize(){
 		try {
-			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-			StrictMode.setThreadPolicy(policy);
-			address = InetAddress.getByName("192.168.150.4");
-			this.clientSocket = new Socket(address, 2042);
+			// connect to the frameself custom socket
+			Log.d("ListReqSender", "Connecting to " + Parameters.getFrameselfAddress());
+			this.clientSocket = new Socket(Parameters.getFrameselfAddress(), 2042);
 			this.sWriter = new BufferedOutputStream(this.clientSocket.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void SendReq(ReqType req){
-		System.out.println("sending message...");
-		try{
-			ObjectMapper mapper = new ObjectMapper();
-			String test = mapper.writeValueAsString(req);
-			sWriter.write(test.getBytes(), 0, test.getBytes().length);
-			sWriter.flush();
-		}catch (IOException e){
-			e.printStackTrace();
-		}finally {
-			closeSocket();
+
+	public static void addReq(ReqType req){
+		Log.d("ListReqSender", "Adding " + req + " to the queue");
+		reqQueue.add(req);
+	}
+
+	public void run(){
+		while(true) {
+			try {
+				ReqType req = reqQueue.take();
+				initialize();
+				Log.d("ListReqSender", "Sending ReqType: " + req + " to " + clientSocket);
+				ObjectMapper mapper = new ObjectMapper();
+				String sendString = mapper.writeValueAsString(req);
+				sWriter.write(sendString.getBytes(), 0, sendString.getBytes().length);
+				sWriter.flush();
+				closeSocket();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
-	
+
 	public void closeSocket(){
 		try {
-			Log.e("SOCKET","alalla");
 			if (this.sWriter != null) {
 				this.sWriter.close();
 				this.clientSocket.close();

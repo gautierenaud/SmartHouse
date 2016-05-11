@@ -1,5 +1,7 @@
 package toulouse.insa.smartcontrol.communicate;
 
+import android.util.Log;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -14,17 +16,19 @@ public class ListAckReceiver extends Thread{
 	private ServerSocket listenSocket;
 	
 	public ListAckReceiver(){
+	}
+
+	public void initialize(){
 		try {
 			listenSocket = new ServerSocket(serverPort);
 			System.out.println("ListAckReceiver starts listening to port " + serverPort);
-			this.start();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void run(){
+		initialize();
 		while (true){
 			Socket connectedSocket;
 			try {
@@ -38,10 +42,9 @@ public class ListAckReceiver extends Thread{
 					result += new String(tmpBuf, 0, r);
 					r = inFromClient.read(tmpBuf);
 				}
-				System.out.println(result);
+				Log.d("ListAckReceiver", result);
 				ObjectMapper mapper = new ObjectMapper();
 				ArrayList<Object> ans = mapper.readValue(result, ArrayList.class);
-				System.out.println("ack: " + ans);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

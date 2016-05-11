@@ -60,6 +60,8 @@ public class ListAllRules extends AppCompatActivity
                 event.setExpiry(new Date(System.currentTimeMillis()+20000));
                 MultipurposeCollector.eventQueue.add(event);
 
+                ListReqSender.addReq(ReqType.ACTION);
+
                 Intent intent = new Intent(ListAllRules.this, CreateRule.class);
                 startActivity(intent);
             }
@@ -87,6 +89,11 @@ public class ListAllRules extends AppCompatActivity
         mAdapter = new MyRecyclerAdapter(frameselfList);
         mRecyclerView.setAdapter(mAdapter);
 
+        ListAckReceiver receiver = new ListAckReceiver();
+        receiver.start();
+
+        ListReqSender sender = new ListReqSender();
+        sender.start();
 
         new Thread(){
             public void run(){
@@ -141,8 +148,8 @@ public class ListAllRules extends AppCompatActivity
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.nav_settings) {
+            openSettings();
         } else if (id == R.id.nav_send) {
 
         }
@@ -150,6 +157,11 @@ public class ListAllRules extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void openSettings(){
+        Intent intent = new Intent(ListAllRules.this, ChangeParams.class);
+        startActivity(intent);
     }
 
     public ArrayList<FrameselfObject> getFrameselfList() {

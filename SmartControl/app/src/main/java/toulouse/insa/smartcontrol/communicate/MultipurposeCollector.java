@@ -4,13 +4,14 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 import frameself.Collector;
 import frameself.format.Event;
+import toulouse.insa.smartcontrol.params.Parameters;
 
 /**
  * Created by gautierenaud on 09/05/16.
  */
 public class MultipurposeCollector {
 
-    public static Collector collector = new Collector("192.168.150.4",5000);
+    public static Collector collector = new Collector(Parameters.getFrameselfAddress(), 5000);
 
     public static ArrayBlockingQueue<Event> eventQueue = new ArrayBlockingQueue<>(50);
 
