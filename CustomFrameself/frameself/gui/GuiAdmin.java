@@ -568,51 +568,53 @@ public class GuiAdmin
 		return panel;
 	}
 
-	public JPanel initializeMapekTab(JTabbedPane tabbedPane_1) { JPanel mapek = new JPanel();
-	mapek.setLayout(new GridLayout(5, 1, 0, 0));
+	public JPanel initializeMapekTab(JTabbedPane tabbedPane_1) {
+		JPanel mapek = new JPanel();
+		mapek.setLayout(new GridLayout(5, 1, 0, 0));
 
-	eventsTable = creatEventJTable();
-	createTablePanel(mapek, "Events", eventsTable, "images/arrow2.png");
+		eventsTable = creatEventJTable();
+		createTablePanel(mapek, "Events", eventsTable, "images/arrow2.png");
 
-	symptomsTable = creatSymptomJTable();
-	createTablePanel(mapek, "Symptoms", symptomsTable, "images/arrow2.png");
+		symptomsTable = creatSymptomJTable();
+		createTablePanel(mapek, "Symptoms", symptomsTable, "images/arrow2.png");
 
-	rfcsTable = creatRfcJTable();
-	createTablePanel(mapek, "RFCs", rfcsTable, "images/arrow2.png");
+		rfcsTable = creatRfcJTable();
+		createTablePanel(mapek, "RFCs", rfcsTable, "images/arrow2.png");
 
-	actionsTable = creatActionJTable();
-	createTablePanel(mapek, "Actions", actionsTable, "images/arrow2.png");
+		actionsTable = creatActionJTable();
+		createTablePanel(mapek, "Actions", actionsTable, "images/arrow2.png");
 
-	actionsResultTable = creatActionResultJTable();
-	createTablePanel(mapek, "Results", actionsResultTable, "images/arrow2.png");
+		actionsResultTable = creatActionResultJTable();
+		createTablePanel(mapek, "Results", actionsResultTable, "images/arrow2.png");
 
 
-	return mapek;
+		return mapek;
 	}
 
-	private JPanel initializeMonitorTab(JTabbedPane tabbedPane_1) { JPanel monitor_1 = new JPanel();
+	private JPanel initializeMonitorTab(JTabbedPane tabbedPane_1) {
+		JPanel monitor_1 = new JPanel();
 
-	monitor_1.setLayout(new GridLayout(0, 1, 0, 0));
+		monitor_1.setLayout(new GridLayout(0, 1, 0, 0));
 
-	receivedEvents = creatEventJTable();
-	createTablePanel(monitor_1, "Events Collector", receivedEvents, "images/arrow2.png");
-
-
-
-	formattedEvents = creatEventJTable();
-	createTablePanel(monitor_1, "Events Formatter", formattedEvents, "images/arrow2.png");
-
-	filtredEvents = creatEventJTable();
-	createTablePanel(monitor_1, "Events Filter", filtredEvents, "images/arrow2.png");
-
-	agregatedEvents = creatEventJTable();
-	createTablePanel(monitor_1, "Events Agregator", agregatedEvents, "images/arrow2.png");
+		receivedEvents = creatEventJTable();
+		createTablePanel(monitor_1, "Events Collector", receivedEvents, "images/arrow2.png");
 
 
-	inferedSymptoms = creatSymptomJTable();
-	createTablePanel(monitor_1, "Symptoms Inference", inferedSymptoms, "images/arrow2.png");
 
-	return monitor_1;
+		formattedEvents = creatEventJTable();
+		createTablePanel(monitor_1, "Events Formatter", formattedEvents, "images/arrow2.png");
+
+		filtredEvents = creatEventJTable();
+		createTablePanel(monitor_1, "Events Filter", filtredEvents, "images/arrow2.png");
+
+		agregatedEvents = creatEventJTable();
+		createTablePanel(monitor_1, "Events Agregator", agregatedEvents, "images/arrow2.png");
+
+
+		inferedSymptoms = creatSymptomJTable();
+		createTablePanel(monitor_1, "Symptoms Inference", inferedSymptoms, "images/arrow2.png");
+
+		return monitor_1;
 	}
 
 

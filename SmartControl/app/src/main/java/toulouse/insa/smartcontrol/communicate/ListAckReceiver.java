@@ -44,7 +44,11 @@ public class ListAckReceiver extends Thread{
 				}
 				Log.d("ListAckReceiver", result);
 				ObjectMapper mapper = new ObjectMapper();
-				ArrayList<Object> ans = mapper.readValue(result, ArrayList.class);
+				ArrayList<Object> tmpArray = mapper.readValue(result, ArrayList.class);
+				ArrayList<CustomRule> ruleList = new ArrayList<>();
+				for (Object o : tmpArray){
+					System.out.println(o.toString());
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

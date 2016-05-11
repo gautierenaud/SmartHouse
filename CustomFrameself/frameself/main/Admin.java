@@ -57,8 +57,6 @@ public class Admin
 		new ListReqReceiver(this.plannerManager, this.analyzerManager, this.monitorManager);
 
 		this.start();
-		if (!useGUI)
-			this.start();
 	}
 
 	public void start() {

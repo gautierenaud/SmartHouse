@@ -92,6 +92,7 @@ public class MonitorManager
 				}
 				} });
 		}
+		System.out.println(this.events);
 		this.symptoms = this.symptomInference.infer(this.events);
 		System.out.println();
 		System.out.println("\nInfered symptoms:(" + this.symptoms.size() + ")");
