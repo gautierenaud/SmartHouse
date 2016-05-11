@@ -46,17 +46,22 @@ public class EventCollector implements Runnable
 				socket.receive(packet);
 				this.event = ((Event)deserialize(msgBuffer));
 				System.out.println("Monitor: Event received = " + this.event.getCategory());
-				javax.swing.SwingUtilities.invokeLater(new Runnable()
-				{
-					public void run() {
-						System.out.println(EventCollector.this.event.getId() + ", " + EventCollector.this.event.getValue() + ", " + EventCollector.this.event.getTimestamp() + ", " + EventCollector.this.event.getExpiry());
-						EventCollector.events.add(EventCollector.this.event);
-						DefaultTableModel model = (DefaultTableModel)frameself.gui.GuiAdmin.getReceivedEvents().getModel();
-						model.addRow(EventCollector.this.createEventObject(EventCollector.this.event));
-					}
-
-
-				});
+				if (Admin.useGUI){
+					javax.swing.SwingUtilities.invokeLater(new Runnable()
+					{
+						public void run() {
+							System.out.println(EventCollector.this.event.getId() + ", " + EventCollector.this.event.getValue() + ", " + EventCollector.this.event.getTimestamp() + ", " + EventCollector.this.event.getExpiry());
+							EventCollector.events.add(EventCollector.this.event);
+							DefaultTableModel model = (DefaultTableModel)frameself.gui.GuiAdmin.getReceivedEvents().getModel();
+							model.addRow(EventCollector.this.createEventObject(EventCollector.this.event));
+						}
+	
+	
+					});
+				}else{
+					System.out.println(EventCollector.this.event.getId() + ", " + EventCollector.this.event.getValue() + ", " + EventCollector.this.event.getTimestamp() + ", " + EventCollector.this.event.getExpiry());
+					EventCollector.events.add(EventCollector.this.event);
+				}
 			}
 		}
 		catch (Exception e)

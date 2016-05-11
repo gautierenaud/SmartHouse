@@ -4,6 +4,8 @@ import frameself.format.Effector;
 import frameself.format.Policy;
 import frameself.format.Sensor;
 import frameself.gui.GuiAdmin;
+import frameself.main.Admin;
+
 import java.io.PrintStream;
 import java.util.ArrayList;
 import javax.swing.JTable;
@@ -36,19 +38,21 @@ public class KnowledgeManager
 
 	public void updateGui()
 	{
-		for (Sensor s : sensors) {
-			DefaultTableModel model = (DefaultTableModel)GuiAdmin.getSensors().getModel();
-			model.addRow(new Object[] { s.getName() });
-		}
-
-		for (Effector e : effectors) {
-			DefaultTableModel model = (DefaultTableModel)GuiAdmin.getEffectors().getModel();
-			model.addRow(new Object[] { e.getName() });
-		}
-
-		for (Policy p : policies) {
-			DefaultTableModel model = (DefaultTableModel)GuiAdmin.getPolicies().getModel();
-			model.addRow(new Object[] { p.getName() });
+		if (Admin.useGUI){
+			for (Sensor s : sensors) {
+				DefaultTableModel model = (DefaultTableModel)GuiAdmin.getSensors().getModel();
+				model.addRow(new Object[] { s.getName() });
+			}
+	
+			for (Effector e : effectors) {
+				DefaultTableModel model = (DefaultTableModel)GuiAdmin.getEffectors().getModel();
+				model.addRow(new Object[] { e.getName() });
+			}
+	
+			for (Policy p : policies) {
+				DefaultTableModel model = (DefaultTableModel)GuiAdmin.getPolicies().getModel();
+				model.addRow(new Object[] { p.getName() });
+			}
 		}
 	}
 

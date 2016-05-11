@@ -34,6 +34,7 @@ public class ListAckSender {
 		this.monitorManager = monitor;
 		this.req = req;
 		try {
+			System.out.println(destinationAddress);
 			this.clientSocket = new Socket(destinationAddress, 2043);
 			this.sWriter = new BufferedOutputStream(this.clientSocket.getOutputStream());
 		} catch (IOException e) {

@@ -10,9 +10,7 @@ public class TestListReq {
 	
 	public TestListReq(){
 		new ListAckReceiver();
-		/*
 		testSender = new ListReqSender();
 		testSender.sendReq(ReqType.SYMPTOM);
-		*/
 	}
 }

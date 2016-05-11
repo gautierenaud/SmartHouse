@@ -45,36 +45,40 @@ public class AnalyzerManager
 
 		System.out.println();
 		System.out.println("\nReceived Symptoms: (" + this.symptoms.size() + ")");
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() { for (Symptom s : AnalyzerManager.this.symptoms) {
-				System.out.println(s.getId() + ", " + s.getValue() + ", " + s.getTimestamp() + ", " + s.getExpiry());
-				DefaultTableModel model = (DefaultTableModel)GuiAdmin.getReceivedSymptoms().getModel();
-				model.addRow(AnalyzerManager.this.createSymptomObject(s));
-			}
-			}
-		});
+		if (Admin.useGUI){
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() { for (Symptom s : AnalyzerManager.this.symptoms) {
+					System.out.println(s.getId() + ", " + s.getValue() + ", " + s.getTimestamp() + ", " + s.getExpiry());
+					DefaultTableModel model = (DefaultTableModel)GuiAdmin.getReceivedSymptoms().getModel();
+					model.addRow(AnalyzerManager.this.createSymptomObject(s));
+				}
+				}
+			});
+		}
 		this.rfcs = this.rfcInference.infer(this.symptoms);
 		System.out.println();
 		System.out.println("\nInfered rfcs:(" + this.rfcs.size() + ")");
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() { for (Rfc r : AnalyzerManager.this.rfcs) {
-				System.out.println(r.getCategory() + ", " + r.getValue() + ", " + r.getTimestamp() + ", " + r.getExpiry());
-				DefaultTableModel model = (DefaultTableModel)GuiAdmin.getInferedRfcs().getModel();
-				model.addRow(AnalyzerManager.this.createRfcObject(r));
-			}
+		if (Admin.useGUI){
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() { for (Rfc r : AnalyzerManager.this.rfcs) {
+					System.out.println(r.getCategory() + ", " + r.getValue() + ", " + r.getTimestamp() + ", " + r.getExpiry());
+					DefaultTableModel model = (DefaultTableModel)GuiAdmin.getInferedRfcs().getModel();
+					model.addRow(AnalyzerManager.this.createRfcObject(r));
+				}
 
-			for (Rfc r : AnalyzerManager.this.rfcs) {
-				System.out.println(r.getCategory() + ", " + r.getValue() + ", " + r.getTimestamp() + ", " + r.getExpiry());
-				DefaultTableModel model = (DefaultTableModel)GuiAdmin.getRfcsTable().getModel();
-				model.addRow(AnalyzerManager.this.createRfcObject(r));
-			}
-			} });
+				for (Rfc r : AnalyzerManager.this.rfcs) {
+					System.out.println(r.getCategory() + ", " + r.getValue() + ", " + r.getTimestamp() + ", " + r.getExpiry());
+					DefaultTableModel model = (DefaultTableModel)GuiAdmin.getRfcsTable().getModel();
+					model.addRow(AnalyzerManager.this.createRfcObject(r));
+				}
+				} });
+		}
 		this.rfcStore.store(this.rfcs);
 		System.out.println();
 
 		return this.rfcs;
 	}
-	
+
 	public RfcInference getRfcInference(){
 		return this.rfcInference;
 	}

@@ -37,6 +37,7 @@ public class ListReqReceiver extends Thread{
 		while (true){
 			try {
 				Socket connectedSocket = listenSocket.accept();
+				System.out.println("plop!");
 				byte[] tmpBuf = new byte[bufferSize];
 				BufferedInputStream inFromClient = new BufferedInputStream(connectedSocket.getInputStream());
 				String result = "";
@@ -46,9 +47,9 @@ public class ListReqReceiver extends Thread{
 					result += new String(tmpBuf, 0, r);
 					r = inFromClient.read(tmpBuf);
 				}
-				
 				ObjectMapper mapper = new ObjectMapper();
 				ReqType req = mapper.readValue(result, ReqType.class);
+				System.out.println("Received request " + result + " from " + connectedSocket.getRemoteSocketAddress());
 				ListAckSender sender = new ListAckSender(req, connectedSocket.getInetAddress(), this.plannerManager, this.analyzerManager, this.monitorManager);
 				sender.sendAck();
 			} catch (IOException e) {

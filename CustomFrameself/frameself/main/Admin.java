@@ -25,6 +25,7 @@ public class Admin
 	Thread thread;
 	public static final String NOM_RESSOURCES = "config.properties";
 	public static Properties prop;
+	public static boolean useGUI = false;
 	static int loopCounter = 0;
 
 	public static void main(String[] args) {
@@ -41,8 +42,10 @@ public class Admin
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		GuiAdmin gui = new GuiAdmin(this);
-		gui.start();
+		if (useGUI){
+			GuiAdmin gui = new GuiAdmin(this);
+			gui.start();
+		}
 		this.knowledgeManager = new KnowledgeManager(prop.getProperty("sensor_init_rule"), prop.getProperty("effector_init_rule"), prop.getProperty("policy_init_rule"));
 		this.monitorManager = new MonitorManager(prop.getProperty("event_formatter_rule"), prop.getProperty("event_filter_rule"), prop.getProperty("event_agregator_rule"), prop.getProperty("symptom_inference_rule"));
 		this.analyzerManager = new AnalyzerManager(prop.getProperty("rfc_inference_rule"));
@@ -52,6 +55,10 @@ public class Admin
 		
 		// lancement d'un thread pour récupérer les listes
 		new ListReqReceiver(this.plannerManager, this.analyzerManager, this.monitorManager);
+
+		this.start();
+		if (!useGUI)
+			this.start();
 	}
 
 	public void start() {

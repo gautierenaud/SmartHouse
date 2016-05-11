@@ -52,57 +52,65 @@ public class MonitorManager
 
 		System.out.println();
 		System.out.println("\nNormalized Events: (" + this.events.size() + ")");
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() { for (Event e : MonitorManager.this.events) {
-				System.out.println(e.getId() + ", " + e.getValue() + ", " + e.getTimestamp() + ", " + e.getExpiry());
-
-				DefaultTableModel model = (DefaultTableModel)GuiAdmin.getNormalizedEvents().getModel();
-				model.addRow(MonitorManager.this.createEventObject(e));
-			}
-			} });
+		if (Admin.useGUI){
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() { for (Event e : MonitorManager.this.events) {
+					System.out.println(e.getId() + ", " + e.getValue() + ", " + e.getTimestamp() + ", " + e.getExpiry());
+	
+					DefaultTableModel model = (DefaultTableModel)GuiAdmin.getNormalizedEvents().getModel();
+					model.addRow(MonitorManager.this.createEventObject(e));
+				}
+				} });
+		}
 		this.events = this.eventFilter.filter(this.events);
 
 		System.out.println();
 		System.out.println("\nFiltered Events: (" + this.events.size() + ")");
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() { for (Event e : MonitorManager.this.events) {
-				System.out.println(e.getId() + ", " + e.getValue() + ", " + e.getTimestamp() + ", " + e.getExpiry());
-				DefaultTableModel model = (DefaultTableModel)GuiAdmin.getFiltredEvents().getModel();
-				model.addRow(MonitorManager.this.createEventObject(e));
-			}
-			} });
+		if (Admin.useGUI){
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() { for (Event e : MonitorManager.this.events) {
+					System.out.println(e.getId() + ", " + e.getValue() + ", " + e.getTimestamp() + ", " + e.getExpiry());
+					DefaultTableModel model = (DefaultTableModel)GuiAdmin.getFiltredEvents().getModel();
+					model.addRow(MonitorManager.this.createEventObject(e));
+				}
+				} });
+		}
 		this.events = this.eventAgregator.agregate(this.events);
 
 		System.out.println();
 		System.out.println("\nAgregated Events: (" + this.events.size() + ")");
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() { for (Event e : MonitorManager.this.events) {
-				System.out.println(e.getId() + ", " + e.getValue() + ", " + e.getTimestamp() + ", " + e.getExpiry());
-				DefaultTableModel model = (DefaultTableModel)GuiAdmin.getAgregatedEvents().getModel();
-				model.addRow(MonitorManager.this.createEventObject(e));
-			}
-			for (Event e : MonitorManager.this.events) {
-				DefaultTableModel model = (DefaultTableModel)GuiAdmin.getEventsTable().getModel();
-				model.addRow(MonitorManager.this.createEventObject(e));
-			}
-			} });
+		if (Admin.useGUI){
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() { for (Event e : MonitorManager.this.events) {
+					System.out.println(e.getId() + ", " + e.getValue() + ", " + e.getTimestamp() + ", " + e.getExpiry());
+					DefaultTableModel model = (DefaultTableModel)GuiAdmin.getAgregatedEvents().getModel();
+					model.addRow(MonitorManager.this.createEventObject(e));
+				}
+				for (Event e : MonitorManager.this.events) {
+					DefaultTableModel model = (DefaultTableModel)GuiAdmin.getEventsTable().getModel();
+					model.addRow(MonitorManager.this.createEventObject(e));
+				}
+				} });
+		}
 		this.symptoms = this.symptomInference.infer(this.events);
 		System.out.println();
 		System.out.println("\nInfered symptoms:(" + this.symptoms.size() + ")");
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() { for (Symptom s : MonitorManager.this.symptoms) {
-				System.out.println(s.getId() + ", " + s.getValue() + ", " + s.getTimestamp() + ", " + s.getExpiry());
-				DefaultTableModel model = (DefaultTableModel)GuiAdmin.getInferedSymptoms().getModel();
-				model.addRow(MonitorManager.this.createSymptomObject(s));
-			}
-
-			for (Symptom s : MonitorManager.this.symptoms) {
-				System.out.println(s.getId() + ", " + s.getValue() + ", " + s.getTimestamp() + ", " + s.getExpiry());
-				DefaultTableModel model = (DefaultTableModel)GuiAdmin.getSymptomsTable().getModel();
-				model.addRow(MonitorManager.this.createSymptomObject(s));
-			}
-			}
-		});
+		if (Admin.useGUI){
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() { for (Symptom s : MonitorManager.this.symptoms) {
+					System.out.println(s.getId() + ", " + s.getValue() + ", " + s.getTimestamp() + ", " + s.getExpiry());
+					DefaultTableModel model = (DefaultTableModel)GuiAdmin.getInferedSymptoms().getModel();
+					model.addRow(MonitorManager.this.createSymptomObject(s));
+				}
+	
+				for (Symptom s : MonitorManager.this.symptoms) {
+					System.out.println(s.getId() + ", " + s.getValue() + ", " + s.getTimestamp() + ", " + s.getExpiry());
+					DefaultTableModel model = (DefaultTableModel)GuiAdmin.getSymptomsTable().getModel();
+					model.addRow(MonitorManager.this.createSymptomObject(s));
+				}
+				}
+			});
+		}
 		this.symptomStore.store(this.symptoms);
 		System.out.println();
 
