@@ -8,14 +8,15 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import toulouse.insa.smartcontrol.R;
+import toulouse.insa.smartcontrol.communicate.CustomRule;
 
 /**
  * Created by gautierenaud on 27/04/16.
  */
 public class MyRecyclerAdapter extends RecyclerView.Adapter<CustomViewHolder> {
-    private List<FrameselfObject> mRuleList;
+    private List<RuleToDisplay> mRuleList;
 
-    public MyRecyclerAdapter(List<FrameselfObject> ruleList){
+    public MyRecyclerAdapter(List<RuleToDisplay> ruleList){
         this.mRuleList = ruleList;
     }
 
@@ -29,13 +30,10 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-        FrameselfObject tmpRule = mRuleList.get(position);
+        RuleToDisplay tmpRule = mRuleList.get(position);
 
-        holder.titleView.setText(tmpRule.getmTitle());
-
-        holder.triggerView.setText(tmpRule.getmTrigger());
-
-        holder.actionView.setText(tmpRule.getmAction());
+        holder.titleView.setText(tmpRule.getTitle());
+        holder.categoryView.setText(tmpRule.getRuleType().toString());
     }
 
     @Override

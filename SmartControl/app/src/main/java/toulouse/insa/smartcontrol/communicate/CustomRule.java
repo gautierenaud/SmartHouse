@@ -7,13 +7,13 @@ public class CustomRule {
 	private String id;
 	private String name;
 	private Map<String, Object> metaData;
-	
+
 	public CustomRule(String id, Map<String, Object> meta, String name){
 		this.id = id;
 		this.metaData = meta;
 		this.name = name;
 	}
-	
+
 	public CustomRule(){
 	}
 
@@ -40,5 +40,5 @@ public class CustomRule {
 	public void setMetaData(Map<String, Object> metaData) {
 		this.metaData = metaData;
 	}
-	
+
 }

@@ -12,9 +12,9 @@ import toulouse.insa.smartcontrol.R;
  * Created by gautierenaud on 27/04/16.
  */
 public class CustomViewHolder extends RecyclerView.ViewHolder {
+
+    protected TextView categoryView;
     protected TextView titleView;
-    protected TextView triggerView;
-    protected TextView actionView;
 
     private View mView;
 
@@ -34,8 +34,7 @@ public class CustomViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
+        this.categoryView = (TextView) itemView.findViewById(R.id.card_category);
         this.titleView = (TextView) itemView.findViewById(R.id.card_title);
-        this.triggerView = (TextView) itemView.findViewById(R.id.card_trigger);
-        this.actionView = (TextView) itemView.findViewById(R.id.card_action);
     }
 }

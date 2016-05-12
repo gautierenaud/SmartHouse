@@ -9,6 +9,7 @@ import toulouse.insa.smartcontrol.params.Parameters;
 /**
  * Created by gautierenaud on 09/05/16.
  */
+// class to collect event from the Android device and send it to Frameself
 public class MultipurposeCollector {
 
     public static Collector collector = new Collector(Parameters.getFrameselfAddress(), 5000);

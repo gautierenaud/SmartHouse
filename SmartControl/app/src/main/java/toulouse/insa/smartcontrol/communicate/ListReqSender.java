@@ -67,4 +67,10 @@ public class ListReqSender extends Thread{
 			e.printStackTrace();
 		}
 	}
+
+	// will send one req for each ReqType (RFC, SYMPTOM, ACTION)
+	public void sendAllReq(){
+		for  (ReqType req : ReqType.values())
+			this.addReq(req);
+	}
 }

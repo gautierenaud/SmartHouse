@@ -7,15 +7,13 @@ import android.view.View;
 import android.widget.EditText;
 
 import toulouse.insa.smartcontrol.R;
-import toulouse.insa.smartcontrol.common.FrameselfObject;
+import toulouse.insa.smartcontrol.communicate.CustomRule;
 
 public class CreateRule extends AppCompatActivity {
 
     private EditText mEditTitle;
     private EditText mEditTrigger;
     private EditText mEditAction;
-
-    private frameself.format.Action action;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +31,7 @@ public class CreateRule extends AppCompatActivity {
     }
 
     public void CommitRule(View view){
-        ListAllRules.frameselfList.add(new FrameselfObject(mEditTitle.getText().toString(), mEditTrigger.getText().toString(), mEditAction.getText().toString()));
+        // ListAllRules.ruleList.add(new CustomRule(mEditTitle.getText().toString(), mEditTrigger.getText().toString(), mEditAction.getText().toString()));
         finish();
     }
 }

@@ -2,7 +2,6 @@ package toulouse.insa.smartcontrol.viewactivities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,25 +17,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 
-import frameself.Dispatcher;
-import frameself.format.Event;
+import toulouse.insa.smartcontrol.ListValues.StoreListFacade;
 import toulouse.insa.smartcontrol.R;
-import toulouse.insa.smartcontrol.common.FrameselfObject;
 import toulouse.insa.smartcontrol.common.MyRecyclerAdapter;
+import toulouse.insa.smartcontrol.common.RuleToDisplay;
+import toulouse.insa.smartcontrol.communicate.CustomRule;
 import toulouse.insa.smartcontrol.communicate.ListAckReceiver;
 import toulouse.insa.smartcontrol.communicate.ListReqSender;
 import toulouse.insa.smartcontrol.communicate.MultipurposeCollector;
 import toulouse.insa.smartcontrol.communicate.ReqType;
-import toulouse.insa.smartcontrol.communicate.SpecificCollector;
 
 public class ListAllRules extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Observer {
 
-    public static ArrayList<FrameselfObject> frameselfList = new ArrayList<>();
+    public static ArrayList<RuleToDisplay> ruleList = new ArrayList<>();
+    private ArrayList<CustomRule> actionList = new ArrayList<>();
+    private ArrayList<CustomRule> rfcList = new ArrayList<>();
+    private ArrayList<CustomRule> symptomList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private MyRecyclerAdapter mAdapter;
+    private ListReqSender sender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,18 +53,6 @@ public class ListAllRules extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // test for sending event
-                Event event = new Event();
-                event.setCategory("LampControl");
-                event.setValue("420");
-                event.setSensor("Phone");
-                event.setLocation("Home");
-                event.setTimestamp(new Date());
-                event.setExpiry(new Date(System.currentTimeMillis()+20000));
-                MultipurposeCollector.eventQueue.add(event);
-
-                ListReqSender.addReq(ReqType.ACTION);
-
                 Intent intent = new Intent(ListAllRules.this, CreateRule.class);
                 startActivity(intent);
             }
@@ -77,22 +68,23 @@ public class ListAllRules extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         /* CardView for Frameself Objects */
-        // filling for test purpose
-        for (int i = 0; i < 20; i++){
-            frameselfList.add(new FrameselfObject("rule" + Integer.toString(i), "trigger", "action"));
-        }
 
         // initialize the recyclerView
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mAdapter = new MyRecyclerAdapter(frameselfList);
+        mAdapter = new MyRecyclerAdapter(ruleList);
         mRecyclerView.setAdapter(mAdapter);
 
-        ListAckReceiver receiver = new ListAckReceiver();
-        receiver.start();
+        // add itself to the list of observable of all the rule types
+        StoreListFacade.getInstance().getRfcObs().addObserver(this);
+        StoreListFacade.getInstance().getActionObs().addObserver(this);
+        StoreListFacade.getInstance().getSymptomObs().addObserver(this);
 
-        ListReqSender sender = new ListReqSender();
+        if (!ListAckReceiver.getInstance().isAlive())
+            ListAckReceiver.getInstance().start();
+
+        sender = new ListReqSender();
         sender.start();
 
         new Thread(){
@@ -100,6 +92,9 @@ public class ListAllRules extends AppCompatActivity
                 MultipurposeCollector.start();
             }
         }.start();
+
+        // send the different requests for the rule lists
+        sender.sendAllReq();
     }
 
     @Override
@@ -150,8 +145,8 @@ public class ListAllRules extends AppCompatActivity
 
         } else if (id == R.id.nav_settings) {
             openSettings();
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_refresh) {
+            sender.sendAllReq();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -164,7 +159,48 @@ public class ListAllRules extends AppCompatActivity
         startActivity(intent);
     }
 
-    public ArrayList<FrameselfObject> getFrameselfList() {
-        return frameselfList;
+    public ArrayList<RuleToDisplay> getFrameselfList() {
+        return ruleList;
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        Log.d("ListAllRules", "modification on object" + observable.getClass());
+
+        /** we swap the content of the lists **/
+        this.actionList.clear();
+        this.actionList.addAll(StoreListFacade.getInstance().getActionList());
+
+        this.rfcList.clear();
+        this.rfcList.addAll(StoreListFacade.getInstance().getRfcList());
+
+        this.symptomList.clear();
+        this.symptomList.addAll(StoreListFacade.getInstance().getSymptomList());
+
+        updateAdapter();
+    }
+
+    public void updateAdapter(){
+        this.ruleList.clear();
+        /** add the rules to the ruleList **/
+        for (CustomRule r : this.symptomList){
+            this.ruleList.add(new RuleToDisplay(r, ReqType.SYMPTOM));
+        }
+
+        for (CustomRule r : this.rfcList){
+            this.ruleList.add(new RuleToDisplay(r, ReqType.RFC));
+        }
+
+        for (CustomRule r : this.actionList){
+            this.ruleList.add(new RuleToDisplay(r, ReqType.ACTION));
+        }
+
+        // update the UI
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.swapAdapter(new MyRecyclerAdapter(ListAllRules.ruleList), false);
+            }
+        });
     }
 }
