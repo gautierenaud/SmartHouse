@@ -1,4 +1,4 @@
-package smarthouse.communicate;
+package toulouse.insa.smartcontrol.communicate;
 
 import java.util.Map;
 
