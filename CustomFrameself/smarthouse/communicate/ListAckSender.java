@@ -16,6 +16,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import frameself.analyzer.AnalyzerManager;
 import frameself.monitor.MonitorManager;
 import frameself.planner.PlannerManager;
+import toulouse.insa.smartcontrol.communicate.CustomRule;
+import toulouse.insa.smartcontrol.communicate.ListAnswer;
+import toulouse.insa.smartcontrol.communicate.ReqType;
 
 public class ListAckSender {
 	
@@ -44,7 +47,7 @@ public class ListAckSender {
 	
 	public void sendAck(){
 		// creating the arrayList
-		ArrayList<CustomRule> result = new ArrayList<>();
+		ArrayList<CustomRule> resultList = new ArrayList<>();
 		Collection<KnowledgePackage> knowledgePackages;
 		switch (this.req) {
 		case SYMPTOM:
@@ -52,7 +55,7 @@ public class ListAckSender {
 			for (KnowledgePackage p : knowledgePackages){
 				Collection<Rule> rules = p.getRules();
 				for (Rule r : rules){
-					result.add(CustomAdaptator.adaptRule(r));
+					resultList.add(CustomAdaptator.adaptRule(r));
 					System.err.println(r.toString() + "/" + r.getId() + "/map size : " + r.getMetaData().size());
 					Map<String, Object> map = r.getMetaData();
 					for (Map.Entry<String, Object> entry : map.entrySet()){
@@ -66,7 +69,7 @@ public class ListAckSender {
 			for (KnowledgePackage p : knowledgePackages){
 				Collection<Rule> rules = p.getRules();
 				for (Rule r : rules){
-					result.add(CustomAdaptator.adaptRule(r));
+					resultList.add(CustomAdaptator.adaptRule(r));
 					System.err.println(r.toString() + "/" + r.getId() + "/map size : " + r.getMetaData().size());
 					Map<String, Object> map = r.getMetaData();
 					for (Map.Entry<String, Object> entry : map.entrySet()){
@@ -80,7 +83,8 @@ public class ListAckSender {
 			for (KnowledgePackage p : knowledgePackages){
 				Collection<Rule> rules = p.getRules();
 				for (Rule r : rules){
-					result.add(CustomAdaptator.adaptRule(r));
+					
+					resultList.add(CustomAdaptator.adaptRule(r));
 					System.err.println(r.toString() + "/" + r.getId() + "/map size : " + r.getMetaData().size());
 					Map<String, Object> map = r.getMetaData();
 					for (Map.Entry<String, Object> entry : map.entrySet()){
@@ -93,10 +97,12 @@ public class ListAckSender {
 			break;
 		}
 		
+		ListAnswer answer = new ListAnswer(req, resultList);
+		
 		// mapping the object to Json String and sending it
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			String sendString = mapper.writeValueAsString(result);
+			String sendString = mapper.writeValueAsString(answer);
 			sWriter.write(sendString.getBytes(), 0, sendString.getBytes().length);
 			sWriter.flush();
 		} catch (IOException e) {

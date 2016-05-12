@@ -7,6 +7,8 @@ import java.net.Socket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import toulouse.insa.smartcontrol.communicate.ReqType;
+
 public class ListReqSender {
 	
 	private Socket clientSocket;

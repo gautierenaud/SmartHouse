@@ -1,5 +1,7 @@
 package smarthouse.communicate;
 
+import toulouse.insa.smartcontrol.communicate.ReqType;
+
 public class TestListReq {
 	
 	private ListReqSender testSender;

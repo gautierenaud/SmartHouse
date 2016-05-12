@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import frameself.analyzer.AnalyzerManager;
 import frameself.monitor.MonitorManager;
 import frameself.planner.PlannerManager;
+import toulouse.insa.smartcontrol.communicate.ReqType;
 
 public class ListReqReceiver extends Thread{
 	
