@@ -6,16 +6,25 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import toulouse.insa.smartcontrol.ListValues.StoreListFacade;
 
 public class ListAckReceiver extends Thread{
 
 	private int serverPort = 2043;
 	private ServerSocket listenSocket;
-	
-	public ListAckReceiver(){
+
+	private static ListAckReceiver instance;
+
+	public static ListAckReceiver getInstance(){
+		if (instance == null)
+			instance = new ListAckReceiver();
+		return instance;
+	}
+
+	private ListAckReceiver(){
 	}
 
 	public void initialize(){
@@ -42,12 +51,20 @@ public class ListAckReceiver extends Thread{
 					result += new String(tmpBuf, 0, r);
 					r = inFromClient.read(tmpBuf);
 				}
-				Log.d("ListAckReceiver", result);
 				ObjectMapper mapper = new ObjectMapper();
-				ArrayList<Object> tmpArray = mapper.readValue(result, ArrayList.class);
-				ArrayList<CustomRule> ruleList = new ArrayList<>();
-				for (Object o : tmpArray){
-					System.out.println(o.toString());
+				ListAnswer receivedAnswer = mapper.readValue(result, ListAnswer.class);
+				switch (receivedAnswer.getAnswerType()){
+					case RFC:
+						StoreListFacade.getInstance().getRfcObs().storeRules(receivedAnswer.getAnswerList());
+						break;
+					case SYMPTOM:
+						StoreListFacade.getInstance().getSymptomObs().storeRules(receivedAnswer.getAnswerList());
+						break;
+					case ACTION:
+						StoreListFacade.getInstance().getActionObs().storeRules(receivedAnswer.getAnswerList());
+						break;
+					default:
+						break;
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
