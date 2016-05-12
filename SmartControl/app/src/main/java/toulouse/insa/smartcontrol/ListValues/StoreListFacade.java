@@ -9,31 +9,45 @@ import toulouse.insa.smartcontrol.communicate.CustomRule;
  */
 public class StoreListFacade {
 
-    private static ActionListObservable actionObs = new ActionListObservable();
-    private static SymptomListObservable symptomObs = new SymptomListObservable();
-    private static RfcListObservable rfcObs = new RfcListObservable();
+    private static StoreListFacade instance = null;
 
-    public static ActionListObservable getActionObs(){
+    public static StoreListFacade getInstance(){
+        if (instance == null)
+            instance = new StoreListFacade();
+        return instance;
+    }
+
+    private static ActionListObservable actionObs;
+    private static SymptomListObservable symptomObs;
+    private static RfcListObservable rfcObs;
+
+    private StoreListFacade(){
+        actionObs = new ActionListObservable();
+        symptomObs = new SymptomListObservable();
+        rfcObs = new RfcListObservable();
+    }
+
+    public ActionListObservable getActionObs(){
         return actionObs;
     }
 
-    public static ArrayList<CustomRule> getActionList(){
+    public ArrayList<CustomRule> getActionList(){
         return actionObs.getActionRules();
     }
 
-    public static SymptomListObservable getSymptomObs(){
+    public SymptomListObservable getSymptomObs(){
         return symptomObs;
     }
 
-    public static ArrayList<CustomRule> getSymptomList(){
+    public ArrayList<CustomRule> getSymptomList(){
         return symptomObs.getSymptomRules();
     }
 
-    public static RfcListObservable getRfcObs(){
+    public RfcListObservable getRfcObs(){
         return rfcObs;
     }
 
-    public static ArrayList<CustomRule> getRfcList(){
+    public ArrayList<CustomRule> getRfcList(){
         return rfcObs.getRfcRules();
     }
 }

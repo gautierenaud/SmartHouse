@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import toulouse.insa.smartcontrol.communicate.CustomRule;
+import toulouse.insa.smartcontrol.communicate.ReqType;
 
 /**
  * Created by gautierenaud on 11/05/16.
@@ -29,5 +30,9 @@ public class RfcListObservable extends Observable{
     // get the Rfc rules
     public ArrayList<CustomRule> getRfcRules(){
         return rfcRules;
+    }
+
+    public ReqType getReqType(){
+        return ReqType.RFC;
     }
 }

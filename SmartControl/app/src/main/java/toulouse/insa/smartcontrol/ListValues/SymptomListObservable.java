@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import toulouse.insa.smartcontrol.communicate.CustomRule;
+import toulouse.insa.smartcontrol.communicate.ReqType;
 
 /**
  * Created by gautierenaud on 11/05/16.
@@ -27,5 +28,9 @@ public class SymptomListObservable extends Observable {
     // get the Symptom rules
     public ArrayList<CustomRule> getSymptomRules(){
         return symptomRules;
+    }
+
+    public ReqType getReqType(){
+        return ReqType.SYMPTOM;
     }
 }
