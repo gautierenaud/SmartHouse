@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import toulouse.insa.smartcontrol.communicate.ListAnswer;
+
 public class ListAckReceiver extends Thread{
 
 	private int serverPort = 2043;
@@ -40,8 +42,8 @@ public class ListAckReceiver extends Thread{
 				}
 				System.out.println(result);
 				ObjectMapper mapper = new ObjectMapper();
-				ArrayList<Object> ans = mapper.readValue(result, ArrayList.class);
-				System.out.println("ack: " + ans);
+				ListAnswer answer = mapper.readValue(result, ListAnswer.class);
+				System.out.println("ack: " + answer);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -20,11 +20,13 @@ public class StoreListFacade {
     private static ActionListObservable actionObs;
     private static SymptomListObservable symptomObs;
     private static RfcListObservable rfcObs;
+    private static PolicyListObservable policyObs;
 
     private StoreListFacade(){
         actionObs = new ActionListObservable();
         symptomObs = new SymptomListObservable();
         rfcObs = new RfcListObservable();
+        policyObs = new PolicyListObservable();
     }
 
     public ActionListObservable getActionObs(){
@@ -49,5 +51,13 @@ public class StoreListFacade {
 
     public ArrayList<CustomRule> getRfcList(){
         return rfcObs.getRfcRules();
+    }
+
+    public ArrayList<CustomRule> getPolicyList(){
+        return policyObs.getPolicyList();
+    }
+
+    public PolicyListObservable getPolicyObs(){
+        return policyObs;
     }
 }

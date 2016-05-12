@@ -51,6 +51,7 @@ public class ListAckReceiver extends Thread{
 					result += new String(tmpBuf, 0, r);
 					r = inFromClient.read(tmpBuf);
 				}
+				Log.e("ListAckReceiver", result);
 				ObjectMapper mapper = new ObjectMapper();
 				ListAnswer receivedAnswer = mapper.readValue(result, ListAnswer.class);
 				switch (receivedAnswer.getAnswerType()){
@@ -62,6 +63,9 @@ public class ListAckReceiver extends Thread{
 						break;
 					case ACTION:
 						StoreListFacade.getInstance().getActionObs().storeRules(receivedAnswer.getAnswerList());
+						break;
+					case POLICY:
+						StoreListFacade.getInstance().getPolicyObs().storeRules(receivedAnswer.getAnswerList());
 						break;
 					default:
 						break;

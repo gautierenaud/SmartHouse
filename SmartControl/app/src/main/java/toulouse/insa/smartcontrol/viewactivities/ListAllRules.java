@@ -33,10 +33,19 @@ import toulouse.insa.smartcontrol.communicate.ReqType;
 public class ListAllRules extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Observer {
 
+    private enum DisplayOption {ALL, SYMPTOMS, RFCS, ACTIONS, POLICIES};
+
+    // a fusion of the different arrays
     public static ArrayList<RuleToDisplay> ruleList = new ArrayList<>();
+
+    // lists to store each types of rules/policies
     private ArrayList<CustomRule> actionList = new ArrayList<>();
     private ArrayList<CustomRule> rfcList = new ArrayList<>();
     private ArrayList<CustomRule> symptomList = new ArrayList<>();
+    private ArrayList<CustomRule> policyList = new ArrayList<>();
+
+    private DisplayOption displayOption = DisplayOption.ALL;
+
     private RecyclerView mRecyclerView;
     private MyRecyclerAdapter mAdapter;
     private ListReqSender sender;
@@ -80,6 +89,7 @@ public class ListAllRules extends AppCompatActivity
         StoreListFacade.getInstance().getRfcObs().addObserver(this);
         StoreListFacade.getInstance().getActionObs().addObserver(this);
         StoreListFacade.getInstance().getSymptomObs().addObserver(this);
+        StoreListFacade.getInstance().getPolicyObs().addObserver(this);
 
         if (!ListAckReceiver.getInstance().isAlive())
             ListAckReceiver.getInstance().start();
@@ -135,14 +145,32 @@ public class ListAllRules extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_symptom) {
-            // Handle the camera action
-        } else if (id == R.id.nav_rfc) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
+        if (id == R.id.nav_all) {
+            if (this.displayOption != DisplayOption.ALL) {
+                this.displayOption = DisplayOption.ALL;
+                updateAdapter();
+            }
+        } else if (id == R.id.nav_symptoms) {
+            if (this.displayOption != DisplayOption.SYMPTOMS) {
+                this.displayOption = DisplayOption.SYMPTOMS;
+                updateAdapter();
+            }
+        } else if (id == R.id.nav_rfcs) {
+            if (this.displayOption != DisplayOption.RFCS) {
+                this.displayOption = DisplayOption.RFCS;
+                updateAdapter();
+            }
+        } else if (id == R.id.nav_actions) {
+            if (this.displayOption != DisplayOption.ACTIONS) {
+                this.displayOption = DisplayOption.ACTIONS;
+                updateAdapter();
+            }
+        } else if (id == R.id.nav_policies) {
+            if (this.displayOption != DisplayOption.POLICIES) {
+                this.displayOption = DisplayOption.POLICIES;
+                updateAdapter();
+            }
         } else if (id == R.id.nav_settings) {
             openSettings();
         } else if (id == R.id.nav_refresh) {
@@ -177,22 +205,53 @@ public class ListAllRules extends AppCompatActivity
         this.symptomList.clear();
         this.symptomList.addAll(StoreListFacade.getInstance().getSymptomList());
 
+        this.policyList.clear();
+        this.policyList.addAll(StoreListFacade.getInstance().getPolicyList());
+
         updateAdapter();
     }
 
     public void updateAdapter(){
         this.ruleList.clear();
         /** add the rules to the ruleList **/
-        for (CustomRule r : this.symptomList){
-            this.ruleList.add(new RuleToDisplay(r, ReqType.SYMPTOM));
-        }
+        switch (this.displayOption){
+            case ALL:
+                for (CustomRule r : this.symptomList){
+                    this.ruleList.add(new RuleToDisplay(r, ReqType.SYMPTOM));
+                }
 
-        for (CustomRule r : this.rfcList){
-            this.ruleList.add(new RuleToDisplay(r, ReqType.RFC));
-        }
+                for (CustomRule r : this.rfcList){
+                    this.ruleList.add(new RuleToDisplay(r, ReqType.RFC));
+                }
 
-        for (CustomRule r : this.actionList){
-            this.ruleList.add(new RuleToDisplay(r, ReqType.ACTION));
+                for (CustomRule r : this.actionList){
+                    this.ruleList.add(new RuleToDisplay(r, ReqType.ACTION));
+                }
+
+                for (CustomRule r : this.policyList){
+                    this.ruleList.add(new RuleToDisplay(r, ReqType.POLICY));
+                }
+                break;
+            case SYMPTOMS:
+                for (CustomRule r : this.symptomList){
+                    this.ruleList.add(new RuleToDisplay(r, ReqType.SYMPTOM));
+                }
+                break;
+            case RFCS:
+                for (CustomRule r : this.rfcList){
+                    this.ruleList.add(new RuleToDisplay(r, ReqType.RFC));
+                }
+                break;
+            case ACTIONS:
+                for (CustomRule r : this.actionList){
+                    this.ruleList.add(new RuleToDisplay(r, ReqType.ACTION));
+                }
+                break;
+            case POLICIES:
+                for (CustomRule r : this.policyList){
+                    this.ruleList.add(new RuleToDisplay(r, ReqType.POLICY));
+                }
+                break;
         }
 
         // update the UI

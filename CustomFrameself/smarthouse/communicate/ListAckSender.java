@@ -14,6 +14,8 @@ import org.drools.definition.rule.Rule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import frameself.analyzer.AnalyzerManager;
+import frameself.format.Policy;
+import frameself.knowledge.KnowledgeManager;
 import frameself.monitor.MonitorManager;
 import frameself.planner.PlannerManager;
 import toulouse.insa.smartcontrol.communicate.CustomRule;
@@ -93,6 +95,13 @@ public class ListAckSender {
 				}
 			}
 			break;
+		case POLICY:
+			ArrayList<Policy> policies = KnowledgeManager.getPolicies();
+			System.out.println("Policy size: " + policies.size());
+			for (Policy p : policies){
+				System.err.println(p.toString() + "/" + p.getName());
+				resultList.add(new CustomRule(p.getName(), null, p.getName()));
+			}
 		default:
 			break;
 		}

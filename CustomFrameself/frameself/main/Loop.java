@@ -55,7 +55,6 @@ public class Loop implements Runnable
 			}
 			catch (InterruptedException localInterruptedException) {}
 			loopNumber--;
-			System.out.println("totototo");
 		}
 
 		if (Admin.useGUI)
