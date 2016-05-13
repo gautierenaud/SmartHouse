@@ -16,7 +16,6 @@ import launcher.Launcher;
 import order.Order;
 import order.RuleFrameself;
 import order.Order.OrderType;
-import order.RuleGenerator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
