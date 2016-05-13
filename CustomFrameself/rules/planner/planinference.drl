@@ -1,41 +1,26 @@
 import frameself.format.*;
-import java.util.ArrayList;
 import java.util.Date;
+import frameself.house.*;
 
-rule "add SwitchLampOn"
+rule "add SwitchOnLights"
     when
-       Rfc(category == "IncreaseLight")
-    then 
-		ArrayList<Attribute> attributes = new ArrayList<Attribute>();
-		attributes.add(new Attribute("state","true"));
-		Action action = new Action();
-		action.setCategory("Switch");
-		action.setName("SwitchLampOn");
-		action.setAttributes(attributes);
-		action.setEffector(new Effector("Lamp")); 
-		action.setTimestamp(new Date());
-		insert(action);
-		Action action2 = new Action();
-		action2.setCategory("Electricity");
-		action2.setName("ElectricityOff");
-		action2.setAttributes(attributes);
-		action2.setEffector(new Effector("Switch"));
-		action2.setTimestamp(new Date());
-		insert(action2);
+       Event($id: id, category == "HousePerson",  $value: value)  
+    then
+      Symptom symptom = new Symptom();
+		symptom.setCategory("PersonInsideHouse");
+		symptom.setValue($value);
+		symptom.setTimestamp(new Date());
+		symptom.setExpiry(new Date(System.currentTimeMillis()+4000));
+      insert(symptom);  
 end
 
-rule "add SwitchLampOff"
-	when
-		Rfc(category == "Decrease Light")
-		Policy(name == "EnergyEfficiency")
-	then
-		ArrayList<Attribute> attributes = new ArrayList<Attribute>();
-		attributes.add(new Attribute("request", "false"));
-		Action action = new Action();
-		action.setCategory("Switch");
-		action.setName("SwitchLampOff");
-		action.setAttributes(attributes);
-		action.setEffector(new Effector("Lamp"));
-		action.setTimestamp(new Date());
-		insert(action);
+rule "add SwitchOffLights"
+    when
+       Event($id: id, category == "HouseEmpty")  
+    then
+      Symptom symptom = new Symptom();
+		symptom.setCategory("NoPersonInsideHouse");
+		symptom.setTimestamp(new Date());
+		symptom.setExpiry(new Date(System.currentTimeMillis()+4000));
+      insert(symptom);  
 end

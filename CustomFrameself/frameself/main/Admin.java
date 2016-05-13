@@ -29,6 +29,10 @@ public class Admin
 	static int loopCounter = 0;
 
 	public static void main(String[] args) {
+		if(args.length>0)
+		{
+			useGUI = true;
+		}
 		new Admin();
 	}
 

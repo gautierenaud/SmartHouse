@@ -245,3 +245,5 @@ public class ThreadFrameself implements Runnable, Observer
 		}
 	}
 }
+
+//RFID : 
