@@ -87,13 +87,14 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/policy_list"
                     android:layout_below="@id/policy_container"
-                    android:layout_centerHorizontal="true" android:visibility="invisible"/>
+                    android:layout_centerHorizontal="true" android:visibility="gone"
+                    android:choiceMode="singleChoice" android:drawSelectorOnTop="false"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_below="@+id/policy_container"
+                    android:layout_below="@+id/policy_list"
                     android:id="@+id/trigger_title_container">
 
                     <TextView
