@@ -176,10 +176,6 @@ public class ListAllRules extends AppCompatActivity
                 updateAdapter();
             }
         }else if (id == R.id.nav_vocal) {
-        } else if (id == R.id.nav_settings) {
-            openSettings();
-        } else if (id == R.id.nav_refresh) {
-            sender.sendAllReq();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

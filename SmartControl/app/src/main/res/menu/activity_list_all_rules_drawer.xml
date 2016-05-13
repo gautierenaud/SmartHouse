@@ -12,16 +12,12 @@
             android:title="Actions" />
         <item android:id="@+id/nav_policies" android:icon="@drawable/ic_menu_manage"
             android:title="Policies" />
-        <item android:id="@+id/nav_vocal" android:icon="@drawable/ic_menu_manage"
-              android:title="Vocal" />
     </group>
 
     <item android:title="Others">
         <menu>
-            <item android:id="@+id/nav_settings" android:icon="@drawable/ic_menu_manage"
-                android:title="Settings"/>
-            <item android:id="@+id/nav_refresh" android:icon="@drawable/ic_menu_refresh"
-                  android:title="Refresh" />
+            <item android:id="@+id/nav_vocal" android:icon="@drawable/ic_menu_manage"
+                  android:title="Vocal Command" />
         </menu>
     </item>
 
