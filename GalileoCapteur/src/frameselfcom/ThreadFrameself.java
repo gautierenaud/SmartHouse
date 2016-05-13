@@ -34,6 +34,8 @@ public class ThreadFrameself implements Runnable, Observer
 	private static final String categoryHousePerson = "HousePerson";
 	private static final String categoryHouseEmpty = "HouseEmpty";
 	private static final String categoryProgramEnds = "ProgramEnds";
+	private static final String categoryIR = "IRSensor";
+	private static final String categoryPressure = "PressureSensor";
 	private static final int houseTimeout = 20000;
 	private Thread thread_dispatcher;
 	private static final int timeoutThreadDispatcher = 5000;
@@ -71,7 +73,10 @@ public class ThreadFrameself implements Runnable, Observer
     				}
     			}
     		}
-    		
+    		System.out.println("IR : " + IFK.getMaxInfrared());
+    		System.out.println("Pressure : " + IFK.getMaxPressure());
+    		collframeself.sendEvent(categoryIR, String.valueOf(IFK.getMaxInfrared()), houseTimeout);
+    		collframeself.sendEvent(categoryPressure, String.valueOf(IFK.getMaxPressure()), houseTimeout);
 	    	try {
 				Thread.sleep(sleep_time);
 			} catch (InterruptedException e) {
