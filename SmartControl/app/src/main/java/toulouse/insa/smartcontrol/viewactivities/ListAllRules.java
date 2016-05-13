@@ -133,6 +133,10 @@ public class ListAllRules extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            openSettings();
+            return true;
+        } else if (id == R.id.action_refresh){
+            sender.sendAllReq();
             return true;
         }
 
@@ -171,6 +175,7 @@ public class ListAllRules extends AppCompatActivity
                 this.displayOption = DisplayOption.POLICIES;
                 updateAdapter();
             }
+        }else if (id == R.id.nav_vocal) {
         } else if (id == R.id.nav_settings) {
             openSettings();
         } else if (id == R.id.nav_refresh) {

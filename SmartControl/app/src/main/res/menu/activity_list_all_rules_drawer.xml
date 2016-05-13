@@ -12,6 +12,8 @@
             android:title="Actions" />
         <item android:id="@+id/nav_policies" android:icon="@drawable/ic_menu_manage"
             android:title="Policies" />
+        <item android:id="@+id/nav_vocal" android:icon="@drawable/ic_menu_manage"
+              android:title="Vocal" />
     </group>
 
     <item android:title="Others">
