@@ -1,27 +1,26 @@
 package order;
 
-import java.util.ArrayList;
-
 public class Order 
 {
 	public enum OrderType {START, STOP, ADDRULE};
 	OrderType orderType;
-	ArrayList<RuleFrameself> rules;
+	RuleFrameself rule;
 	
 	private Order()
 	{
 		
 	}
 	
+	public Order(RuleFrameself rule)
+	{
+		this.orderType = OrderType.ADDRULE;
+		this.rule = rule;
+	}
+	
 	public Order(OrderType orderType)
 	{
 		this.orderType = orderType;
-		this.rules = new ArrayList<RuleFrameself>();
-	}
-	
-	public void addRule(RuleFrameself rule)
-	{
-		this.rules.add(rule);
+		this.rule = null;
 	}
 	
 	public OrderType getOrderType()
@@ -29,8 +28,8 @@ public class Order
 		return this.orderType;
 	}
 	
-	public ArrayList<RuleFrameself> getRules()
+	public RuleFrameself getRule()
 	{
-		return this.rules;
+		return this.rule;
 	}
 }

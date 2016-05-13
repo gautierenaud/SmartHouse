@@ -142,10 +142,10 @@ public class ServerAndroid implements Runnable {
 				else if(order.getOrderType() == OrderType.ADDRULE)
 				{
 					System.out.println("Order received : ADDRULE.");
-					ArrayList<RuleFrameself> rules = order.getRules();
-					if(rules.isEmpty())
+					RuleFrameself rule = order.getRule();
+					if(rule == null)
 					{
-						System.out.println("No rules found.");
+						System.out.println("No rule found.");
 					}
 					else
 					{
@@ -171,27 +171,21 @@ public class ServerAndroid implements Runnable {
 						{
 							System.out.println("Couldn't create backup. Rules won't be added.");
 						}
-						
-						System.out.println("Adding " +  rules.size() + " new rules...");
-						
-						for(RuleFrameself rule : rules)
+						System.out.println("Adding " + rule.getRuleName() + "...");
+						try 
 						{
-							System.out.println("Adding " + rule.getRuleName() + "...");
-							try 
-							{
-							    Files.write(Paths.get("rules/planner/planinference.drl"), RuleGenerator.generateRule(rule), StandardOpenOption.APPEND);
+						    Files.write(Paths.get("rules/planner/planinference.drl"), rule.generateRule(), StandardOpenOption.APPEND);
+						}
+						catch (IOException e) {
+							added = false;
+							try {
+								Files.deleteIfExists(Paths.get("rules/planner/planinference.drl"));
+								Files.copy(Paths.get("rules/planner/.planinference.drl.backup"), Paths.get("rules/planner/planinference.drl"));
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
 							}
-							catch (IOException e) {
-								added = false;
-								try {
-									Files.deleteIfExists(Paths.get("rules/planner/planinference.drl"));
-									Files.copy(Paths.get("rules/planner/.planinference.drl.backup"), Paths.get("rules/planner/planinference.drl"));
-								} catch (IOException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
-							    System.out.println("Couldn't add all rules, file restored.");
-							}
+						    System.out.println("Couldn't add all rules, file restored.");
 						}
 						if(added)
 						{

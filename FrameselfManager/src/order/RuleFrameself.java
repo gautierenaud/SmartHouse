@@ -7,18 +7,18 @@ public class RuleFrameself {
 	private String ruleName;
 	private ArrayList<String> rfcIDs;
 	private String category;
-	private String actionName;
+	private ArrayList<String> actions;
 	
 	private RuleFrameself()
 	{
 		
 	}
 	
-	public RuleFrameself(String ruleName, String category, String actionName)
+	public RuleFrameself(String ruleName, String category)
 	{
 		this.ruleName = ruleName;
 		this.category = category;
-		this.actionName = actionName;
+		this.actions = new ArrayList<String>();
 		this.rfcIDs = new ArrayList<String>();
 	}
 	
@@ -32,6 +32,11 @@ public class RuleFrameself {
 		this.rfcIDs.add(RfcID);
 	}
 	
+	public void addAction(String action)
+	{
+		this.actions.add(action);
+	}
+	
 	public ArrayList<String> getRfcIDs()
 	{
 		return this.rfcIDs;
@@ -42,10 +47,34 @@ public class RuleFrameself {
 		return this.category;
 	}
 	
-	public String getActionName()
+	public ArrayList<String> getActions()
 	{
-		return this.actionName;
+		return this.actions;
 	}
 	
-
+	public byte[] generateRule()
+	{
+		String data = "\nrule \"" + this.getRuleName() + "\"\n";
+		data += "\twhen\n";
+		for(String RfcID : this.getRfcIDs())
+		{
+			data += "\t\tRfc(id == \"" + RfcID + "\")\n";
+		}
+		data += "\tthen\n";
+		int i = 0;
+		for(String action : this.getActions())
+		{
+			data += "\t\tArrayList<Attribute> attributes" + i + " = new ArrayList<Attribute>();\n";
+			data += "\t\tattributes" + i + ".add(new Attribute(\"state\",\"false\"));\n";
+			data += "\t\tAction action" + i + " = new Action();\n";
+			data += "\t\taction" + i + ".setCategory(\"" + this.getCategory() + "\");\n";
+			data += "\t\taction" + i + ".setName(\"" + action + "\");\n";
+			data += "\t\taction" + i + ".setAttributes(attributes" + i + ");\n";
+			data += "\t\taction" + i + ".setTimestamp(new Date());\n";
+			data += "\t\tinsert(action" + i + ");\n";
+			i++;
+		}
+		data += "end\n";
+		return data.getBytes();
+	}
 }
