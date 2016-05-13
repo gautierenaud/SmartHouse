@@ -33,7 +33,26 @@ public class IFKitSensorChangeListener implements SensorChangeListener{
 	    	if(indexInput<IFK.ifk_analog_Count)
 	    	{
 		    	int value = sensorChangeEvent.getValue();
-		    	this.analog_Input[indexInput] = value;
+		    	synchronized(this.analog_Input)
+		    	{
+		    		this.analog_Input[indexInput] = value;
+		    	}
+		    	if(indexInput==0) //pressure
+		    	{
+		    		int maxPressure = IFK.getMaxPressure();
+		    		if(value > maxPressure)
+		    		{
+		    			IFK.setMaxPressure(value);
+		    		}
+		    	}
+		    	else if(indexInput==1) //IR
+		    	{
+		    		int maxIR = IFK.getMaxInfrared();
+		    		if(value > maxIR)
+		    		{
+		    			IFK.setMaxInfrared(value);
+		    		}
+		    	}
 		    	System.out.println("Analog input " + indexInput + " changed : " + value);
 	    	}
 	    	else

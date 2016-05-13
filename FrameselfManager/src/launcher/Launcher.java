@@ -5,7 +5,7 @@ import java.io.IOException;
 public class Launcher implements Runnable {
 
 	private Process proc;
-	private final String command = "java -jar frameself.jar";
+	private final String command = "java -jar frameself.jar arg";
 
 	public void start()
 	{

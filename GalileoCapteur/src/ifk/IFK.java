@@ -18,13 +18,16 @@ public class IFK  {
     private IFKitInputChangeListener ifk_input_listener;
     private IFKitOutputChangeListener ifk_output_listener;
     private IFKitSensorChangeListener ifk_sensor_listener;
-    
+    private static Integer maxPressure;
+    private static Integer maxInfrared;
     
     public IFK() 
     {
     	ifk_digital_Output = new boolean[ifk_digital_Count];
     	ifk_digital_Input = new boolean[ifk_digital_Count];
     	ifk_analog_Input = new int[ifk_analog_Count];
+    	maxInfrared = 0;
+    	maxPressure = 0;
     	for(int i=0;i<ifk_digital_Count;i++)
     	{
     		ifk_digital_Output[i] = false;
@@ -63,6 +66,38 @@ public class IFK  {
     public boolean[] getDigitalOutputs()
     {
     	return this.ifk_digital_Output;
+    }
+    
+    public static int getMaxInfrared()
+    {
+    	synchronized(maxInfrared)
+    	{
+    		return maxInfrared;
+    	}
+    }
+    
+    public static int getMaxPressure()
+    {
+    	synchronized(maxPressure)
+    	{
+    		return maxPressure;
+    	}
+    }
+    
+    public static void setMaxInfrared(int v)
+    {
+    	synchronized(maxInfrared)
+    	{
+    		maxInfrared = v;
+    	}
+    }
+    
+    public static void setMaxPressure(int v)
+    {
+    	synchronized(maxPressure)
+    	{
+    		maxPressure = v;
+    	}
     }
     
     public void dispose() {
