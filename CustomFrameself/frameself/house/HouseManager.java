@@ -39,4 +39,21 @@ public class HouseManager
 	{
 		return personsInside.contains(person);
 	}
+	
+	public int numberPersonsInside()
+	{
+		return this.personsInside.size();
+	}
+	
+	public void updatePersonsHouse(String person)
+	{
+		if(!this.isPersonInside(person))
+		{
+			this.addPerson(person);
+		}	
+		else
+		{
+			this.removePerson(person);
+		}
+	}
 }
