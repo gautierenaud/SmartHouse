@@ -33,10 +33,7 @@ public class CreateRule extends AppCompatActivity {
         this.setTitle("Create New Rule");
 
         mEditTitle = (EditText) findViewById(R.id.edit_title);
-        mEditTrigger = (EditText) findViewById(R.id.edit_trigger);
-        mEditAction = (EditText) findViewById(R.id.edit_action);
-        mPolicyCheck = (CheckBox) findViewById(R.id.policy_check);
-        mPolicyList = (ExpandableListView) findViewById(R.id.policy_list);
+        mPolicyList = (ExpandableListView) 
     }
 
     public void CommitRule(View view){

@@ -1,4 +1,6 @@
-package order;
+package server;
+
+import order.RuleFrameself;
 
 public class RuleGenerator {
 
