@@ -31,11 +31,6 @@ public class ThreadFrameself implements Runnable, Observer
 	private IFK ifk;
 	private RFID rfid;
 	private int sleep_time;
-	private static final String categoryHousePerson = "HousePerson";
-	private static final String categoryHouseEmpty = "HouseEmpty";
-	private static final String categoryProgramEnds = "ProgramEnds";
-	private static final String categoryIR = "IRSensor";
-	private static final String categoryPressure = "PressureSensor";
 	private static final int houseTimeout = 20000;
 	private Thread thread_dispatcher;
 	private static final int timeoutThreadDispatcher = 5000;
@@ -57,26 +52,48 @@ public class ThreadFrameself implements Runnable, Observer
     
 	public void run()
     {
+		System.out.println("Initializing thread...");
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	ArrayList<String> rfid_saved_tags = new ArrayList<String>();
+    	IFK.setMaxPressure(0);
+		IFK.setMaxInfrared(0);
+		System.out.println("Thread initialized.");
     	while(running_thread)
     	{
     		synchronized(rfid_present_tags)
     		{
-    			if(rfid_present_tags.isEmpty())
+    			ArrayList<String> rfid_tosend_tags = new ArrayList<String>();
+    			ArrayList<String> rfid_temp_tags = new ArrayList<String>();
+    			rfid_temp_tags.addAll(rfid_present_tags);
+    			rfid_temp_tags.removeAll(rfid_saved_tags);
+    			rfid_tosend_tags.addAll(rfid_temp_tags);
+    			rfid_temp_tags.clear();
+    			rfid_temp_tags.addAll(rfid_saved_tags);
+    			rfid_temp_tags.removeAll(rfid_present_tags);
+    			rfid_tosend_tags.addAll(rfid_temp_tags);
+    			for(String tag : rfid_tosend_tags)
     			{
-    				collframeself.sendEvent(categoryHouseEmpty, houseTimeout);
+    				collframeself.sendEvent("RFID", tag, houseTimeout);
     			}
-    			else
-    			{
-    				for(String id_person : rfid_present_tags)
-    				{
-    					collframeself.sendEvent(categoryHousePerson, id_person, houseTimeout);
-    				}
-    			}
+    			rfid_saved_tags.clear();
+        		rfid_saved_tags.addAll(rfid_present_tags);
     		}
-    		System.out.println("IR : " + IFK.getMaxInfrared());
-    		System.out.println("Pressure : " + IFK.getMaxPressure());
-    		collframeself.sendEvent(categoryIR, String.valueOf(IFK.getMaxInfrared()), houseTimeout);
-    		collframeself.sendEvent(categoryPressure, String.valueOf(IFK.getMaxPressure()), houseTimeout);
+    		if(IFK.getMaxInfrared() > 100)
+    		{
+    			collframeself.sendEvent("IR", String.valueOf(IFK.getMaxInfrared()), houseTimeout);
+    		}
+    		
+    		if(IFK.getMaxPressure() > 100)
+    		{
+    			collframeself.sendEvent("Pressure", String.valueOf(IFK.getMaxPressure()), houseTimeout);
+    		}
+    		IFK.setMaxPressure(0);
+    		IFK.setMaxInfrared(0);
 	    	try {
 				Thread.sleep(sleep_time);
 			} catch (InterruptedException e) {

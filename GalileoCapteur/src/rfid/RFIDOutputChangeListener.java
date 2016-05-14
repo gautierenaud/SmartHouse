@@ -16,7 +16,7 @@ public class RFIDOutputChangeListener implements OutputChangeListener{
 
 	public void outputChanged(OutputChangeEvent oe)
 	{
-		System.out.println(oe);
+		//System.out.println(oe);
 	}
     
 }

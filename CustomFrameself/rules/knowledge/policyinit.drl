@@ -4,5 +4,7 @@ rule "Init Policies"
 	when
     then
  	   insert(new Policy("EnergyEfficiency"));
- 	   insert(new Policy("UseEnergy"));
+		insert(new Policy("UseEnergy"));
+		insert(new Policy("SecurityMode"));
+		insert(new Policy("FreeMode"));
 end
