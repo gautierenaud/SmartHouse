@@ -1,17 +1,12 @@
 package server;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-
 import launcher.Launcher;
 import order.Order;
 import order.RuleFrameself;
@@ -19,7 +14,13 @@ import order.Order.OrderType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ServerAndroid implements Runnable {
+/**
+ *
+ * This Class will manage both incoming messages from Android and the control of the Launcher Class
+ *  
+**/
+
+public class ServerAndroid extends Thread {
 
 	private DatagramSocket socket;
 	private int port;
@@ -39,7 +40,6 @@ public class ServerAndroid implements Runnable {
 	public void close()
 	{
 		socket.close();
-		
 	}
 	
 	public void stopRunning()
@@ -57,12 +57,12 @@ public class ServerAndroid implements Runnable {
 		}
 	}
 	
-	public Order receive() throws SocketException
-	{
+	public Order receive() throws SocketException{
 		byte[] msgBuffer = new byte['Ѐ'];
 	    DatagramPacket packet = new DatagramPacket(msgBuffer, msgBuffer.length);
 	    try {
 			this.socket.receive(packet);
+			System.out.println("packet received!");
 		} catch (IOException e) {
 			if(!e.getMessage().equals("Socket closed"))
 			{
@@ -106,106 +106,11 @@ public class ServerAndroid implements Runnable {
 		while(thread_running)
 		{
 			try {
+				// wait for an order and treat it
 				Order order = this.receive();
+				treatMessage(order);
 				
-				if(order.getOrderType() == OrderType.START)
-				{
-					System.out.println("Order received : START.");
-					if(!thread_frameselfApplication.isAlive())
-					{
-						thread_frameselfApplication = new Thread(launcher);
-						thread_frameselfApplication.start();
-					}
-					else
-					{
-						System.out.println("Application already started.");
-					}
-				}
-				else if(order.getOrderType() == OrderType.STOP)
-				{
-					System.out.println("Order received : STOP.");
-					if(thread_frameselfApplication.isAlive())
-					{
-						launcher.stop();
-						try {
-							thread_frameselfApplication.join();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					else
-					{
-						System.out.println("Application already stopped.");
-					}
-				}
-				else if(order.getOrderType() == OrderType.ADDRULE)
-				{
-					System.out.println("Order received : ADDRULE.");
-					RuleFrameself rule = order.getRule();
-					if(rule == null)
-					{
-						System.out.println("No rule found.");
-					}
-					else
-					{
-						boolean addRule = false;
-						boolean restoreBackup = false;
-						boolean added = true;
-						if(thread_frameselfApplication.isAlive())
-						{
-							System.out.println("Stopping frameself...");
-							launcher.stop();
-							try {
-								thread_frameselfApplication.join();
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-						System.out.println("Creating backup...");
-						try
-						{
-							Files.copy(Paths.get("rules/planner/planinference.drl"), Paths.get("rules/planner/.planinference.drl.backup"));
-						} catch (IOException e1) 
-						{
-							System.out.println("Couldn't create backup. Rules won't be added.");
-						}
-						System.out.println("Adding " + rule.getRuleName() + "...");
-						try 
-						{
-						    Files.write(Paths.get("rules/planner/planinference.drl"), rule.generateRule(), StandardOpenOption.APPEND);
-						}
-						catch (IOException e) {
-							added = false;
-							try {
-								Files.deleteIfExists(Paths.get("rules/planner/planinference.drl"));
-								Files.copy(Paths.get("rules/planner/.planinference.drl.backup"), Paths.get("rules/planner/planinference.drl"));
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						    System.out.println("Couldn't add all rules, file restored.");
-						}
-						if(added)
-						{
-							System.out.println("Rules correctly added.");
-							try {
-								Files.deleteIfExists(Paths.get("rules/planner/.planinference.drl.backup"));
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							System.out.println("Backup deleted.");
-						}
-						System.out.println("Restarting frameself...");
-						thread_frameselfApplication = new Thread(launcher);
-						thread_frameselfApplication.start();
-					}
-					//launcher.addRule();
-				}
 			} catch (SocketException e) {
-				// TODO Auto-generated catch block
 				if(!thread_running)
 				{
 					System.out.println("Socket closed.");
@@ -217,15 +122,112 @@ public class ServerAndroid implements Runnable {
 			}
 			catch(NullPointerException e)
 			{
-				if(!ctrlcharError)
-				{
+				if(!ctrlcharError){
 					e.printStackTrace();
-				}
-				else
-				{
+				}else{
 					ctrlcharError = false;
 				}
 			}
 		}	
+	}
+
+	private void treatMessage(Order order) {
+		
+		if(order.getOrderType() == OrderType.START)
+		{
+			System.out.println("Order received : START.");
+			if(!thread_frameselfApplication.isAlive())
+			{
+				thread_frameselfApplication = new Thread(launcher);
+				thread_frameselfApplication.start();
+			}
+			else
+			{
+				System.out.println("Application already started.");
+			}
+		}
+		else if(order.getOrderType() == OrderType.STOP)
+		{
+			System.out.println("Order received : STOP.");
+			if(thread_frameselfApplication.isAlive())
+			{
+				launcher.stop();
+				try {
+					thread_frameselfApplication.join();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else
+			{
+				System.out.println("Application already stopped.");
+			}
+		}
+		else if(order.getOrderType() == OrderType.ADDRULE)
+		{
+			System.out.println("Order received : ADDRULE.");
+			RuleFrameself rule = order.getRule();
+			if(rule == null)
+			{
+				System.out.println("No rule found.");
+			}
+			else
+			{
+				boolean addRule = false;
+				boolean restoreBackup = false;
+				boolean added = true;
+				if(thread_frameselfApplication.isAlive())
+				{
+					System.out.println("Stopping frameself...");
+					launcher.stop();
+					try {
+						thread_frameselfApplication.join();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				System.out.println("Creating backup...");
+				try
+				{
+					Files.copy(Paths.get("rules/planner/planinference.drl"), Paths.get("rules/planner/.planinference.drl.backup"));
+				} catch (IOException e1) 
+				{
+					System.out.println("Couldn't create backup. Rules won't be added.");
+				}
+				System.out.println("Adding " + rule.getRuleName() + "...");
+				try 
+				{
+				    Files.write(Paths.get("rules/planner/planinference.drl"), rule.generateRule(), StandardOpenOption.APPEND);
+				}
+				catch (IOException e) {
+					added = false;
+					try {
+						Files.deleteIfExists(Paths.get("rules/planner/planinference.drl"));
+						Files.copy(Paths.get("rules/planner/.planinference.drl.backup"), Paths.get("rules/planner/planinference.drl"));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				    System.out.println("Couldn't add all rules, file restored.");
+				}
+				if(added)
+				{
+					System.out.println("Rules correctly added.");
+					try {
+						Files.deleteIfExists(Paths.get("rules/planner/.planinference.drl.backup"));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.out.println("Backup deleted.");
+				}
+				System.out.println("Restarting frameself...");
+				thread_frameselfApplication = new Thread(launcher);
+				thread_frameselfApplication.start();
+			}
+			//launcher.addRule();
+		}
 	}
 }

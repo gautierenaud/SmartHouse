@@ -1,17 +1,9 @@
 package server;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-
 import frameself.Dispatcher;
 import frameself.format.Action;
-public class ServerDispatch implements Runnable {
+public class ServerDispatch extends Thread {
 
 	private DatagramSocket socket;
 	private boolean thread_running;
@@ -34,8 +26,7 @@ public class ServerDispatch implements Runnable {
 		this.thread_running = false;
 	}
 	
-	public void close()
-	{
+	public void close(){
 		dispatcher.close();
 	}
 	

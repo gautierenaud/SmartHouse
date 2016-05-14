@@ -10,12 +10,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import order.Order;
+import order.OrderSender;
 import toulouse.insa.smartcontrol.R;
 import toulouse.insa.smartcontrol.params.Parameters;
 
 public class ChangeParams extends AppCompatActivity {
 
     private EditText frameselfIP;
+    private OrderSender orderSender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,9 @@ public class ChangeParams extends AppCompatActivity {
 
             }
         });
+
+        // create and start the order sender
+        this.orderSender = new OrderSender();
     }
 
     public void SetNewFrameselfIP(View view){
@@ -57,6 +63,14 @@ public class ChangeParams extends AppCompatActivity {
             int duration = Toast.LENGTH_SHORT;
             Toast.makeText(context, text, duration).show();
         }
+    }
+
+    public void sendStart(View view){
+        this.orderSender.orderQueue.add(new Order(Order.OrderType.START));
+    }
+
+    public void sendStop(View view){
+        this.orderSender.orderQueue.add(new Order(Order.OrderType.STOP));
     }
 
     // check if string is a valid ip

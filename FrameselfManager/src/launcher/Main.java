@@ -11,17 +11,21 @@ public class Main {
 	 * ipSendAction (actionner)
 	 * portSendAction (actionner)
 	 * portGetAction (frameself)
+	 * gui (enable frameself's gui or not)
 	 */
 	public static void main(String[] args) 
 	{
+		Launcher launcher;
+		if (args.length == 5)
+			launcher = new Launcher(args[4]);
+		else
+			launcher = new Launcher();
 		
-		Launcher launcher = new Launcher();
 		ServerAndroid serverAndroid = new ServerAndroid(launcher, Integer.parseInt(args[0]));
+		serverAndroid.start();
+		
 		ServerDispatch serverDispatch = new ServerDispatch(args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]));
-		Thread thread_serverAndroid = new Thread(serverAndroid);
-		Thread thread_serverDispatch = new Thread(serverDispatch);
-		thread_serverAndroid.start();	
-		thread_serverDispatch.start();
+		serverDispatch.start();
 		
 		try {
 			System.in.read();
@@ -36,7 +40,7 @@ public class Main {
 		serverDispatch.close();
 		
 		try {
-			thread_serverAndroid.join();
+			serverAndroid.join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

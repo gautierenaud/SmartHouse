@@ -5,8 +5,15 @@ import java.io.IOException;
 public class Launcher implements Runnable {
 
 	private Process proc;
-	private final String command = "java -jar frameself.jar gui";
+	private String command = "java -jar SmartFrameself.jar";
 
+	public Launcher (String gui) {
+		command += " " + gui;
+	}
+	
+	public Launcher () {
+	}
+	
 	public void start()
 	{
 		try {
@@ -27,15 +34,14 @@ public class Launcher implements Runnable {
 	
 	public void waitForProcEnd()
 	{
-		
 		try {
 			System.out.println("Waiting for application to finish...");
-			proc.waitFor();
+			int returnVal = proc.waitFor();
+			System.out.println("Application exited with code: " + returnVal);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 
 	@Override
