@@ -28,7 +28,7 @@ rule "SwitchOnLEDInAction"
     then 
    	   ArrayList<Attribute> attributesLED = new ArrayList<Attribute>();
    	   attributesLED.add(new Attribute("state", "false"));
-   	   attributesLED.add(new Attribute("text", "Bonjour" + $value));
+   	   attributesLED.add(new Attribute("text", "Bon" + $value));
    	   Action actionLED = new Action();
    	   actionLED.setCategory("LED");
    	   actionLED.setName("setText");

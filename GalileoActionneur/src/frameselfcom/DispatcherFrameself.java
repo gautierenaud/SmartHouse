@@ -65,6 +65,7 @@ public class DispatcherFrameself implements Runnable
 	@Override
 	public void run() 
 	{
+		System.out.println("Thread started.");
 		while(this.thread_running)
 		{
 			try
@@ -72,17 +73,19 @@ public class DispatcherFrameself implements Runnable
 				Action action = dispatcher.receive();
 				String actionName = action.getName();
 				String actionCategory = action.getCategory();
-				
+				System.out.println(actionName + " received.");
 				if(actionCategory.equals("LED"))
 				{
 					if(actionName.equals("setText"))
 					{
+						System.out.println("It is a setText.");
 						String text = "";
 						for(Attribute attribute : action.getAttributes())
 						{
 							if(attribute.getName().equals("text"))
 							{
 								text = attribute.getValue();
+								System.out.println(text);
 								break;
 							}
 						}
@@ -93,19 +96,21 @@ public class DispatcherFrameself implements Runnable
 						}
 						else
 						{
+							System.out.println("Writing...");
 							tabLED.set_text(text, 10, 0);
 							serialcom.write(tabLED.toByte());
 							action.setResult("true");
 							action.setError("No error");
 						}
 						dispatcher.send(action);
-						System.out.println(text);
+						
 					}
 				}
 				else if(actionCategory.equals("Phillips"))
 				{
 					if(actionName.equals("changeColor"))
 					{
+						System.out.println("It is a changeColor.");
 						int red = -1;
 						int green = -1;
 						int blue = -1;
@@ -156,5 +161,6 @@ public class DispatcherFrameself implements Runnable
 				break;
 			}
 		}
+		System.out.println("Thread finished.");
 	}
 }
