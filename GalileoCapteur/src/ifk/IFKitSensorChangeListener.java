@@ -53,7 +53,7 @@ public class IFKitSensorChangeListener implements SensorChangeListener{
 		    			IFK.setMaxInfrared(value);
 		    		}
 		    	}
-		    	System.out.println("Analog input " + indexInput + " changed : " + value);
+		    	//System.out.println("Analog input " + indexInput + " changed : " + value);
 	    	}
 	    	else
 	    	{

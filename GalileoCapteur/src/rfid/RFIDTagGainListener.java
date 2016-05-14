@@ -16,8 +16,6 @@ public class RFIDTagGainListener extends Observable implements TagGainListener {
 	{
 		this.setChanged();
 		this.notifyObservers(oe);
-		//lala=(RFIDPhidget)oe.getSource();
-		//MyCollector.sendEvent();
 	}
     
 }

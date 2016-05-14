@@ -34,7 +34,7 @@ public class IFKitOutputChangeListener implements OutputChangeListener{
 		    	{
 		    		this.digital_Output[indexInput] = value;
 		    	}
-		    	System.out.println("Digital output " + indexInput + " changed : " + value);
+		    	//System.out.println("Digital output " + indexInput + " changed : " + value);
 		    	
 	    	}
 	    	else

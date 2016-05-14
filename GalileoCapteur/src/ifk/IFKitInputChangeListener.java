@@ -30,7 +30,7 @@ public class IFKitInputChangeListener implements InputChangeListener
 	    	{
 		    	boolean value = inputChangeEvent.getState();
 		    	this.digital_Input[indexInput] = value;
-		    	System.out.println("Digital input " + indexInput + " changed : " + value);
+		    	//System.out.println("Digital input " + indexInput + " changed : " + value);
 	    	}
 	    	else
 	    	{
