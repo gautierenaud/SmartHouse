@@ -1,0 +1,52 @@
+import frameself.format.*;
+import java.util.Date;
+import frameself.house.*;
+
+rule "RFIDTagSymptom"
+	when
+		Event(category == "RFID" , $value: value)
+	then
+		HouseManager houseManager = HouseManager.getInstance();
+		boolean stateEmptyHouseBefore = houseManager.isHouseEmpty();
+		int numberPersonsInsideBefore = houseManager.numberPersonsInside();
+		houseManager.updatePersonsHouse($value);
+		boolean stateEmptyHouseNow = houseManager.isHouseEmpty();
+		int numberPersonsInsideNow = houseManager.numberPersonsInside();
+		
+		if(stateEmptyHouseNow && !stateEmptyHouseBefore)
+		{
+			Symptom symptom = new Symptom();
+			symptom.setCategory("HouseState:Empty");
+			symptom.setTimestamp(new Date());
+			symptom.setExpiry(new Date(System.currentTimeMillis() + 4000));
+			insert(symptom);
+		}
+		else if(!stateEmptyHouseNow && stateEmptyHouseBefore)
+		{
+			Symptom symptom = new Symptom();
+			symptom.setCategory("HouseState:NotEmpty");
+			symptom.setTimestamp(new Date());
+			symptom.setExpiry(new Date(System.currentTimeMillis() + 4000));
+			insert(symptom);
+		}
+		
+		if(numberPersonsInsideNow > numberPersonsInsideBefore)
+		{
+			Symptom symptom = new Symptom();
+			symptom.setCategory("HouseState:PersonIn");
+			symptom.setValue($value);
+			symptom.setTimestamp(new Date());
+			symptom.setExpiry(new Date(System.currentTimeMillis() + 4000));
+			insert(symptom);
+		}
+		else if(numberPersonsInsideNow < numberPersonsInsideBefore && !stateEmptyHouseNow)
+		{
+			Symptom symptom = new Symptom();
+			symptom.setCategory("HouseState:PersonOut");
+			symptom.setValue($value);
+			symptom.setTimestamp(new Date());
+			symptom.setExpiry(new Date(System.currentTimeMillis() + 4000));
+			insert(symptom);
+		}
+end
+

@@ -39,42 +39,6 @@ public class ServerDispatch implements Runnable {
 		dispatcher.close();
 	}
 	
-	private byte[] serialize(Object obj) throws java.io.IOException 
-	{
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		ObjectOutputStream os = new ObjectOutputStream(out);
-		os.writeObject(obj);
-		return out.toByteArray();
-	}
-		
-	private void send(String remoteIP, Action a)
-	{
-		try 
-		{
-			DatagramSocket clientSocket = new DatagramSocket();
-			InetAddress IPAddress = InetAddress.getByAddress(remoteIP.getBytes());
-			byte[] sendData = serialize(a);
-			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 8000);
-			clientSocket.send(sendPacket);
-			clientSocket.close();
-		} 
-		catch (SocketException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		catch (UnknownHostException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		catch (IOException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-	}
-	
 	@Override
 	public void run()
 	{
@@ -84,10 +48,21 @@ public class ServerDispatch implements Runnable {
 			{
 				Action action = dispatcher.receive();
 				String actionName = action.getName();
+				String actionCategory = action.getCategory();
 				System.out.println("Dispatching " + actionName + "...");
-				if(actionName.equals("SwitchLampOff") || actionName.equals("SwitchLampOn"))
+				if(actionCategory.equals("LED"))
 				{
-					dispatcher.send(action);
+					if(actionName.equals("setText"))
+					{
+						dispatcher.send(action);
+					}
+				}
+				else if(actionCategory.equals("Phillips"))
+				{
+					if(actionName.equals("changeColor"))
+					{
+						dispatcher.send(action);
+					}
 				}
 			}
 			catch(NullPointerException e)

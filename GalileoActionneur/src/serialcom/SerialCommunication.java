@@ -66,7 +66,7 @@ public class SerialCommunication
 		}
 		catch(NoSuchPortException ex)
 		{
-			System.out.println("NoSuchPortException : first execute command 'sudo ln -s /dev/ACM[X] /dev/ttyS8[X]'");
+			System.out.println("NoSuchPortException : first execute command 'sudo ln -s /dev/ttyACM[X] /dev/ttyS8[X]'");
 		}
     }
 	

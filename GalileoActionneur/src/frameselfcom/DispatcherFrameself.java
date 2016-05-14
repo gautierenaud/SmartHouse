@@ -1,8 +1,11 @@
 package frameselfcom;
+import java.util.ArrayList;
+
 import actionneurs.TableauLED;
 import actionneurs.Tableau_led;
 import frameself.Dispatcher;
 import frameself.format.Action;
+import frameself.format.Attribute;
 import serialcom.*;
 
 public class DispatcherFrameself implements Runnable 
@@ -40,8 +43,23 @@ public class DispatcherFrameself implements Runnable
 	
 	public void dispose()
 	{
-		serialcom.close();
-		dispatcher.close();
+		try
+		{
+			serialcom.close();
+		}
+		catch(NullPointerException e)
+		{
+			
+		}
+		
+		try
+		{
+			dispatcher.close();
+		}
+		catch(NullPointerException e)
+		{
+			
+		}
 	}
 	
 	@Override
@@ -53,40 +71,84 @@ public class DispatcherFrameself implements Runnable
 			{
 				Action action = dispatcher.receive();
 				String actionName = action.getName();
-				if(actionName.equals("SwitchLampOn")) //displaybonjour
+				String actionCategory = action.getCategory();
+				
+				if(actionCategory.equals("LED"))
 				{
-					if(!tabLedStr.equals("Bonjour"))
+					if(actionName.equals("setText"))
 					{
-						tabLED.set_text("bonjour", 10, 0);
-						serialcom.write(tabLED.toByte());
-						tabLedStr = "Bonjour";
-						action.setResult("true");
-						action.setError("No error");
-					}
-					else
-					{
-						action.setResult("false");
-						action.setError(tabLedStr + " is already being displayed.");
+						String text = "";
+						for(Attribute attribute : action.getAttributes())
+						{
+							if(attribute.getName().equals("text"))
+							{
+								text = attribute.getValue();
+								break;
+							}
+						}
+						if(text.equals(""))
+						{
+							action.setResult("false");
+							action.setError("Couldn't find attribute 'text'");
+						}
+						else
+						{
+							tabLED.set_text(text, 10, 0);
+							serialcom.write(tabLED.toByte());
+							action.setResult("true");
+							action.setError("No error");
+						}
+						dispatcher.send(action);
+						System.out.println(text);
 					}
 				}
-				else if(actionName.equals("SwitchLampOff"))
+				else if(actionCategory.equals("Phillips"))
 				{
-					if(!tabLedStr.equals(""))
+					if(actionName.equals("changeColor"))
 					{
-						int[][] buffer = TableauLED.nulle;
-						serialcom.write(buffer);
-						tabLedStr = "";
-						action.setResult("true");
-						action.setError("No error");
-					}
-					else
-					{
-						action.setResult("false");
-						action.setError(tabLedStr + " is already being displayed.");
+						int red = -1;
+						int green = -1;
+						int blue = -1;
+						int brightness = -1;
+						for(Attribute attribute : action.getAttributes())
+						{
+							if(attribute.getName().equals("red"))
+							{
+								red = Integer.parseInt(attribute.getValue());
+							}
+							else if(attribute.getName().equals("green"))
+							{
+								green = Integer.parseInt(attribute.getValue());
+							}
+							if(attribute.getName().equals("blue"))
+							{
+								blue = Integer.parseInt(attribute.getValue());
+							}
+							else if(attribute.getName().equals("brightness"))
+							{
+								brightness = Integer.parseInt(attribute.getValue());
+							}
+							else if(red!=-1 && green!=-1 && blue!=-1 && brightness!=-1)
+							{
+								break;
+							}
+						}
+						if(red!=-1 && green!=-1 && blue!=-1 && brightness!=-1)
+						{
+							//allumer lampe
+							System.out.println("Change color : r=" + red + "; g=" + green + "; b=" + blue + "; br=" + brightness);
+							action.setResult("true");
+							action.setError("No error");
+						}
+						else
+						{
+							action.setResult("false");
+							action.setError("Couldn't find all attributes to change color lamp");
+						}
+						dispatcher.send(action);
+						
 					}
 				}
-				System.out.println(action.getName()+" excuted");
-				dispatcher.send(action);
 			}
 			catch(NullPointerException e)
 			{

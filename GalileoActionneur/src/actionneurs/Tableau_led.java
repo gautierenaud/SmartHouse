@@ -210,9 +210,9 @@ public class Tableau_led {
 				mon_string[ligne] += "1";
 			}
 		}
-		System.out.println("********** Mon tableau nettoyage ***********");
-		Lettres_pixels.afficher_tableau_string(mon_string);
-		System.out.println("********************************************");
+		//System.out.println("********** Mon tableau nettoyage ***********");
+		//Lettres_pixels.afficher_tableau_string(mon_string);
+		//System.out.println("********************************************");
 		return mon_string;
 	}
 
