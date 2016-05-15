@@ -8,6 +8,7 @@ public class RuleFrameself {
 	private ArrayList<String> rfcIDs;
 	private String category;
 	private ArrayList<String> actions;
+	private String policy;
 	
 	private RuleFrameself()
 	{
@@ -60,6 +61,8 @@ public class RuleFrameself {
 		{
 			data += "\t\tRfc(id == \"" + RfcID + "\")\n";
 		}
+		if (policy != null)
+			data += "\t\tPolicy(id == \"" + policy + "\")\n";
 		data += "\tthen\n";
 		int i = 0;
 		for(String action : this.getActions())
@@ -76,5 +79,13 @@ public class RuleFrameself {
 		}
 		data += "end\n";
 		return data.getBytes();
+	}
+
+	public String getPolicy() {
+		return policy;
+	}
+
+	public void setPolicy(String policy) {
+		this.policy = policy;
 	}
 }

@@ -15,7 +15,7 @@ public class Main {
 	public static void main(String[] args) 
 	{
 		
-		Launcher launcher = new Launcher();
+		Launcher launcher = new Launcher(args.length == 5);
 		ServerAndroid serverAndroid = new ServerAndroid(launcher, Integer.parseInt(args[0]));
 		ServerDispatch serverDispatch = new ServerDispatch(args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]));
 		Thread thread_serverAndroid = new Thread(serverAndroid);

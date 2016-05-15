@@ -5,7 +5,13 @@ import java.io.IOException;
 public class Launcher implements Runnable {
 
 	private Process proc;
-	private final String command = "java -jar frameself.jar gui";
+	private String command = "java -jar frameself.jar";
+	private boolean gui;
+	
+	public Launcher(boolean gui){
+		this.gui = gui;
+		this.command += this.gui ? " gui" : "";
+	}
 
 	public void start()
 	{
