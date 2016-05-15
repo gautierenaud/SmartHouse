@@ -1,0 +1,90 @@
+import frameself.format.*;
+import java.util.Date;
+import java.util.ArrayList;
+
+
+rule "SwitchOnLightsAction"
+    when
+       Rfc(category == "SwitchOnLights")
+    then 
+   	   ArrayList<Attribute> attributesLight = new ArrayList<Attribute>();
+   	   attributesLight.add(new Attribute("state", "false"));
+   	   attributesLight.add(new Attribute("red", "127"));
+   	   attributesLight.add(new Attribute("green", "127"));
+   	   attributesLight.add(new Attribute("blue", "127"));
+   	   attributesLight.add(new Attribute("brightness", "127"));
+   	   Action actionLight = new Action();
+   	   actionLight.setCategory("Phillips");
+   	   actionLight.setName("changeColor");
+   	   actionLight.setAttributes(attributesLight);
+   	   actionLight.setEffector(new Effector("PhillipsLamp")); 
+   	   actionLight.setTimestamp(new Date());
+       insert(actionLight);
+end
+
+rule "SwitchOnLEDInAction"
+    when
+       Rfc(category == "SwitchOnLEDIn", $value: value)
+    then 
+   	   ArrayList<Attribute> attributesLED = new ArrayList<Attribute>();
+   	   attributesLED.add(new Attribute("state", "false"));
+   	   attributesLED.add(new Attribute("text", "Bon" + $value));
+   	   Action actionLED = new Action();
+   	   actionLED.setCategory("LED");
+   	   actionLED.setName("setText");
+   	   actionLED.setAttributes(attributesLED);
+   	   actionLED.setEffector(new Effector("TableauLED")); 
+   	   actionLED.setTimestamp(new Date());
+       insert(actionLED);
+end
+
+rule "SwitchOnLEDOutAction"
+    when
+       Rfc(category == "SwitchOnLEDOut", $value: value)
+    then 
+   	   ArrayList<Attribute> attributesLED = new ArrayList<Attribute>();
+   	   attributesLED.add(new Attribute("state", "false"));
+   	   attributesLED.add(new Attribute("text", "Au revoir" + $value));
+   	   Action actionLED = new Action();
+   	   actionLED.setCategory("LED");
+   	   actionLED.setName("setText");
+   	   actionLED.setAttributes(attributesLED);
+   	   actionLED.setEffector(new Effector("TableauLED")); 
+   	   actionLED.setTimestamp(new Date());
+       insert(actionLED);
+end
+
+rule "SwitchOffLightsAction"
+    when
+       Rfc(category == "SwitchOffLights")
+    then 
+   	   ArrayList<Attribute> attributesLight = new ArrayList<Attribute>();
+   	   attributesLight.add(new Attribute("state", "false"));
+   	   attributesLight.add(new Attribute("red", "0"));
+   	   attributesLight.add(new Attribute("green", "0"));
+   	   attributesLight.add(new Attribute("blue", "0"));
+   	   attributesLight.add(new Attribute("brightness", "0"));
+   	   Action actionLight = new Action();
+   	   actionLight.setCategory("Phillips");
+   	   actionLight.setName("changeColor");
+   	   actionLight.setAttributes(attributesLight);
+   	   actionLight.setEffector(new Effector("PhillipsLamp")); 
+   	   actionLight.setTimestamp(new Date());
+       insert(actionLight);
+end
+
+rule "SwitchOffLEDAction"
+    when
+       Rfc(category == "SwitchOffLED")
+    then 
+   	   ArrayList<Attribute> attributesLED = new ArrayList<Attribute>();
+   	   attributesLED.add(new Attribute("state", "false"));
+   	   attributesLED.add(new Attribute("text", ""));
+   	   Action actionLED = new Action();
+   	   actionLED.setCategory("LED");
+   	   actionLED.setName("setText");
+   	   actionLED.setAttributes(attributesLED);
+   	   actionLED.setEffector(new Effector("TableauLED")); 
+   	   actionLED.setTimestamp(new Date());
+       insert(actionLED);
+end

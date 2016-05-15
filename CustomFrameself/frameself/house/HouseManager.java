@@ -45,11 +45,8 @@ public class HouseManager
 		return this.personsInside.size();
 	}
 	
-	public String updatePersonsInHouse(String person)
+	public void updatePersonsHouse(String person)
 	{
-		HouseManager houseManager = HouseManager.getInstance();
-		boolean stateEmptyHouseBefore = houseManager.isHouseEmpty();
-		int numberPersonsInsideBefore = houseManager.numberPersonsInside();
 		if(!this.isPersonInside(person))
 		{
 			this.addPerson(person);
@@ -58,25 +55,5 @@ public class HouseManager
 		{
 			this.removePerson(person);
 		}
-		boolean stateEmptyHouseNow = houseManager.isHouseEmpty();
-		int numberPersonsInsideNow = houseManager.numberPersonsInside();	
-		if(stateEmptyHouseNow && !stateEmptyHouseBefore)
-		{
-			return "HouseState:Empty";
-		}
-		else if(!stateEmptyHouseNow && stateEmptyHouseBefore)
-		{
-			return "HouseState:NotEmpty";
-		}
-		
-		if(numberPersonsInsideNow > numberPersonsInsideBefore)
-		{
-			return "HouseState:PersonIn";
-		}
-		else if(numberPersonsInsideNow < numberPersonsInsideBefore && !stateEmptyHouseNow)
-		{
-			return "HouseState:PersonOut";
-		}
-		return "";
 	}
 }

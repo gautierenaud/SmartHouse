@@ -7,7 +7,7 @@ import frameselfcom.ThreadFrameself;
 public class Main 
 {
 
-	private final static int sleep_time = 3000; //ms
+	private final static int sleep_time = 1000; //ms
 	private final static int threadFrameselfTimeout = 5*sleep_time;
 	/*param :
 	 * ipEvent (frameself)
