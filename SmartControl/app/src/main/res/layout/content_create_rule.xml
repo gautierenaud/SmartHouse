@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:paddingBottom="@dimen/activity_vertical_margin"
+	android:paddingLeft="@dimen/activity_horizontal_margin"
+	android:paddingRight="@dimen/activity_horizontal_margin"
+	android:paddingTop="@dimen/activity_vertical_margin"
+	app:layout_behavior="@string/appbar_scrolling_view_behavior"
+	tools:context="toulouse.insa.smartcontrol.createRule.CreateRule"
+	tools:showIn="@layout/activity_create_rule">
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/scrollView">
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent" android:padding="5dp">
+
+			<TextView
+				android:id="@+id/show_title"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Title of the Rule"
+				android:textSize="15dp"/>
+
+			<EditText
+				android:id="@+id/edit_title"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/show_title"
+				android:hint="Title of this rule"
+				android:textSize="15dp"/>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="5dp"
+				android:id="@+id/policy_container"
+				android:layout_below="@+id/edit_title">
+
+				<TextView
+					android:id="@+id/policy_title"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Policy"
+					android:textSize="15dp"/>
+
+				<View android:layout_width="0dp"
+				      android:layout_height="0dp"
+				      android:layout_weight="1"/>
+
+				<CheckBox
+					android:id="@+id/policy_check"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+				/>
+
+			</LinearLayout>
+
+			<ExpandableListView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/policy_list"
+				android:layout_below="@id/policy_container"
+				android:layout_centerHorizontal="true" android:visibility="gone"
+				android:choiceMode="singleChoice" android:drawSelectorOnTop="false"/>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:layout_below="@+id/policy_list"
+				android:id="@+id/trigger_title_container">
+
+				<TextView
+					android:id="@+id/show_trigger"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Triggers"
+					android:textSize="15dp"/>
+
+				<View android:layout_width="0dp"
+				      android:layout_height="0dp"
+				      android:layout_weight="1"/>
+
+				<Button
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/btn_add_trigger"
+					android:text="add"
+					android:onClick="addTriggerSpinner"/>
+
+			</LinearLayout>
+
+			<android.support.v7.widget.RecyclerView
+				android:id="@+id/trigger_recycler_view"
+				android:layout_below="@+id/trigger_title_container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"></android.support.v7.widget.RecyclerView>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:layout_below="@+id/trigger_recycler_view"
+				android:id="@+id/action_title_container">
+
+				<TextView
+					android:id="@+id/show_action"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Actions"
+					android:textSize="15dp"/>
+
+				<View android:layout_width="0dp"
+				      android:layout_height="0dp"
+				      android:layout_weight="1"/>
+
+				<Button android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="add" android:onClick="addActionSpinner"/>
+
+			</LinearLayout>
+
+			<android.support.v7.widget.RecyclerView
+				android:id="@+id/action_recycler_view"
+				android:layout_below="@+id/action_title_container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"></android.support.v7.widget.RecyclerView>
+
+			<Button
+				android:id="@+id/create_rule"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/action_recycler_view"
+				android:text="Create"
+				android:onClick="commitRule"/>
+
+		</RelativeLayout>
+	</ScrollView>
+
+</RelativeLayout>
