@@ -32,7 +32,22 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<CustomViewHolder> {
         RuleToDisplay tmpRule = mRuleList.get(position);
 
         holder.titleView.setText(tmpRule.getTitle());
-        holder.categoryView.setText(tmpRule.getRuleType().toString());
+        String title = "";
+        switch (tmpRule.getRuleType()){
+            case RFC:
+                title = "Symptom to Rfc";
+                break;
+            case SYMPTOM:
+                title = "Event to Symptom";
+                break;
+            case ACTION:
+                title = "Rfc to Action";
+                break;
+            case POLICY:
+                title = "Policy";
+                break;
+        }
+        holder.categoryView.setText(title);
     }
 
     @Override

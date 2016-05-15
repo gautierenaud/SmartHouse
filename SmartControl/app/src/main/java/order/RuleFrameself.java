@@ -8,12 +8,13 @@ public class RuleFrameself {
 	private ArrayList<String> rfcIDs;
 	private String category;
 	private ArrayList<String> actions;
-	
+	private String policy;
+
 	private RuleFrameself()
 	{
-		
+
 	}
-	
+
 	public RuleFrameself(String ruleName, String category)
 	{
 		this.ruleName = ruleName;
@@ -21,37 +22,37 @@ public class RuleFrameself {
 		this.actions = new ArrayList<String>();
 		this.rfcIDs = new ArrayList<String>();
 	}
-	
+
 	public String getRuleName()
 	{
 		return this.ruleName;
 	}
-	
+
 	public void addRfcID(String RfcID)
 	{
 		this.rfcIDs.add(RfcID);
 	}
-	
+
 	public void addAction(String action)
 	{
 		this.actions.add(action);
 	}
-	
+
 	public ArrayList<String> getRfcIDs()
 	{
 		return this.rfcIDs;
 	}
-	
+
 	public String getCategory()
 	{
 		return this.category;
 	}
-	
+
 	public ArrayList<String> getActions()
 	{
 		return this.actions;
 	}
-	
+
 	public byte[] generateRule()
 	{
 		String data = "\nrule \"" + this.getRuleName() + "\"\n";
@@ -60,6 +61,8 @@ public class RuleFrameself {
 		{
 			data += "\t\tRfc(id == \"" + RfcID + "\")\n";
 		}
+		if (policy != null)
+			data += "\t\tPolicy(name == \"" + policy + "\")\n";
 		data += "\tthen\n";
 		int i = 0;
 		for(String action : this.getActions())
@@ -76,5 +79,13 @@ public class RuleFrameself {
 		}
 		data += "end\n";
 		return data.getBytes();
+	}
+
+	public String getPolicy() {
+		return policy;
+	}
+
+	public void setPolicy(String policy) {
+		this.policy = policy;
 	}
 }

@@ -5,11 +5,11 @@
         <item android:id="@+id/nav_all" android:icon="@drawable/ic_menu_camera"
               android:title="All" />
         <item android:id="@+id/nav_symptoms" android:icon="@drawable/ic_menu_camera"
-            android:title="Symptoms" />
+            android:title="Monitor" />
         <item android:id="@+id/nav_rfcs" android:icon="@drawable/ic_menu_gallery"
-            android:title="Rfcs" />
+            android:title="Analyzer" />
         <item android:id="@+id/nav_actions" android:icon="@drawable/ic_menu_slideshow"
-            android:title="Actions" />
+            android:title="Planner" />
         <item android:id="@+id/nav_policies" android:icon="@drawable/ic_menu_manage"
             android:title="Policies" />
     </group>

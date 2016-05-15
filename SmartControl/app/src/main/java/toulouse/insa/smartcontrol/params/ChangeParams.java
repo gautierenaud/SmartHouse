@@ -28,6 +28,8 @@ public class ChangeParams extends AppCompatActivity {
         frameselfIP = (EditText) findViewById(R.id.param_frameself_ip_value);
         frameselfIP.setText(Parameters.getFrameselfAddress());
 
+        setTitle("Parameters");
+
         frameselfIP.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
