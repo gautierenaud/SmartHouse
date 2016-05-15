@@ -71,11 +71,12 @@ public class CreateRule extends AppCompatActivity {
         ArrayList<String> headers = new ArrayList<>();
         headers.add("Choose Policy");
         // init the child items from the Policies from the stored policy list
-        HashMap<String, List<String>> childs = new HashMap<>();
-        ArrayList<String> childItems = getChilds();
-        childs.put(headers.get(0), childItems);
+        HashMap<String, List<String>> children = new HashMap<>();
+        ArrayList<String> childItems = getChildren();
+        System.out.println(childItems.size());
+        children.put(headers.get(0), childItems);
 
-        policyViewAdapter = new TriggerExpandableListAdapter(this, headers, childs);
+        policyViewAdapter = new PolicyExpandableListAdapter(this, headers, children);
         mPolicyList.setAdapter(policyViewAdapter);
         mPolicyList.setOnChildClickListener(new ExpandableListView.OnChildClickListener(){
 
@@ -110,7 +111,7 @@ public class CreateRule extends AppCompatActivity {
     }
 
     @NonNull
-    private ArrayList<String> getChilds() {
+    private ArrayList<String> getChildren() {
         ArrayList<String> childItems = new ArrayList<>();
         ArrayList<CustomRule> policies = StoreListFacade.getInstance().getPolicyList();
         for (CustomRule r : policies){
