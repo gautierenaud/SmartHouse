@@ -52,3 +52,13 @@ rule "HouseNotEmptyRfc"
 		insert(rfcLight);
 end
 
+rule "HouseIntruderRfc"
+	when
+		Symptom(category == "HouseState:Intruder")
+	then
+		Rfc rfcLight = new Rfc();
+		rfcLight.setCategory("SwitchOnLightsRed");
+		rfcLight.setTimestamp(new Date());
+		rfcLight.setExpiry(new Date(System.currentTimeMillis()+4000));
+		insert(rfcLight);
+end
