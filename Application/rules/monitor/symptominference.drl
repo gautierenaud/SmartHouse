@@ -18,6 +18,18 @@ rule "PersonAuthentified"
 		insert(symptom);
 end
 
+rule "VocalCommandRecognized"
+	when
+		Event(category == "VocalRecognition", $value: value)
+	then
+		Symptom symptom = new Symptom();
+		symptom.setCategory("CommandRecognized");
+		symptom.setValue($value);
+		symptom.setTimestamp(new Date());
+		symptom.setExpiry(new Date(System.currentTimeMillis() + 4000));
+		insert(symptom);
+end
+
 rule "PersonNotAuthentified"
 	when
 		(Event(category == "IR") or Event(category == "Pressure"))
