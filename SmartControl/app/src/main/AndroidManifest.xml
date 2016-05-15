@@ -22,8 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".createRule.CreateRule"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:name=".createRule.CreateRule"/>
         <activity android:name=".params.ChangeParams">
         </activity>
     </application>

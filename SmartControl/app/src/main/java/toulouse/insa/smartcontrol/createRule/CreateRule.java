@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -18,6 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
+import order.Order;
+import order.OrderSender;
+import order.RuleFrameself;
 import toulouse.insa.smartcontrol.ListValues.StoreListFacade;
 import toulouse.insa.smartcontrol.R;
 import toulouse.insa.smartcontrol.communicate.CustomRule;
@@ -108,6 +112,8 @@ public class CreateRule extends AppCompatActivity {
         this.actionRecyclerAdapter = new ActionRecyclerAdapter(this, this);
         actionRecyclerView.setAdapter(this.actionRecyclerAdapter);
         /** END OF TRIGGER SELECTION **/
+
+        new OrderSender();
     }
 
     @NonNull
@@ -121,6 +127,20 @@ public class CreateRule extends AppCompatActivity {
     }
 
     public void commitRule(View view){
+        EditText titleEdit = (EditText) view.getRootView().findViewById(R.id.edit_title);
+        String ruleTitle = titleEdit.getText().toString();
+        RuleFrameself ruleToSend = new RuleFrameself(ruleTitle, "UserDefined");
+
+        for (Pair<Integer, String> rfc : selectedTriggers){
+            ruleToSend.addRfcID(rfc.second);
+        }
+
+        for (Pair<Integer, String> action : selectedActions){
+            ruleToSend.addAction(action.second);
+        }
+
+        Order orderToSend = new Order(ruleToSend);
+        OrderSender.orderQueue.add(orderToSend);
         // ListAllRules.ruleList.add(new CustomRule(mEditTitle.getText().toString(), mEditTrigger.getText().toString(), mEditAction.getText().toString()));
         finish();
     }
