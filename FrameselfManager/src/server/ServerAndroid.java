@@ -1,16 +1,12 @@
 package server;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
 
 import launcher.Launcher;
 import order.Order;
@@ -149,8 +145,6 @@ public class ServerAndroid implements Runnable {
 					}
 					else
 					{
-						boolean addRule = false;
-						boolean restoreBackup = false;
 						boolean added = true;
 						if(thread_frameselfApplication.isAlive())
 						{

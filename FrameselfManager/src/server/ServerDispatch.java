@@ -1,32 +1,23 @@
 package server;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
 import frameself.Dispatcher;
 import frameself.format.Action;
-public class ServerDispatch implements Runnable {
+public abstract class ServerDispatch implements Runnable {
 
-	private DatagramSocket socket;
 	private boolean thread_running;
 	private Dispatcher dispatcher;
-	private String ipAddress;
-	private int sendPort;
-	private int listeningPort;
+	private String ipSource;
+	private int portFrom;
+	private int portTo;
 	
-	public ServerDispatch(String ipAddress, int portSend, int portListening)
+	public ServerDispatch(String ipSource, int portFrom, int portTo)
 	{
-		this.ipAddress = ipAddress;
-		this.sendPort = portSend;
-		this.listeningPort = portListening;
-		thread_running = true;
-		dispatcher = new Dispatcher(this.ipAddress,this.sendPort,this.listeningPort);
+		this.ipSource = ipSource;
+		this.portFrom = portFrom;
+		this.portTo = portTo;
+		this.thread_running = true;
+		this.dispatcher = new Dispatcher(this.ipSource ,this.portTo, this.portFrom);
 	}
 	
 	public void stopRunning()
@@ -34,36 +25,37 @@ public class ServerDispatch implements Runnable {
 		this.thread_running = false;
 	}
 	
+	
 	public void close()
 	{
 		dispatcher.close();
 	}
 	
+	public void sendAction(Action action)
+	{
+		try
+		{
+			dispatcher.send(action);
+			System.out.println("Action dispatched.");
+		}
+		catch(NullPointerException e)
+		{
+			
+		}
+	}
+	
+	public abstract void treatAction(Action action);
+	
 	@Override
-	public void run()
+	public final void run()
 	{
 		while(thread_running)
 		{
 			try
 			{
 				Action action = dispatcher.receive();
-				String actionName = action.getName();
-				String actionCategory = action.getCategory();
-				System.out.println("Dispatching " + actionName + "...");
-				if(actionCategory.equals("LED"))
-				{
-					if(actionName.equals("setText"))
-					{
-						dispatcher.send(action);
-					}
-				}
-				else if(actionCategory.equals("Phillips"))
-				{
-					if(actionName.equals("changeColor"))
-					{
-						dispatcher.send(action);
-					}
-				}
+				System.out.println("Dispatching " + action.getName() + "...");
+				treatAction(action);
 			}
 			catch(NullPointerException e)
 			{
@@ -75,6 +67,9 @@ public class ServerDispatch implements Runnable {
 				{
 					System.out.println("Dispatch server stopped.");
 				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
