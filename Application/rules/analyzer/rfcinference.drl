@@ -28,6 +28,7 @@ end
 rule "HouseEmptyRfc"
 	when
 		Symptom(category == "HouseState:Empty")
+		or Symptom(category == "VocalRecognition", value == "SwitchOff")
 	then
 		Rfc rfcLight = new Rfc();
 		rfcLight.setCategory("SwitchOffLights");
@@ -44,6 +45,7 @@ end
 rule "HouseNotEmptyRfc"
 	when
 		Symptom(category == "HouseState:NotEmpty")
+		or Symptom(category == "VocalRecognition", value == "SwitchOn")
 	then
 		Rfc rfcLight = new Rfc();
 		rfcLight.setCategory("SwitchOnLights");
@@ -52,3 +54,13 @@ rule "HouseNotEmptyRfc"
 		insert(rfcLight);
 end
 
+rule "HouseIntruderRfc"
+	when
+		Symptom(category == "HouseState:Intruder")
+	then
+		Rfc rfcLight = new Rfc();
+		rfcLight.setCategory("SwitchOnLightsRed");
+		rfcLight.setTimestamp(new Date());
+		rfcLight.setExpiry(new Date(System.currentTimeMillis()+4000));
+		insert(rfcLight);
+end
