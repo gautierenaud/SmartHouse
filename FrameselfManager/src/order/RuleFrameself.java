@@ -62,7 +62,7 @@ public class RuleFrameself {
 			data += "\t\tRfc(id == \"" + RfcID + "\")\n";
 		}
 		if (policy != null)
-			data += "\t\tPolicy(id == \"" + policy + "\")\n";
+			data += "\t\tPolicy(name == \"" + policy + "\")\n";
 		data += "\tthen\n";
 		int i = 0;
 		for(String action : this.getActions())

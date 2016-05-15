@@ -36,7 +36,8 @@ public class Launcher implements Runnable {
 		
 		try {
 			System.out.println("Waiting for application to finish...");
-			proc.waitFor();
+			int exitValue = proc.waitFor();
+			System.out.println("Application exited with code :" + exitValue);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
