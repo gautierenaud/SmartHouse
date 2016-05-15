@@ -25,7 +25,7 @@ public class Main {
 	public static void main(String[] args) 
 	{
 		
-		Launcher launcher = new Launcher(args.length == 8);
+		Launcher launcher = new Launcher(args.length == 7);
 		ServerFrameself serverFrameself = new ServerFrameself("127.0.0.1", Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 		ServerAndroid serverAndroid = new ServerAndroid(launcher, Integer.parseInt(args[2]));
 		ServerActionner serverActionner = new ServerActionner(args[3], Integer.parseInt(args[4]), Integer.parseInt(args[5]));
