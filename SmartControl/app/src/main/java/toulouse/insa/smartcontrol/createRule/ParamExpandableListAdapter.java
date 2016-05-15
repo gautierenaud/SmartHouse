@@ -1,4 +1,4 @@
-package toulouse.insa.smartcontrol.params;
+package toulouse.insa.smartcontrol.createRule;
 
 import android.content.Context;
 import android.graphics.Typeface;

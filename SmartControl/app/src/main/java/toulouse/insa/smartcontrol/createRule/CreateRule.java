@@ -1,9 +1,12 @@
-package toulouse.insa.smartcontrol.viewactivities;
+package toulouse.insa.smartcontrol.createRule;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -18,7 +21,6 @@ import java.util.List;
 import toulouse.insa.smartcontrol.ListValues.StoreListFacade;
 import toulouse.insa.smartcontrol.R;
 import toulouse.insa.smartcontrol.communicate.CustomRule;
-import toulouse.insa.smartcontrol.params.ParamExpandableListAdapter;
 
 public class CreateRule extends AppCompatActivity {
 
@@ -86,5 +88,13 @@ public class CreateRule extends AppCompatActivity {
     public void CommitRule(View view){
         // ListAllRules.ruleList.add(new CustomRule(mEditTitle.getText().toString(), mEditTrigger.getText().toString(), mEditAction.getText().toString()));
         finish();
+    }
+
+    public void AddTrigger(View view){
+        LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = vi.inflate(R.layout.param_rule_group, null);
+
+        ViewGroup insertPoint = (ViewGroup) findViewById(R.id.trigger_rule_container);
+        insertPoint.addView(v, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 }

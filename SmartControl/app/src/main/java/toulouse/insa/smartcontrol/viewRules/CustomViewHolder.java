@@ -1,4 +1,4 @@
-package toulouse.insa.smartcontrol.common;
+package toulouse.insa.smartcontrol.viewRules;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

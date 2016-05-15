@@ -1,4 +1,4 @@
-package toulouse.insa.smartcontrol.common;
+package toulouse.insa.smartcontrol.viewRules;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import toulouse.insa.smartcontrol.R;
-import toulouse.insa.smartcontrol.communicate.CustomRule;
 
 /**
  * Created by gautierenaud on 27/04/16.

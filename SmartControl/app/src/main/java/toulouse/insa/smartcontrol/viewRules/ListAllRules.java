@@ -1,4 +1,4 @@
-package toulouse.insa.smartcontrol.viewactivities;
+package toulouse.insa.smartcontrol.viewRules;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,13 +22,13 @@ import java.util.Observer;
 
 import toulouse.insa.smartcontrol.ListValues.StoreListFacade;
 import toulouse.insa.smartcontrol.R;
-import toulouse.insa.smartcontrol.common.MyRecyclerAdapter;
-import toulouse.insa.smartcontrol.common.RuleToDisplay;
 import toulouse.insa.smartcontrol.communicate.CustomRule;
 import toulouse.insa.smartcontrol.communicate.ListAckReceiver;
 import toulouse.insa.smartcontrol.communicate.ListReqSender;
 import toulouse.insa.smartcontrol.communicate.MultipurposeCollector;
 import toulouse.insa.smartcontrol.communicate.ReqType;
+import toulouse.insa.smartcontrol.createRule.CreateRule;
+import toulouse.insa.smartcontrol.params.ChangeParams;
 
 public class ListAllRules extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Observer {

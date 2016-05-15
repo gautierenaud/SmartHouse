@@ -1,4 +1,4 @@
-package toulouse.insa.smartcontrol.common;
+package toulouse.insa.smartcontrol.viewRules;
 
 import toulouse.insa.smartcontrol.communicate.CustomRule;
 import toulouse.insa.smartcontrol.communicate.ReqType;

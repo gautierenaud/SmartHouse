@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="toulouse.insa.smartcontrol.viewactivities.ChangeParams">
+    tools:context=".params.ChangeParams">
 
     <TextView
         android:id="@+id/param_frameself_ip_title"
@@ -18,6 +18,7 @@
         android:text="Frameself IP"
         android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,4 +34,23 @@
         android:onClick="SetNewFrameselfIP"
         android:layout_alignBottom="@+id/param_frameself_ip_value"
         android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
+
+    <Button
+        android:id="@+id/btn_send_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/param_frameself_ip_value"
+        android:text="Start Frameself"
+        android:onClick="sendStart"
+    />
+
+    <Button
+        android:id="@+id/btn_send_stop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_send_start"
+        android:text="Stop Frameself"
+        android:onClick="sendStop"
+    />
+
 </RelativeLayout>
