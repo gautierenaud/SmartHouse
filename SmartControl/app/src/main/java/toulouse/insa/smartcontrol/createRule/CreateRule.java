@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -45,13 +44,13 @@ public class CreateRule extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_rule);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(toolbar);
+        setTitle("Creating Rule");
 
-        selectedTriggers = new ArrayBlockingQueue<>(StoreListFacade.getInstance().getRfcList().size());
-        selectedActions = new ArrayBlockingQueue<>(StoreListFacade.getInstance().getActionList().size());
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        //setSupportActionBar(toolbar);
 
-        this.setTitle("Create New Rule");
+        selectedTriggers = new ArrayBlockingQueue<>(StoreListFacade.getInstance().getRfcList().size() > 0 ? StoreListFacade.getInstance().getRfcList().size() : 5);
+        selectedActions = new ArrayBlockingQueue<>(StoreListFacade.getInstance().getActionList().size() > 0 ? StoreListFacade.getInstance().getActionList().size() : 5);
 
         /** POLICY DISPLAY **/
         mPolicyCheck = (CheckBox) findViewById(R.id.policy_check);
