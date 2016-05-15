@@ -28,6 +28,7 @@ end
 rule "HouseEmptyRfc"
 	when
 		Symptom(category == "HouseState:Empty")
+		or Symptom(category == "VocalRecognition", value == "SwitchOff")
 	then
 		Rfc rfcLight = new Rfc();
 		rfcLight.setCategory("SwitchOffLights");
@@ -44,6 +45,7 @@ end
 rule "HouseNotEmptyRfc"
 	when
 		Symptom(category == "HouseState:NotEmpty")
+		or Symptom(category == "VocalRecognition", value == "SwitchOn")
 	then
 		Rfc rfcLight = new Rfc();
 		rfcLight.setCategory("SwitchOnLights");
