@@ -131,6 +131,11 @@ public class CreateRule extends AppCompatActivity {
         String ruleTitle = titleEdit.getText().toString();
         RuleFrameself ruleToSend = new RuleFrameself(ruleTitle, "UserDefined");
 
+        if (this.mPolicyCheck.isChecked()){
+            TextView policyChoice = (TextView) view.getRootView().findViewById(R.id.choice_result);
+            ruleToSend.setPolicy(policyChoice.getText().toString());
+        }
+
         for (Pair<Integer, String> rfc : selectedTriggers){
             ruleToSend.addRfcID(rfc.second);
         }
