@@ -28,6 +28,9 @@ public class Admin
 	public static boolean useGUI = false;
 	static int loopCounter = 0;
 
+	// handmade argument for sleeping sleepTime * seconds (1 sec by default)
+	public static int sleepTime = 1;
+
 	public static void main(String[] args) {
 		if(args.length>0)
 		{
