@@ -641,6 +641,7 @@ public class PhillipsLamp implements Runnable {
 		{
 			this.clignoter_rouge_auto(600);
 		}
+		System.out.println("Thread manager lamp finished.");
 	}
 	
 }

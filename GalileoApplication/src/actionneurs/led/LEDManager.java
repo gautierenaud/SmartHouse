@@ -39,7 +39,6 @@ public class LEDManager implements Runnable
 		while(thread_running)
 		{
 			String currentTab[] = new String[textab.length];
-			
 			for(int i=0;i<textab.length;i++)
 			{
 				if(x+21>limit)
@@ -75,16 +74,15 @@ public class LEDManager implements Runnable
 			{
 				x = 0;
 			}
-			try {
-				Thread.sleep(250);
-			} catch (InterruptedException e) {
+			try 
+			{
+				Thread.sleep(500);
+			} 
+			catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
+		System.out.println("Thread manager LED finished.");
 	}
-
-	
-	
 }

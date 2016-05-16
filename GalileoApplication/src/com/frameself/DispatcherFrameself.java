@@ -64,15 +64,37 @@ public class DispatcherFrameself implements Runnable
 		{
 			
 		}
+		System.out.println("Disposing...");
+		lamp.close();
+		if(thread_lamp!=null && thread_lamp.isAlive())
+		{
+			try
+			{
+				
+				thread_lamp.join();
+			}
+			catch(InterruptedException e)
+			{
+				
+			}
+			catch(NullPointerException e)
+			{
+				
+			}
+		}
+		ledManager.stopRunning();
+		if(thread_managerLED!=null && thread_lamp.isAlive())
+		{
+			try
+			{
+				thread_managerLED.join();
+			}
+			catch(InterruptedException e)
+			{
+				
+			}
+		}
 		
-		try
-		{
-			lamp.close();
-		}
-		catch(NullPointerException e)
-		{
-			
-		}
 	}
 	
 	public void stopRunning()
@@ -122,7 +144,7 @@ public class DispatcherFrameself implements Runnable
 						}
 						if(text.equals(""))
 						{
-							tabLED.set_text("", 0, 0);
+							tabLED.set_text(" ", 0, 0);
 							serialcom.write(tabLED.toByte());
 							action.setResult("true");
 							action.setError("No error");
@@ -190,6 +212,7 @@ public class DispatcherFrameself implements Runnable
 						}
 						else if(red!=-1 && green!=-1 && blue!=-1 && brightness!=-1)
 						{
+							lamp.set_etat_lampe_1(true);
 							System.out.println("Change color : r=" + red + "; g=" + green + "; b=" + blue + "; br=" + brightness);
 							lamp.changer_couleur(red, green, blue, brightness, 255, 1);
 							action.setResult("true");
@@ -228,6 +251,7 @@ public class DispatcherFrameself implements Runnable
 									
 								}
 							}
+							lamp.set_etat_lampe_1(true);
 							lamp.setColorType(ambiance);
 							thread_lamp = new Thread(lamp);
 							thread_lamp.start();
