@@ -30,10 +30,39 @@ public class SerialCommunication
 		}
 	}
 	
+    static String getPortTypeName ( int portType )
+    {
+        switch ( portType )
+        {
+            case CommPortIdentifier.PORT_I2C:
+                return "I2C";
+            case CommPortIdentifier.PORT_PARALLEL:
+                return "Parallel";
+            case CommPortIdentifier.PORT_RAW:
+                return "Raw";
+            case CommPortIdentifier.PORT_RS485:
+                return "RS485";
+            case CommPortIdentifier.PORT_SERIAL:
+                return "Serial";
+            default:
+                return "unknown type";
+        }
+    }
+
+    
 	void connect () throws Exception
     {
 		try
 		{
+	        java.util.Enumeration<CommPortIdentifier> portEnum = CommPortIdentifier.getPortIdentifiers();
+	        System.out.println("Wanted port: " + portName);
+	        System.out.println("Start.");
+	        while ( portEnum.hasMoreElements() ) 
+	        {
+	            CommPortIdentifier portIdentifier = portEnum.nextElement();
+	            System.out.println(portIdentifier.getName()  +  " - " +  getPortTypeName(portIdentifier.getPortType()) );
+	        }   
+	        System.out.println("Done.");
 			CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
 			if ( portIdentifier.isCurrentlyOwned() )
 	        {
@@ -49,7 +78,7 @@ public class SerialCommunication
 	                serialPort.setSerialPortParams(baudSpeed,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
 	                in = serialPort.getInputStream();
 	                out = serialPort.getOutputStream();
-	                System.out.println("Serial communication successfully opened.");
+	                //System.out.println("Serial communication successfully opened.");
 	            }
 	            else
 	            {
