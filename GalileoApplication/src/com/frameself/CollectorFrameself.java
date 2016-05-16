@@ -19,21 +19,23 @@ public class CollectorFrameself
 		collector = new Collector(this.ipAddress,this.port);
 	}
 
-	public void sendEvent(String category, int timeout)
+	public void sendEvent(String category, int priority, int timeout)
 	{
 		Event event = new Event();
 		event.setLocation(location);
 		event.setTimestamp(new Date());
+		event.setPriority(priority);
 		event.setCategory(category);
 		event.setExpiry(new Date(System.currentTimeMillis()+timeout));
 		collector.send(event);
 	}
 	
-	public void sendEvent(String category, String value, int timeout)
+	public void sendEvent(String category, String value, int priority, int timeout)
 	{
 		Event event = new Event();
 		event.setLocation(location);
 		event.setTimestamp(new Date());
+		event.setPriority(priority);
 		event.setCategory(category);
 		event.setValue(value);
 		event.setExpiry(new Date(System.currentTimeMillis()+timeout));

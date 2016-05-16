@@ -5,8 +5,8 @@ import frameself.house.*;
 rule "PersonAuthentified"
 	when
 		Event(category == "RFID" , $value: value)
-		and Event(category == "IR")
-		and Event(category == "Pressure")
+		and Event(category == "IR", priority == 1)
+		and Event(category == "Pressure", priority == 1)
 	then
 		HouseManager houseManager = HouseManager.getInstance();
 		String houseManagerCategory = houseManager.updatePersonsInHouse($value);
@@ -15,7 +15,13 @@ rule "PersonAuthentified"
 		symptom.setValue($value);
 		symptom.setTimestamp(new Date());
 		symptom.setExpiry(new Date(System.currentTimeMillis() + 4000));
+		String houseManagerCategory2 = houseManager.PersonInOrOut();
+		Symptom symptom2 = new Symptom();
+		symptom2.setCategory(houseManagerCategory2);
+		symptom2.setTimestamp(new Date());
+		symptom2.setExpiry(new Date(System.currentTimeMillis() + 4000));
 		insert(symptom);
+		insert(symptom2);
 end
 
 rule "VocalCommandRecognized"
@@ -32,7 +38,7 @@ end
 
 rule "PersonNotAuthentified"
 	when
-		(Event(category == "IR") or Event(category == "Pressure"))
+		(Event(category == "IR", priority == 0) or Event(category == "Pressure", priority == 0))
 	    and not (Event(category == "RFID"))
 	then
 		Symptom symptom = new Symptom();
@@ -41,3 +47,4 @@ rule "PersonNotAuthentified"
 		symptom.setExpiry(new Date(System.currentTimeMillis() + 4000));
 		insert(symptom);
 end
+

@@ -9,7 +9,7 @@ import org.json.*;
 // Bien sûr il sera possible de le changer pour faire des groupes/n'affecter que certaines lampes etc...
 
 
-public class PhillipsLamp {
+public class PhillipsLamp implements Runnable {
 
 	
 	public PhillipsLamp() 
@@ -24,7 +24,7 @@ public class PhillipsLamp {
 //=================================================================================
 //================================ VARIABLES ======================================
 //=================================================================================
-
+	String colorType;
 	String add_IP;
 	String mon_ID_user;
 	String url_racine;	// avant la connection
@@ -179,6 +179,12 @@ public class PhillipsLamp {
 //========================================================================================	
 //==================== UPDATE des parametres & Connexion =================================
 
+	
+	public void setColorType(String type)
+	{
+		this.colorType = type;
+	}
+	
 	/**
 	 * Permet de se connecter au Hue Bridge, et d'obtenir son @ip, et notre n° user
 	 */
@@ -610,6 +616,31 @@ public class PhillipsLamp {
 		}
 		//System.out.println(reponse);
 		return forme_json(reponse);
+	}
+
+	@Override
+	public void run() 
+	{
+		if(colorType.equals("love"))
+		{
+			this.set_ambiance_love(100, 600);
+		}
+		else if(colorType.equals("nature"))
+		{
+			this.set_ambiance_nature(100, 600);
+		}
+		else if(colorType.equals("optimism"))
+		{
+			this.set_ambiance_optimism(100, 600);
+		}
+		else if(colorType.equals("nature"))
+		{
+			this.set_ambiance_reveil_matin(100);
+		}
+		else if(colorType.equals("intruder"))
+		{
+			this.clignoter_rouge_auto(600);
+		}
 	}
 	
 }

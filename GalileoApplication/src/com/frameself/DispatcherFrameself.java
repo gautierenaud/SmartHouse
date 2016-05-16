@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 import com.serial.*;
 
-import actionneurs.led.TableauLED;
+import actionneurs.led.LEDManager;
 import actionneurs.led.Tableau_led;
 import actionneurs.phillips.PhillipsLamp;
 import frameself.Dispatcher;
@@ -22,24 +22,26 @@ public class DispatcherFrameself implements Runnable
 	private ThreadFrameself thread_frameself;
 	private String serialPortName;
 	private SerialCommunication serialcom;
-	private String portName;
 	private int baudSpeed;
 	private PhillipsLamp lamp;
 	private Tableau_led tabLED;
-
+	private Thread thread_managerLED;
+	private LEDManager ledManager;
+	private Thread thread_lamp;
+	
 	
 	public DispatcherFrameself(ThreadFrameself thread_frameself, String ipAddress, int sendPort, int listeningPort, String serialPortName, int baudSpeed)
 	{
+		this.serialPortName = serialPortName;
 		this.ipAddress = ipAddress;
 		this.thread_running = true;
 		this.thread_frameself = thread_frameself;
 		this.tabLED = new Tableau_led();
 		this.baudSpeed = baudSpeed;
-		this.serialPortName = serialPortName;
 		this.sendPort = sendPort;
 		this.listeningPort = listeningPort;
 		this.dispatcher = new Dispatcher(this.ipAddress,this.sendPort,this.listeningPort);
-		this.serialcom = new SerialCommunication(this.portName, this.baudSpeed);
+		this.serialcom = new SerialCommunication(this.serialPortName, this.baudSpeed);
 		this.lamp = new PhillipsLamp();
 	}
 	
@@ -84,10 +86,9 @@ public class DispatcherFrameself implements Runnable
 		{
 			this.lamp.se_connecter();
 			this.lamp.test_connexion();
-			System.out.println("Thread started.");
 			while(this.thread_running)
 			{
-
+				System.out.println("Receiving action...");
 				Action action = dispatcher.receive();
 				String actionName = action.getName();
 				String actionCategory = action.getCategory();
@@ -107,21 +108,34 @@ public class DispatcherFrameself implements Runnable
 								break;
 							}
 						}
+						if(thread_managerLED!=null && thread_managerLED.isAlive())
+						{
+							ledManager.stopRunning();
+							try
+							{
+								thread_managerLED.join();
+							}
+							catch(InterruptedException e)
+							{
+								
+							}
+						}
 						if(text.equals(""))
 						{
-							action.setResult("false");
-							action.setError("Couldn't find attribute 'text'");
-						}
-						else
-						{
-							System.out.println("Writing...");
-							tabLED.set_text(text, 10, 0);
+							tabLED.set_text("", 0, 0);
 							serialcom.write(tabLED.toByte());
 							action.setResult("true");
 							action.setError("No error");
 						}
-						dispatcher.send(action);
-						
+						else
+						{
+							System.out.println("Starting LEDManager...");
+							ledManager = new LEDManager(tabLED, text, this.serialcom);
+							thread_managerLED = new Thread(ledManager);
+							thread_managerLED.start();
+							action.setResult("true");
+							action.setError("No error");
+						}
 					}
 				}
 				else if(actionCategory.equals("Phillips"))
@@ -129,6 +143,18 @@ public class DispatcherFrameself implements Runnable
 					if(actionName.equals("changeColor"))
 					{
 						System.out.println("It is a changeColor.");
+						if(thread_lamp!=null && thread_lamp.isAlive())
+						{
+							lamp.close();
+							try
+							{
+								thread_lamp.join();
+							}
+							catch(InterruptedException e)
+							{
+								
+							}
+						}
 						int red = -1;
 						int green = -1;
 						int blue = -1;
@@ -156,25 +182,67 @@ public class DispatcherFrameself implements Runnable
 								break;
 							}
 						}
-						if(red!=-1 && green!=-1 && blue!=-1 && brightness!=-1)
+						if(red==0 && green ==0 && blue == 0 && brightness == 0)
 						{
-							//allumer lampe
+							lamp.set_etat_lampe_1(false);
+							action.setResult("true");
+							action.setError("No error");
+						}
+						else if(red!=-1 && green!=-1 && blue!=-1 && brightness!=-1)
+						{
 							System.out.println("Change color : r=" + red + "; g=" + green + "; b=" + blue + "; br=" + brightness);
-							//lamp.changer_couleur(200, 20, 20, 127, 250, 1);
-							//lamp.changer_couleur(red, green, blue, brightness, 250, 0);
-							lamp.set_ambiance_nature(100, 600);
+							lamp.changer_couleur(red, green, blue, brightness, 255, 1);
 							action.setResult("true");
 							action.setError("No error");
 						}
 						else
 						{
+							System.out.println("Couldn't find all attributes to change color lamp");
 							action.setResult("false");
 							action.setError("Couldn't find all attributes to change color lamp");
 						}
-						dispatcher.send(action);
 						
 					}
+					else if(actionName.equals("setAmbiance"))
+					{
+						String ambiance = "";
+						for(Attribute attribute : action.getAttributes())
+						{
+							if(attribute.getName().equals("ambiance"))
+							{
+								ambiance = attribute.getValue();
+								break;
+							}
+						}
+						if(!ambiance.equals(""))
+						{
+							if(thread_lamp!=null && thread_lamp.isAlive())
+							{
+								lamp.close();
+								try
+								{
+									thread_lamp.join();
+								}
+								catch(InterruptedException e)
+								{
+									
+								}
+							}
+							lamp.setColorType(ambiance);
+							thread_lamp = new Thread(lamp);
+							thread_lamp.start();
+							action.setResult("true");
+							action.setError("No error");
+						}
+						else
+						{
+							System.out.println("Couldn't find lamp ambiance.");
+							action.setResult("false");
+							action.setError("Couldn't find lamp ambiance.");
+						}
+					}
 				}
+				dispatcher.send(action);
 			}
 		}
 		catch(Exception e)

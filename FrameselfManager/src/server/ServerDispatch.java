@@ -11,13 +11,13 @@ public abstract class ServerDispatch implements Runnable {
 	private int portFrom;
 	private int portTo;
 	
-	public ServerDispatch(String ipSource, int portFrom, int portTo)
+	public ServerDispatch(String ipSource, int portTo, int portFrom)
 	{
 		this.ipSource = ipSource;
 		this.portFrom = portFrom;
 		this.portTo = portTo;
 		this.thread_running = true;
-		this.dispatcher = new Dispatcher(this.ipSource ,this.portTo, this.portFrom);
+		this.dispatcher = new Dispatcher(this.ipSource , this.portTo, this.portFrom);
 	}
 	
 	public void stopRunning()

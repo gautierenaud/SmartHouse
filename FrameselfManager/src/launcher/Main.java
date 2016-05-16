@@ -26,9 +26,9 @@ public class Main {
 	{
 		
 		Launcher launcher = new Launcher(args.length == 7);
-		ServerFrameself serverFrameself = new ServerFrameself("127.0.0.1", Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+		ServerFrameself serverFrameself = new ServerFrameself("127.0.0.1", Integer.parseInt(args[5]), Integer.parseInt(args[0]));
 		ServerAndroid serverAndroid = new ServerAndroid(launcher, Integer.parseInt(args[2]));
-		ServerActionner serverActionner = new ServerActionner(args[3], Integer.parseInt(args[4]), Integer.parseInt(args[5]));
+		ServerActionner serverActionner = new ServerActionner(args[3], Integer.parseInt(args[1]), Integer.parseInt(args[4]));
 		Thread thread_serverFrameself = new Thread(serverFrameself);
 		Thread thread_serverAndroid = new Thread(serverAndroid);
 		Thread thread_serverActionner = new Thread(serverActionner);

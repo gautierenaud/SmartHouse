@@ -76,6 +76,8 @@ public class ThreadFrameself implements Runnable, Observer
 		System.out.println("Frameself Thread initialized.");
     	while(running_thread)
     	{
+    		System.out.println("Acquiring data...");
+    		int priority=0;
     		synchronized(rfid_present_tags)
     		{
     			ArrayList<String> rfid_tosend_tags = new ArrayList<String>();
@@ -89,19 +91,23 @@ public class ThreadFrameself implements Runnable, Observer
     			rfid_tosend_tags.addAll(rfid_temp_tags);
     			for(String tag : rfid_tosend_tags)
     			{
-    				collframeself.sendEvent("RFID", tag, houseTimeout);
+    				collframeself.sendEvent("RFID", tag, 0, houseTimeout);
+    			}
+    			if(!rfid_tosend_tags.isEmpty())
+    			{
+    				priority = 1;
     			}
     			rfid_saved_tags.clear();
         		rfid_saved_tags.addAll(rfid_present_tags);
     		}
     		if(IFK.getMaxInfrared() > 100)
     		{
-    			collframeself.sendEvent("IR", String.valueOf(IFK.getMaxInfrared()), houseTimeout);
+    			collframeself.sendEvent("IR", String.valueOf(IFK.getMaxInfrared()), priority, houseTimeout);
     		}
     		
     		if(IFK.getMaxPressure() > 100)
     		{
-    			collframeself.sendEvent("Pressure", String.valueOf(IFK.getMaxPressure()), houseTimeout);
+    			collframeself.sendEvent("Pressure", String.valueOf(IFK.getMaxPressure()), priority, houseTimeout);
     		}
     		IFK.setMaxPressure(0);
     		IFK.setMaxInfrared(0);
@@ -122,6 +128,7 @@ public class ThreadFrameself implements Runnable, Observer
 	
 	public void dispose()
 	{
+		disframeself.dispose();
 		ifk.dispose();
 		rfid.dispose();
 		rfid = null;

@@ -140,7 +140,7 @@ public class Lettres_pixels {
 				string_char_actuel = getLettre(mon_string.charAt(pos_char), mode_6);
 				for (ligne=0; ligne<hauteur; ligne++) {
 					// On ajoute 
-					mon_tab[ligne] += string_char_actuel[ligne] += "0";
+					mon_tab[ligne] += string_char_actuel[ligne] + "0";
 				}
 			}
 		}

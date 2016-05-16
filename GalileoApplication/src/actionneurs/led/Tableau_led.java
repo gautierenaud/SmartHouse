@@ -1,5 +1,7 @@
 package actionneurs.led;
 
+import java.util.ArrayList;
+
 public class Tableau_led {
 
 	//======================================================================
@@ -62,6 +64,21 @@ public class Tableau_led {
 		return mon_tab_bytes;
 	}
 	
+	public byte[] toByte2()
+	{
+			String data="";
+			for (int ligne=0; ligne<21; ligne++) 
+			{
+				data += mon_tableau[ligne];
+			}
+			return data.getBytes();
+	}
+	
+	public static String[] getText(String text)
+	{
+		String[] textTab = Lettres_pixels.stringToTab(text, false);
+		return textTab;
+	}
 	//****************************************************************
 	//****************** Dessin **************************************
 	//****************************************************************
@@ -115,9 +132,9 @@ public class Tableau_led {
 		
 		// Nettoyer la zone où on mettra le texte
 		placer_dessin(this.tab_rempli_7, x, 0, true);
-		System.out.println("**** test de la conversion en texte");
+		/*System.out.println("**** test de la conversion en texte");
 		Lettres_pixels.afficher_tableau_string(mon_texte_pixel);
-		System.out.println("**** fin test de la conversion en texte");
+		System.out.println("**** fin test de la conversion en texte");*/
 		
 		// Placer le texte
 		placer_dessin(mon_texte_pixel, x, y, false);
@@ -319,7 +336,6 @@ public class Tableau_led {
 		}
 		return mon_heure;
 	}
-	
 	
 	//======================================================================
 	//==================== MAIN TEST =======================================
