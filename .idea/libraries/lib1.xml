@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="lib1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/GalileoApplication/lib/dispatcher.jar!/" />
+      <root url="jar://$PROJECT_DIR$/GalileoApplication/lib/phidget21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/GalileoApplication/lib/org.json.jar!/" />
+      <root url="jar://$PROJECT_DIR$/GalileoApplication/lib/frameself.jar!/" />
+      <root url="jar://$PROJECT_DIR$/GalileoApplication/lib/RXTXcomm.jar!/" />
+      <root url="jar://$PROJECT_DIR$/GalileoApplication/lib/collector.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

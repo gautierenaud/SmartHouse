@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SmartFrameself">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/FrameselfManager/SmartFrameself.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

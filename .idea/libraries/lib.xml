@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/FrameselfManager/lib/frameself.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FrameselfManager/lib/jackson-annotations-2.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FrameselfManager/lib/dispatcher.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FrameselfManager/lib/jackson-core-2.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FrameselfManager/lib/jackson-databind-2.3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/SmartControl/app/libs/jackson-annotations-2.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/SmartControl/app/libs/jackson-core-2.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/SmartControl/app/libs/jackson-databind-2.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/SmartControl/app/libs/dispatcher.jar!/" />
+      <root url="jar://$PROJECT_DIR$/SmartControl/app/libs/collector.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

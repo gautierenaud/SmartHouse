@@ -1,0 +1,32 @@
+<component name="libraryTable">
+  <library name="CustomFrameself">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/drools-templates.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/jackson-core-2.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/knowledge-internal-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/droolsjbpm-ide-common.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/jbpm-flow.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/drools-jsr94.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/jxl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/junit.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/org.eclipse.jdt.core_3.7.3.v20120119-1537.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/jbpm-bpmn2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/jbpm-flow-builder.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/xstream.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/miglayout15-swing.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/forms-1.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/jackson-databind-2.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/antlr-runtime.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/drools-compiler.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/knowledge-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/jackson-annotations-2.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/jsr94.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/mvel2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/commons-lang3-3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/drools-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/CustomFrameself/drools-decisiontables.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

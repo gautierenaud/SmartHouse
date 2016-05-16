@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Application">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Application/GalileoApplication.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Application/frameself.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Application/FrameselfManager.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
