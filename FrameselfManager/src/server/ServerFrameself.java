@@ -4,8 +4,8 @@ import frameself.format.Action;
 
 public class ServerFrameself extends ServerDispatch {
 
-	public ServerFrameself(String ipSource, int portFrom, int portTo) {
-		super(ipSource, portFrom, portTo);
+	public ServerFrameself(String ipSource, int portTo, int portFrom) {
+		super(ipSource, portTo, portFrom);
 		// TODO Auto-generated constructor stub
 	}
 

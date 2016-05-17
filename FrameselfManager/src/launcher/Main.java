@@ -26,7 +26,7 @@ public class Main {
 	{
 		
 		Launcher launcher = new Launcher(args.length == 7);
-		ServerFrameself serverFrameself = new ServerFrameself("127.0.0.1", Integer.parseInt(args[5]), Integer.parseInt(args[0]));
+		ServerFrameself serverFrameself = new ServerFrameself(args[3], Integer.parseInt(args[5]), Integer.parseInt(args[0]));
 		ServerAndroid serverAndroid = new ServerAndroid(launcher, Integer.parseInt(args[2]));
 		ServerActionner serverActionner = new ServerActionner(args[3], Integer.parseInt(args[1]), Integer.parseInt(args[4]));
 		Thread thread_serverFrameself = new Thread(serverFrameself);

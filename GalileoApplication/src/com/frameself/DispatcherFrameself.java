@@ -36,12 +36,15 @@ public class DispatcherFrameself implements Runnable
 		this.ipAddress = ipAddress;
 		this.thread_running = true;
 		this.thread_frameself = thread_frameself;
-		this.tabLED = new Tableau_led();
+		//this.tabLED = new Tableau_led();
 		this.baudSpeed = baudSpeed;
 		this.sendPort = sendPort;
 		this.listeningPort = listeningPort;
 		this.dispatcher = new Dispatcher(this.ipAddress,this.sendPort,this.listeningPort);
-		this.serialcom = new SerialCommunication(this.serialPortName, this.baudSpeed);
+		System.out.println("IP: " + this.ipAddress);
+		System.out.println("PortSend: " + this.sendPort);
+		System.out.println("PortListen: " + this.listeningPort);
+		//this.serialcom = new SerialCommunication(this.serialPortName, this.baudSpeed);
 		this.lamp = new PhillipsLamp();
 	}
 	
@@ -49,7 +52,7 @@ public class DispatcherFrameself implements Runnable
 	{
 		try
 		{
-			serialcom.close();
+			//serialcom.close();
 		}
 		catch(NullPointerException e)
 		{
@@ -82,8 +85,8 @@ public class DispatcherFrameself implements Runnable
 				
 			}
 		}
-		ledManager.stopRunning();
-		if(thread_managerLED!=null && thread_lamp.isAlive())
+		//ledManager.stopRunning();
+		/*if(thread_managerLED!=null && thread_lamp.isAlive())
 		{
 			try
 			{
@@ -93,7 +96,7 @@ public class DispatcherFrameself implements Runnable
 			{
 				
 			}
-		}
+		}*/
 		
 	}
 	
@@ -130,7 +133,7 @@ public class DispatcherFrameself implements Runnable
 								break;
 							}
 						}
-						if(thread_managerLED!=null && thread_managerLED.isAlive())
+						/*if(thread_managerLED!=null && thread_managerLED.isAlive())
 						{
 							ledManager.stopRunning();
 							try
@@ -141,20 +144,20 @@ public class DispatcherFrameself implements Runnable
 							{
 								
 							}
-						}
+						}*/
 						if(text.equals(""))
 						{
-							tabLED.set_text(" ", 0, 0);
-							serialcom.write(tabLED.toByte());
+							//tabLED.set_text(" ", 0, 0);
+							//serialcom.write(tabLED.toByte());
 							action.setResult("true");
 							action.setError("No error");
 						}
 						else
 						{
 							System.out.println("Starting LEDManager...");
-							ledManager = new LEDManager(tabLED, text, this.serialcom);
-							thread_managerLED = new Thread(ledManager);
-							thread_managerLED.start();
+							//ledManager = new LEDManager(tabLED, text, this.serialcom);
+							//thread_managerLED = new Thread(ledManager);
+							//thread_managerLED.start();
 							action.setResult("true");
 							action.setError("No error");
 						}
