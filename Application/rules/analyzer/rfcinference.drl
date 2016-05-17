@@ -64,3 +64,36 @@ rule "HouseIntruderRfc"
 		rfcLight.setExpiry(new Date(System.currentTimeMillis()+4000));
 		insert(rfcLight);
 end
+
+rule "VoiceLightOn"
+	when
+		Symptom(category == "CommandRecognized", value == "SwitchOnLights")
+	then
+		Rfc rfcLight = new Rfc();
+		rfcLight.setCategory("SwitchOnLights");
+		rfcLight.setTimestamp(new Date());
+		rfcLight.setExpiry(new Date(System.currentTimeMillis()+4000));
+		insert(rfcLight);
+end
+
+rule "VoiceLightOff"
+	when
+		Symptom(category == "CommandRecognized", value == "SwitchOffLights")
+	then
+		Rfc rfcLight = new Rfc();
+		rfcLight.setCategory("SwitchOffLights");
+		rfcLight.setTimestamp(new Date());
+		rfcLight.setExpiry(new Date(System.currentTimeMillis()+4000));
+		insert(rfcLight);
+end
+
+rule "VoiceLightRed"
+	when
+		Symptom(category == "CommandRecognized", value == "SwitchOnRed")
+	then
+		Rfc rfcLight = new Rfc();
+		rfcLight.setCategory("SwitchOnLightsRed");
+		rfcLight.setTimestamp(new Date());
+		rfcLight.setExpiry(new Date(System.currentTimeMillis()+4000));
+		insert(rfcLight);
+end
