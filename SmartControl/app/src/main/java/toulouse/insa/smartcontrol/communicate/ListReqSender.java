@@ -3,6 +3,7 @@ package toulouse.insa.smartcontrol.communicate;
 import android.os.Debug;
 import android.os.StrictMode;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -53,6 +54,7 @@ public class ListReqSender extends Thread{
 				closeSocket();
 			} catch (Exception e1) {
 				e1.printStackTrace();
+				//Toast toast = new Toast(this.get)
 			}
 		}
 	}

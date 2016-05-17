@@ -1,5 +1,6 @@
 package toulouse.insa.smartcontrol.viewRules;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -219,6 +220,12 @@ public class ListAllRules extends AppCompatActivity
 
         updateAdapter();
     }
+/*
+    public static Context getContext(){
+        //return instance;
+        // or return instance.getApplicationContext();
+    }
+    */
 
     public void updateAdapter(){
         this.ruleList.clear();

@@ -109,3 +109,19 @@ rule "SwitchOnLightsRedAction"
    	   actionLight.setTimestamp(new Date());
        insert(actionLight);
 end
+
+rule "LoveMoodAction"
+    when
+       Rfc(category == "LoveMood")
+    then 
+   	   ArrayList<Attribute> attributesLED = new ArrayList<Attribute>();
+   	   attributesLED.add(new Attribute("state", "false"));
+   	   attributesLED.add(new Attribute("text", ""));
+   	   Action actionLED = new Action();
+   	   actionLED.setCategory("LED");
+   	   actionLED.setName("setAmbiance");
+   	   actionLED.setAttributes(attributesLED);
+   	   actionLED.setEffector(new Effector("TableauLED")); 
+   	   actionLED.setTimestamp(new Date());
+       insert(actionLED);
+end

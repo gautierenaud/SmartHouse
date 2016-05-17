@@ -20,6 +20,7 @@ public class MultipurposeCollector {
         while(true) {
             try {
                 Event e = eventQueue.take();
+                System.out.println("sending : " + e);
                 collector.send(e);
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
