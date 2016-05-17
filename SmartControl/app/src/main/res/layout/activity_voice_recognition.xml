@@ -24,5 +24,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sendOrder"
+            android:id="@+id/button" android:layout_gravity="bottom" android:onClick="sendOrder"/>
     </LinearLayout>
 </LinearLayout>

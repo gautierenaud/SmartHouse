@@ -37,11 +37,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 
 import edu.cmu.pocketsphinx.Assets;
@@ -49,7 +51,9 @@ import edu.cmu.pocketsphinx.Hypothesis;
 import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
+import frameself.format.Event;
 import toulouse.insa.smartcontrol.R;
+import toulouse.insa.smartcontrol.communicate.MultipurposeCollector;
 
 import static android.widget.Toast.makeText;
 
@@ -240,5 +244,15 @@ public class PocketSphinxActivity extends Activity implements RecognitionListene
     @Override
     public void onTimeout() {
         switchSearch(KWS_SEARCH);
+    }
+
+    public void sendOrder(View view){
+        Event e = new Event();
+        e.setCategory("Mic");
+        e.setId("Le truc dit par l'utilisateur");
+        e.setValue("Un truc dit en plus? genre une couleur?");
+        e.setTimestamp(new Date(System.currentTimeMillis()));
+        e.setExpiry(new Date(System.currentTimeMillis() + 4000));
+        MultipurposeCollector.eventQueue.add(e);
     }
 }
