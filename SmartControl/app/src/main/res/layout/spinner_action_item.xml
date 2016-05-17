@@ -1,19 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
+              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
-	<Spinner
-		android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id="@+id/action_spinner"
-	/>
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		<Spinner
+			android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:id="@+id/action_spinner"
+		/>
+		<Button android:layout_width="50dp"
+			        android:text="Del"
+			        android:id="@+id/action_delete"
+			        android:layout_height="wrap_content"/>
+	</LinearLayout>
 
-	<Button android:layout_width="50dp"
-	        android:text="Del"
-	        android:id="@+id/action_delete"
-	        android:layout_height="wrap_content"/>
+	<RelativeLayout
+		android:visibility="visible"
+		android:id="@+id/setColor_container"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_marginLeft="20dp">
+
+		<LinearLayout android:layout_width="wrap_content"
+		              android:id="@+id/setColor_r"
+		              android:orientation="horizontal"
+		              android:layout_height="wrap_content">
+
+			<TextView android:layout_width="wrap_content"
+			          android:id="@+id/setColor_r_title"
+			          android:text="r : "
+			          android:layout_height="wrap_content"/>
+
+			<EditText
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:inputType="numberSigned"
+				android:id="@+id/setColor_r_val" android:layout_weight="1"/>
+
+		</LinearLayout>
+
+		<LinearLayout android:layout_width="wrap_content"
+		              android:id="@+id/setColor_g"
+		              android:layout_toRightOf="@id/setColor_r"
+		              android:orientation="horizontal"
+		              android:layout_height="wrap_content">
+
+			<TextView android:layout_width="wrap_content"
+			          android:id="@+id/setColor_g_title"
+			          android:text="g : "
+			          android:layout_height="wrap_content"/>
+
+			<EditText
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:inputType="numberSigned"
+				android:id="@+id/setColor_g_val" android:layout_weight="1"/>
+
+		</LinearLayout>
+
+		<LinearLayout android:layout_width="wrap_content"
+		              android:id="@+id/setColor_b"
+		              android:layout_below="@id/setColor_r"
+		              android:orientation="horizontal"
+		              android:layout_height="wrap_content">
+
+			<TextView android:layout_width="wrap_content"
+			          android:id="@+id/setColor_b_title"
+			          android:text="b : "
+			          android:layout_height="wrap_content"/>
+
+			<EditText
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:inputType="numberSigned"
+				android:id="@+id/setColor_b_val" android:layout_weight="1"/>
+
+		</LinearLayout>
+
+		<LinearLayout android:layout_width="wrap_content"
+		              android:id="@+id/setColor_bright"
+		              android:orientation="horizontal"
+		              android:layout_below="@id/setColor_g"
+		              android:layout_toRightOf="@id/setColor_b"
+		              android:layout_height="wrap_content">
+
+			<TextView android:layout_width="wrap_content"
+			          android:id="@+id/setColor_bright_title"
+			          android:text="bright : "
+			          android:layout_height="wrap_content"/>
+
+			<EditText
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:inputType="numberSigned"
+				android:id="@+id/setColor_bright_val" android:layout_weight="1"/>
+
+		</LinearLayout>
+
+	</RelativeLayout>
+
+	<LinearLayout android:layout_width="wrap_content"
+	              android:layout_height="wrap_content"
+	              android:orientation="horizontal"
+	              android:id="@+id/setText_container"
+	              android:visibility="visible" android:layout_marginLeft="20dp">
+
+		<TextView android:layout_width="wrap_content"
+		          android:layout_height="wrap_content"
+		          android:id="@+id/setText_title"
+		          android:text="text : "
+		/>
+
+		<EditText
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/setText_val"
+		/>
+
+	</LinearLayout>
 
 </LinearLayout>

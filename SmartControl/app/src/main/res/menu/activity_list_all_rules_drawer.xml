@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_all" android:icon="@drawable/ic_menu_camera"
+        <item android:id="@+id/nav_all" android:icon="@drawable/ic_for_all"
               android:title="All" />
-        <item android:id="@+id/nav_symptoms" android:icon="@drawable/ic_menu_camera"
+        <item android:id="@+id/nav_symptoms" android:icon="@drawable/ic_monitor"
             android:title="Monitor" />
-        <item android:id="@+id/nav_rfcs" android:icon="@drawable/ic_menu_gallery"
+        <item android:id="@+id/nav_rfcs" android:icon="@drawable/ic_menu_recent_history"
             android:title="Analyzer" />
-        <item android:id="@+id/nav_actions" android:icon="@drawable/ic_menu_slideshow"
+        <item android:id="@+id/nav_actions" android:icon="@drawable/ic_menu_today"
             android:title="Planner" />
-        <item android:id="@+id/nav_policies" android:icon="@drawable/ic_menu_manage"
+        <item android:id="@+id/nav_policies" android:icon="@drawable/ic_menu_compass"
             android:title="Policies" />
     </group>
 
     <item android:title="Others">
         <menu>
-            <item android:id="@+id/nav_vocal" android:icon="@drawable/ic_menu_manage"
+            <item android:id="@+id/nav_vocal" android:icon="@drawable/ic_btn_speak_now"
                   android:title="Vocal Command" />
         </menu>
     </item>

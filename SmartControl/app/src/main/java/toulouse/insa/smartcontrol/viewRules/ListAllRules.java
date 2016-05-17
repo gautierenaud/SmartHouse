@@ -29,6 +29,7 @@ import toulouse.insa.smartcontrol.communicate.MultipurposeCollector;
 import toulouse.insa.smartcontrol.communicate.ReqType;
 import toulouse.insa.smartcontrol.createRule.CreateRule;
 import toulouse.insa.smartcontrol.params.ChangeParams;
+import toulouse.insa.smartcontrol.voiceRecognition.PocketSphinxActivity;
 
 public class ListAllRules extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Observer {
@@ -149,7 +150,6 @@ public class ListAllRules extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-
         if (id == R.id.nav_all) {
             if (this.displayOption != DisplayOption.ALL) {
                 this.displayOption = DisplayOption.ALL;
@@ -176,6 +176,14 @@ public class ListAllRules extends AppCompatActivity
                 updateAdapter();
             }
         }else if (id == R.id.nav_vocal) {
+            Intent intent = new Intent(ListAllRules.this, PocketSphinxActivity.class);
+            startActivity(intent);
+
+
+            /*
+            Intent intent = new Intent(ListAllRules.this, VoiceRecorder.class);
+            startActivity(intent);
+            */
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

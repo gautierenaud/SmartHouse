@@ -8,6 +8,7 @@ public class RuleFrameself {
 	private ArrayList<String> rfcIDs;
 	private String category;
 	private ArrayList<String> actions;
+	private ArrayList<Pair<String, String>> attributes;
 	private String policy;
 
 	private RuleFrameself()
@@ -21,6 +22,7 @@ public class RuleFrameself {
 		this.category = category;
 		this.actions = new ArrayList<String>();
 		this.rfcIDs = new ArrayList<String>();
+		this.attributes = new ArrayList<>();
 	}
 
 	public String getRuleName()
@@ -37,6 +39,8 @@ public class RuleFrameself {
 	{
 		this.actions.add(action);
 	}
+
+	public void addAttribute(Pair<String, String> pair) { this.attributes.add(pair); }
 
 	public ArrayList<String> getRfcIDs()
 	{
@@ -69,6 +73,9 @@ public class RuleFrameself {
 		{
 			data += "\t\tArrayList<Attribute> attributes" + i + " = new ArrayList<Attribute>();\n";
 			data += "\t\tattributes" + i + ".add(new Attribute(\"state\",\"false\"));\n";
+			for (Pair<String, String> p : this.getAttributes()){
+				data += "\t\tattributes" + i + ".add(new Attribute(\"" + p.getFirst() + "\",\"" + p.getSecond() + "\"));\n";
+			}
 			data += "\t\tAction action" + i + " = new Action();\n";
 			data += "\t\taction" + i + ".setCategory(\"" + this.getCategory() + "\");\n";
 			data += "\t\taction" + i + ".setName(\"" + action + "\");\n";
@@ -88,4 +95,13 @@ public class RuleFrameself {
 	public void setPolicy(String policy) {
 		this.policy = policy;
 	}
+
+	public ArrayList<Pair<String, String>> getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(ArrayList<Pair<String, String>> attributes) {
+		this.attributes = attributes;
+	}
+
 }

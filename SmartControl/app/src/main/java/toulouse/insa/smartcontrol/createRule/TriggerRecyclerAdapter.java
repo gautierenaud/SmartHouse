@@ -79,7 +79,7 @@ public class TriggerRecyclerAdapter extends RecyclerView.Adapter<TriggerViewHold
                     printPossibleValues(holder.getAdapterPosition());
                     // add to selection <holderPosition, selectedValue>
                     ArrayList<String> tmpPossibilities = mParent.getPossibleTriggerChoices(holder.getAdapterPosition());
-                    if (tmpPossibilities.size() < position) {
+                    if (tmpPossibilities.size() > position) {
                         String newSelection = tmpPossibilities.get(position);
                         String actualSelection = mParent.getTriggerSelection(holder.getAdapterPosition());
                         if (!newSelection.equals(actualSelection)) {

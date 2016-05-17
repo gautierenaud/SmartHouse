@@ -1,0 +1,8 @@
+#JSGF V1.0;
+
+grammar light;
+
+public <light> = switch on  |
+          switch off |
+          love       |
+          power save;

@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
@@ -79,8 +81,18 @@ public class ActionRecyclerAdapter extends RecyclerView.Adapter<ActionViewHolder
                     printPossibleValues(holder.getAdapterPosition());
                     // add to selection <holderPosition, selectedValue>
                     ArrayList<String> tmpPossibilities = mParent.getPossibleActionChoices(holder.getAdapterPosition());
-                    if (tmpPossibilities.size() < position) {
+                    if (tmpPossibilities.size() > position  ) {
+                        RelativeLayout setColors = (RelativeLayout) view.getRootView().findViewById(R.id.setColor_container);
+                        LinearLayout setText = (LinearLayout) view.getRootView().findViewById(R.id.setText_container);
                         String newSelection = tmpPossibilities.get(position);
+                        if (newSelection.equals("changeColor")){
+                            setColors.setVisibility(View.VISIBLE);
+                            setText.setVisibility(View.GONE);
+                        } else if (newSelection.equals("setText")){
+                            setColors.setVisibility(View.GONE);
+                            setText.setVisibility(View.VISIBLE);
+                        }
+
                         String actualSelection = mParent.getActionSelection(holder.getAdapterPosition());
                         if (!newSelection.equals(actualSelection)) {
                             mParent.updateActionSelectionChange(new Pair<>(holder.getAdapterPosition(), newSelection));

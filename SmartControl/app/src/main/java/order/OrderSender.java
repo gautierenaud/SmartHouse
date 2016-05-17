@@ -49,6 +49,7 @@ public class OrderSender extends Thread{
                 Log.d("OrderSender", "sending: " + sendString);
 
                 InetAddress address = InetAddress.getByName(Parameters.getFrameselfAddress());
+                System.out.println(sendString.getBytes().length);
                 DatagramPacket packet = new DatagramPacket(sendString.getBytes(), sendString.getBytes().length, address, 8000);
 
                 clientSocket.send(packet);
