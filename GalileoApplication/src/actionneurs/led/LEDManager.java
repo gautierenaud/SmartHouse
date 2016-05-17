@@ -17,7 +17,7 @@ public class LEDManager implements Runnable
 	public LEDManager(Tableau_led tabLED, String text, SerialCommunication serialcom)
 	{
 		this.tabLED = tabLED;
-		this.textab = tabLED.getText("bonjour");
+		this.textab = tabLED.getText(text);
 		this.limit = textab[0].length();
 		this.x=0;//ligne
 		this.y=10;//colonne
@@ -38,12 +38,22 @@ public class LEDManager implements Runnable
 		
 		while(thread_running)
 		{
+			p++;
 			String currentTab[] = new String[textab.length];
+			for(int i=0;i<currentTab.length;i++)
+			{
+				currentTab[i] = "";
+			}
+			
 			for(int i=0;i<textab.length;i++)
 			{
 				if(x+21>limit)
 				{
-					currentTab[i] = textab[i].substring(x, limit) + textab[i].substring(0, x%21);
+					currentTab[i] = textab[i].substring(x, limit)/* + textab[i].substring(0, x%21)*/;
+					while(currentTab[i].length()<21)
+					{
+						currentTab[i] += "0";
+					}
 				}
 				else
 				{
@@ -55,11 +65,11 @@ public class LEDManager implements Runnable
 			{
 				finalTab[i] = "000000000000000000000";
 			}
-			for(int i = y; i < y+7;i++)
+			for(int i = y; i < y+textab.length;i++)
 			{
 				finalTab[i] = currentTab[i-y];
 			}
-			for(int i = y + 7;i<21;i++)
+			for(int i = y + textab.length;i<21;i++)
 			{
 				finalTab[i] = "000000000000000000000";
 			}

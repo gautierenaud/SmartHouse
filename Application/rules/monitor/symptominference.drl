@@ -24,7 +24,7 @@ rule "PersonAuthentified"
 		insert(symptom2);
 end
 
-rule "VocalCommandRecognized"
+rule "VocalCommand"
 	when
 		Event(category == "VocalRecognition", $value: value)
 	then

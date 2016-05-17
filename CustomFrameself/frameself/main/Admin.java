@@ -29,7 +29,7 @@ public class Admin
 	static int loopCounter = 0;
 
 	// handmade argument for sleeping sleepTime * seconds (1 sec by default)
-	public static int sleepTime = 1;
+	public static int sleepTime = 5;
 
 	public static void main(String[] args) {
 		if(args.length>0)

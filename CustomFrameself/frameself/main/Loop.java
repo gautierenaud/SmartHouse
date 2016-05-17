@@ -51,7 +51,7 @@ public class Loop implements Runnable
 			this.executerManager.execute(actions);
 			Admin.loopCounter += 1;
 			try {
-				Thread.sleep(Admin.useGUI ? GuiAdmin.getSlider().getValue() * 1000 : Admin.sleepTime * 1000);
+				Thread.sleep(Admin.sleepTime * 1000);
 			}
 			catch (InterruptedException localInterruptedException) {}
 			loopNumber--;

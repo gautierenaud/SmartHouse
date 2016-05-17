@@ -128,7 +128,14 @@ public class ThreadFrameself implements Runnable, Observer
 	
 	public void dispose()
 	{
-		disframeself.dispose();
+		try
+		{
+			disframeself.dispose();
+		}
+		catch(NullPointerException e)
+		{
+			
+		}
 		ifk.dispose();
 		rfid.dispose();
 		rfid = null;
