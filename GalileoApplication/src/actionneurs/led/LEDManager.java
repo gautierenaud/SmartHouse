@@ -38,7 +38,6 @@ public class LEDManager implements Runnable
 		
 		while(thread_running)
 		{
-			p++;
 			String currentTab[] = new String[textab.length];
 			for(int i=0;i<currentTab.length;i++)
 			{
@@ -49,11 +48,7 @@ public class LEDManager implements Runnable
 			{
 				if(x+21>limit)
 				{
-					currentTab[i] = textab[i].substring(x, limit)/* + textab[i].substring(0, x%21)*/;
-					while(currentTab[i].length()<21)
-					{
-						currentTab[i] += "0";
-					}
+					currentTab[i] = textab[i].substring(x, limit) + textab[i].substring(0, x%21);
 				}
 				else
 				{
