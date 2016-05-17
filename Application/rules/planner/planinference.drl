@@ -97,15 +97,12 @@ rule "SwitchOnLightsRedAction"
 	then
 	   ArrayList<Attribute> attributesLight = new ArrayList<Attribute>();
    	   attributesLight.add(new Attribute("state", "false"));
-   	   attributesLight.add(new Attribute("red", "254"));
-   	   attributesLight.add(new Attribute("green", "0"));
-   	   attributesLight.add(new Attribute("blue", "0"));
-   	   attributesLight.add(new Attribute("brightness", "254"));
+   	   attributesLight.add(new Attribute("ambiance", "intruder"));
    	   Action actionLight = new Action();
    	   actionLight.setCategory("Phillips");
-   	   actionLight.setName("changeColor");
+   	   actionLight.setName("setAmbiance");
    	   actionLight.setAttributes(attributesLight);
    	   actionLight.setEffector(new Effector("PhillipsLamp")); 
    	   actionLight.setTimestamp(new Date());
-       insert(actionLight);
+       	insert(actionLight);
 end
