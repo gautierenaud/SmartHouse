@@ -55,7 +55,7 @@ public class ServerAndroid implements Runnable {
 	
 	public Order receive() throws SocketException
 	{
-		byte[] msgBuffer = new byte['Ѐ'];
+		byte[] msgBuffer = new byte[10000];
 	    DatagramPacket packet = new DatagramPacket(msgBuffer, msgBuffer.length);
 	    try {
 			this.socket.receive(packet);
