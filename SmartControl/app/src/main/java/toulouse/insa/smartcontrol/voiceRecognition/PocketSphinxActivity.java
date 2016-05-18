@@ -60,12 +60,14 @@ import static android.widget.Toast.makeText;
 public class PocketSphinxActivity extends Activity implements RecognitionListener {
 
     /* Named searches allow to quickly reconfigure the decoder */
+    String command=null;
     private static final String KWS_SEARCH = "wakeup";
     private static final String LIGHT_SEARCH = "light";
+    private static final String AMBIANCE_SEARCH = "ambiance";
     private static final String MENU_SEARCH = "menu";
 
     /* Keyword we are looking for to activate menu */
-    private static final String KEYPHRASE = "home";
+    private static final String KEYPHRASE = "computer";
 
     /* Used to handle permission request */
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
@@ -82,6 +84,7 @@ public class PocketSphinxActivity extends Activity implements RecognitionListene
         captions.put(KWS_SEARCH, R.string.kws_caption);
         captions.put(MENU_SEARCH, R.string.menu_caption);
         captions.put(LIGHT_SEARCH, R.string.light_caption);
+        captions.put(AMBIANCE_SEARCH, R.string.ambiance_caption);
         setContentView(R.layout.activity_voice_recognition);
         ((TextView) findViewById(R.id.caption_text))
                 .setText("Preparing the recognizer");
@@ -162,6 +165,8 @@ public class PocketSphinxActivity extends Activity implements RecognitionListene
             switchSearch(MENU_SEARCH);
         else if (text.equals(LIGHT_SEARCH))
             switchSearch(LIGHT_SEARCH);
+        else if (text.equals(AMBIANCE_SEARCH))
+            switchSearch(AMBIANCE_SEARCH);
         else
             ((TextView) findViewById(R.id.result_text)).setText(text);
     }
@@ -172,9 +177,11 @@ public class PocketSphinxActivity extends Activity implements RecognitionListene
     @Override
     public void onResult(Hypothesis hypothesis) {
         ((TextView) findViewById(R.id.result_text)).setText("");
+        ((TextView) findViewById(R.id.req_text)).setText("");
         if (hypothesis != null) {
             String text = hypothesis.getHypstr();
             makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+            command=text;
         }
     }
 
@@ -234,6 +241,10 @@ public class PocketSphinxActivity extends Activity implements RecognitionListene
         // Create grammar-based search for digit recognition
         File lightGrammar = new File(assetsDir, "light.gram");
         recognizer.addGrammarSearch(LIGHT_SEARCH, lightGrammar);
+
+        // Create grammar-based search for digit recognition
+        File ambianceGrammar = new File(assetsDir, "ambiance.gram");
+        recognizer.addGrammarSearch(AMBIANCE_SEARCH, ambianceGrammar);
     }
 
     @Override
@@ -247,12 +258,15 @@ public class PocketSphinxActivity extends Activity implements RecognitionListene
     }
 
     public void sendOrder(View view){
-        Event e = new Event();
-        e.setCategory("Mic");
-        e.setId("Le truc dit par l'utilisateur");
-        e.setValue("Un truc dit en plus? genre une couleur?");
-        e.setTimestamp(new Date(System.currentTimeMillis()));
-        e.setExpiry(new Date(System.currentTimeMillis() + 4000));
-        MultipurposeCollector.eventQueue.add(e);
+        if(command!=null) {
+            Event e = new Event();
+            e.setCategory("VocalRecognition");
+            e.setValue(command);
+            e.setTimestamp(new Date(System.currentTimeMillis()));
+            e.setExpiry(new Date(System.currentTimeMillis() + 4000));
+            MultipurposeCollector.eventQueue.add(e);
+            ((TextView) findViewById(R.id.req_text)).setText(command);
+        }
+        command=null;
     }
 }
