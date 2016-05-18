@@ -86,3 +86,15 @@ rule "VoiceLightOff"
 		rfcLight.setExpiry(new Date(System.currentTimeMillis()+4000));
 		insert(rfcLight);
 end
+
+rule "VoiceMoodLove"
+	when
+		Symptom(category == "CommandRecognized", value == "love")
+	then
+		Rfc rfcLight = new Rfc();
+		rfcLight.setCategory("LoveMood");
+		rfcLight.setTimestamp(new Date());
+		rfcLight.setExpiry(new Date(System.currentTimeMillis()+4000));
+		insert(rfcLight);
+end
+

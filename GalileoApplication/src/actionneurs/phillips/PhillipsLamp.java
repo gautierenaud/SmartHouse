@@ -62,7 +62,7 @@ public class PhillipsLamp implements Runnable {
 	 * Mettre une transition de couleur, de rouge-orange faible luminosité à forte.
 	 * @param temps_transition_secondes		Le temps de la transition entre fort et faible (conseil 10 000 ~ 10mn).
 	 */
-	public void set_ambiance_reveil_matin(int temps_transition_secondes) {
+	public void set_ambiance_reveil_matin(int temps_transition_secondes) throws Exception {
 		transition_rgb(	238, 30, 0, 5, 250, 
 						238, 90, 10, 250, 240, 
 						temps_transition_secondes*1000, 1);
@@ -73,7 +73,7 @@ public class PhillipsLamp implements Runnable {
 	 * @param temps_transition_secondes (temps conseillé, >100) sinon la transition se fait assez mal
 	 * @param temps_total_secondes 	Duree totale de ce mode.
 	 */
-	public void set_ambiance_optimism( int temps_transition_secondes, int temps_total_secondes ) {
+	public void set_ambiance_optimism( int temps_transition_secondes, int temps_total_secondes ) throws Exception {
 		long temps_depart_ms = System.currentTimeMillis();
 		while (!finish  && temps_total_secondes > (System.currentTimeMillis()-temps_depart_ms)*1000) {
 			transition_rgb(	238, 64, 0, 240, 240, 
@@ -90,7 +90,7 @@ public class PhillipsLamp implements Runnable {
 	 * @param temps_transition_secondes (temps conseillé, >100) sinon la transition se fait assez mal
 	 * @param temps_total_secondes 	Duree totale de ce mode.
 	 */
-	public void set_ambiance_nature( int temps_transition_secondes, int temps_total_secondes ) {
+	public void set_ambiance_nature( int temps_transition_secondes, int temps_total_secondes ) throws Exception {
 		long temps_depart_ms = System.currentTimeMillis();
 		while (!finish && temps_total_secondes > (System.currentTimeMillis()-temps_depart_ms)*1000) {
 			// De ForestGreen à DarkSeaGreen4
@@ -148,7 +148,7 @@ public class PhillipsLamp implements Runnable {
 	 * @param temps_transition_secondes (temps conseillé, >100) sinon la transition se fait assez mal
 	 * @param temps_total_secondes 	Duree totale de ce mode.
 	 */
-	public void set_ambiance_love( int temps_transition_secondes, int temps_total_secondes ) {
+	public void set_ambiance_love( int temps_transition_secondes, int temps_total_secondes ) throws Exception {
 		long temps_depart_ms = System.currentTimeMillis();
 		while (!finish  && temps_total_secondes > (System.currentTimeMillis()-temps_depart_ms)*1000) {
 			// Rouge a Rose
@@ -254,7 +254,7 @@ public class PhillipsLamp implements Runnable {
 		}
 	}
 	
-	public static void main (String[] args){
+	/*public static void main (String[] args){
 	System.out.println("Hello World");
 	PhillipsLamp mon_prog = new PhillipsLamp();
 	mon_prog.se_connecter();
@@ -264,7 +264,7 @@ public class PhillipsLamp implements Runnable {
 	//mon_prog.set_ambiance_optimism(100, 60000);
 	//mon_prog.set_ambiance_nature(100, 10000);
 	mon_prog.set_ambiance_love(100, 10000);
-	}
+	}*/
 	
 //============================ Commandes specifiques ==============================
 	
@@ -621,25 +621,28 @@ public class PhillipsLamp implements Runnable {
 	@Override
 	public void run() 
 	{
-		if(colorType.equals("love"))
+		try
 		{
-			this.set_ambiance_love(100, 600);
+			if(colorType.equals("love"))
+			{
+				this.set_ambiance_love(100, 600);
+			}
+			else if(colorType.equals("nature"))
+			{
+				this.set_ambiance_nature(100, 600);
+			}
+			else if(colorType.equals("optimism"))
+			{
+				this.set_ambiance_optimism(100, 600);
+			}
+			else if(colorType.equals("intruder"))
+			{
+				this.clignoter_rouge_auto(600);
+			}
 		}
-		else if(colorType.equals("nature"))
+		catch(Exception e)
 		{
-			this.set_ambiance_nature(100, 600);
-		}
-		else if(colorType.equals("optimism"))
-		{
-			this.set_ambiance_optimism(100, 600);
-		}
-		else if(colorType.equals("nature"))
-		{
-			this.set_ambiance_reveil_matin(100);
-		}
-		else if(colorType.equals("intruder"))
-		{
-			this.clignoter_rouge_auto(600);
+			
 		}
 		System.out.println("Thread manager lamp finished.");
 	}
