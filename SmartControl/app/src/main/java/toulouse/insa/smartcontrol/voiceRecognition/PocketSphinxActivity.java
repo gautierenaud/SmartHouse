@@ -269,4 +269,9 @@ public class PocketSphinxActivity extends Activity implements RecognitionListene
         }
         command=null;
     }
+
+    public void resetOrder(View view){
+        ((TextView) findViewById(R.id.result_text)).setText("None");
+        switchSearch(KWS_SEARCH);
+    }
 }
