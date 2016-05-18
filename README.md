@@ -25,5 +25,5 @@ The Folders in the root directory of this project contains:
 	SmartControl:
 		contains the source code of the Android application, created with Android Studio 2.1
 		
-	Tablea_Led:
+	Tableau_Led:
 		contains the basic API to interact with the LED Matrix.
