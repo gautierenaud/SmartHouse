@@ -20,10 +20,9 @@
         android:orientation="vertical"
         android:gravity="center" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/req_text" />
+        <View android:layout_width="0dp"
+              android:layout_height="0dp"
+              android:layout_weight="1"/>
 
         <TextView
             android:id="@+id/result_text"
@@ -35,6 +34,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="sendOrder"
-            android:id="@+id/button" android:layout_gravity="bottom" android:onClick="sendOrder"/>
+            android:id="@+id/button" android:layout_gravity="center_horizontal" android:onClick="sendOrder"/>
     </LinearLayout>
 </LinearLayout>

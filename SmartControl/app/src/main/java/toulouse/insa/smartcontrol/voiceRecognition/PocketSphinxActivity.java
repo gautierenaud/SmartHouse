@@ -176,12 +176,12 @@ public class PocketSphinxActivity extends Activity implements RecognitionListene
      */
     @Override
     public void onResult(Hypothesis hypothesis) {
-        ((TextView) findViewById(R.id.result_text)).setText("");
-        ((TextView) findViewById(R.id.req_text)).setText("");
+        // ((TextView) findViewById(R.id.req_text)).setText("");
         if (hypothesis != null) {
             String text = hypothesis.getHypstr();
-            makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+            // makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
             command=text;
+            ((TextView) findViewById(R.id.result_text)).setText(command);
         }
     }
 
@@ -265,7 +265,7 @@ public class PocketSphinxActivity extends Activity implements RecognitionListene
             e.setTimestamp(new Date(System.currentTimeMillis()));
             e.setExpiry(new Date(System.currentTimeMillis() + 4000));
             MultipurposeCollector.eventQueue.add(e);
-            ((TextView) findViewById(R.id.req_text)).setText(command);
+            //((TextView) findViewById(R.id.req_text)).setText(command);
         }
         command=null;
     }

@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import frameself.format.Event;
 import toulouse.insa.smartcontrol.params.Parameters;
+import toulouse.insa.smartcontrol.viewRules.ListAllRules;
 
 public class ListReqSender extends Thread{
 	
@@ -54,7 +55,10 @@ public class ListReqSender extends Thread{
 				closeSocket();
 			} catch (Exception e1) {
 				e1.printStackTrace();
-				//Toast toast = new Toast(this.get)
+				/*
+				Toast toast = Toast.makeText(ListAllRules.getContext(), "Frameself not reachable", Toast.LENGTH_SHORT);
+				toast.show();
+				*/
 			}
 		}
 	}

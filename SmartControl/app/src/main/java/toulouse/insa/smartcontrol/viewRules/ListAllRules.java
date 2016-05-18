@@ -35,7 +35,9 @@ import toulouse.insa.smartcontrol.voiceRecognition.PocketSphinxActivity;
 public class ListAllRules extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Observer {
 
-    private enum DisplayOption {ALL, SYMPTOMS, RFCS, ACTIONS, POLICIES};
+    private enum DisplayOption {ALL, SYMPTOMS, RFCS, ACTIONS, POLICIES}
+
+    ;
 
     // a fusion of the different arrays
     public static ArrayList<RuleToDisplay> ruleList = new ArrayList<>();
@@ -52,12 +54,16 @@ public class ListAllRules extends AppCompatActivity
     private MyRecyclerAdapter mAdapter;
     private ListReqSender sender;
 
+    private static Context mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_all_rules);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mContext = this;
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         assert fab != null;
@@ -99,8 +105,8 @@ public class ListAllRules extends AppCompatActivity
         sender = new ListReqSender();
         sender.start();
 
-        new Thread(){
-            public void run(){
+        new Thread() {
+            public void run() {
                 MultipurposeCollector.start();
             }
         }.start();
@@ -137,7 +143,7 @@ public class ListAllRules extends AppCompatActivity
         if (id == R.id.action_settings) {
             openSettings();
             return true;
-        } else if (id == R.id.action_refresh){
+        } else if (id == R.id.action_refresh) {
             sender.sendAllReq();
             return true;
         }
@@ -176,7 +182,7 @@ public class ListAllRules extends AppCompatActivity
                 this.displayOption = DisplayOption.POLICIES;
                 updateAdapter();
             }
-        }else if (id == R.id.nav_vocal) {
+        } else if (id == R.id.nav_vocal) {
             Intent intent = new Intent(ListAllRules.this, PocketSphinxActivity.class);
             startActivity(intent);
 
@@ -192,7 +198,7 @@ public class ListAllRules extends AppCompatActivity
         return true;
     }
 
-    public void openSettings(){
+    public void openSettings() {
         Intent intent = new Intent(ListAllRules.this, ChangeParams.class);
         startActivity(intent);
     }
@@ -227,44 +233,44 @@ public class ListAllRules extends AppCompatActivity
     }
     */
 
-    public void updateAdapter(){
+    public void updateAdapter() {
         this.ruleList.clear();
         /** add the rules to the ruleList **/
-        switch (this.displayOption){
+        switch (this.displayOption) {
             case ALL:
-                for (CustomRule r : this.symptomList){
+                for (CustomRule r : this.symptomList) {
                     this.ruleList.add(new RuleToDisplay(r, ReqType.SYMPTOM));
                 }
 
-                for (CustomRule r : this.rfcList){
+                for (CustomRule r : this.rfcList) {
                     this.ruleList.add(new RuleToDisplay(r, ReqType.RFC));
                 }
 
-                for (CustomRule r : this.actionList){
+                for (CustomRule r : this.actionList) {
                     this.ruleList.add(new RuleToDisplay(r, ReqType.ACTION));
                 }
 
-                for (CustomRule r : this.policyList){
+                for (CustomRule r : this.policyList) {
                     this.ruleList.add(new RuleToDisplay(r, ReqType.POLICY));
                 }
                 break;
             case SYMPTOMS:
-                for (CustomRule r : this.symptomList){
+                for (CustomRule r : this.symptomList) {
                     this.ruleList.add(new RuleToDisplay(r, ReqType.SYMPTOM));
                 }
                 break;
             case RFCS:
-                for (CustomRule r : this.rfcList){
+                for (CustomRule r : this.rfcList) {
                     this.ruleList.add(new RuleToDisplay(r, ReqType.RFC));
                 }
                 break;
             case ACTIONS:
-                for (CustomRule r : this.actionList){
+                for (CustomRule r : this.actionList) {
                     this.ruleList.add(new RuleToDisplay(r, ReqType.ACTION));
                 }
                 break;
             case POLICIES:
-                for (CustomRule r : this.policyList){
+                for (CustomRule r : this.policyList) {
                     this.ruleList.add(new RuleToDisplay(r, ReqType.POLICY));
                 }
                 break;
@@ -277,5 +283,9 @@ public class ListAllRules extends AppCompatActivity
                 mRecyclerView.swapAdapter(new MyRecyclerAdapter(ListAllRules.ruleList), false);
             }
         });
+    }
+
+    public static Context getContext() {
+        return mContext;
     }
 }
