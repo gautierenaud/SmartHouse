@@ -8,9 +8,9 @@
 	<string name="action_refresh">Refresh</string>
 	<string name="title_activity_create_rule">CreateRule</string>
 
-	<string name="kws_caption">To start demonstration say \"oh mighty computer\".</string>
-	<string name="menu_caption">Say \"light\", \"welcome\" or \"thief\" to choose a command.</string>
-	<string name="light_caption">To try recognition of digits: say something like \"switch on switch off love power save\".</string>
-	<string name="forecast_caption">To try recognition of a weather forecast like \"sunny spells on Wednesday\".</string>
+	<string name="kws_caption">To start demonstration say \"computer\".</string>
+	<string name="menu_caption">Say \"light\", \"ambiance\" \"thief\" or \"time\"  to choose a command.</string>
+	<string name="light_caption">Say something like \"switch on\" or \"switch off\" to choose a command.</string>
+	<string name="ambiance_caption">Say something like \"love\", \"nature"\ or \"optimism"\ to choose a command.</string>
 	<string name="phone_caption">To try phonetic recognition say anything.</string>
 </resources>

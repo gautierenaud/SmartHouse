@@ -3,6 +3,4 @@
 grammar light;
 
 public <light> = switch on  |
-          switch off |
-          love       |
-          power save;
+          switch off;
